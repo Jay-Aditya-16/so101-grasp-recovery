@@ -11,7 +11,7 @@ import mujoco.viewer
 import numpy as np
 
 
-def rollout(robot, viewer, get_action, fps, seconds):
+def rollout(robot, viewer, get_action, fps, seconds, on_step=None):
     cube_geom = robot.model.geom("cube_geom").id
     # The first box geom is the floor in the pinned tutorial scene.
     box_floor = int(robot.model.body_geomadr[robot.box_id])
@@ -42,14 +42,17 @@ def rollout(robot, viewer, get_action, fps, seconds):
                 cube_contacts.add(int(contact.geom2))
             elif contact.geom2 == cube_geom:
                 cube_contacts.add(int(contact.geom1))
-        bilateral_contact |= jaw_bodies <= {int(robot.model.geom_bodyid[geom]) for geom in cube_contacts}
+        touching_both = jaw_bodies <= {int(robot.model.geom_bodyid[geom]) for geom in cube_contacts}
+        bilateral_contact |= touching_both
         supported = box_floor in cube_contacts
         stable = supported and np.all(distance <= 0.03) and np.linalg.norm(
             robot.data.joint("cube_free").qvel[:3]
         ) < 0.03
         settled_frames = settled_frames + 1 if stable else 0
-        if settled_frames >= round(0.5 * fps) and peak_height - start_height >= 0.05:
-            placed = True
+        placed = settled_frames >= round(0.5 * fps) and peak_height - start_height >= 0.05
+        if on_step is not None:
+            on_step(touching_both, supported, stable, placed)
+        if placed:
             break
         time.sleep(max(0, 1 / fps - (time.monotonic() - started)))
 
@@ -69,9 +72,14 @@ def main():
     parser.add_argument("--episodes", type=int, default=1)
     parser.add_argument("--seed", type=int, default=1000)
     parser.add_argument("--seconds", type=float, default=12)
+    parser.add_argument("--demo-dataset", type=Path, help="Reconstruct the starting pose from this local dataset")
+    parser.add_argument("--demo-episode", type=int, default=0)
+    parser.add_argument("--capture", type=Path, help="Save one rollout as a compressed NumPy archive")
     args = parser.parse_args()
     if args.episodes < 1 or args.seconds <= 0:
         parser.error("--episodes and --seconds must be positive")
+    if args.capture and (args.episodes != 1 or args.scene_check or args.capture.exists()):
+        parser.error("--capture requires one rollout and a new output path")
     if not args.scene_check and (
         args.checkpoint is None or not (args.checkpoint / "model.safetensors").is_file()
     ):
@@ -86,6 +94,11 @@ def main():
 
     camera_keys = {"top": "observation.images.top", "wrist_cam": "observation.images.wrist"}
     rng = np.random.default_rng(args.seed)
+    reference = None
+    if args.demo_dataset:
+        from replay_act_demo import load_demo
+
+        reference = load_demo(args.demo_dataset, args.demo_episode)
     if not args.scene_check:
         import torch
         from lerobot.policies import make_pre_post_processors
@@ -101,8 +114,12 @@ def main():
         )
 
     for episode in range(args.episodes):
-        cube = random_cube(rng)
+        cube = reference[0].tolist() if reference is not None else random_cube(rng)
         robot = SO101Sim(cube_pos=cube, box_pos=(0.05, 0.22), render=False)
+        if reference is not None and not np.allclose(robot.data.qpos[:6], reference[2][0], atol=1e-4):
+            raise RuntimeError("The recorded and simulated initial joint positions differ")
+        capture = {key: [] for key in ("time", "qpos", "qvel", "cube_xyz", "top_rgb", "wrist_rgb",
+                                       "action", "bilateral_contact", "box_support", "settled", "reward")}
         with mujoco.Renderer(robot.model, height=IMG_H, width=IMG_W) as renderer:
             if args.scene_check:
                 for camera in camera_keys:
@@ -110,26 +127,64 @@ def main():
                     print(f"{camera}: {renderer.render().shape}")
                 return
 
-            def get_action():
+            def observe():
                 obs = {
                     "observation.state": torch.tensor(robot.data.qpos[:6], dtype=torch.float32)[None],
                     "task": [TASK],
                 }
                 for camera, key in camera_keys.items():
                     renderer.update_scene(robot.data, camera=camera)
-                    rgb = torch.from_numpy(renderer.render().copy())
+                    frame = renderer.render().copy()
+                    if args.capture:
+                        capture["top_rgb" if camera == "top" else "wrist_rgb"].append(frame)
+                    rgb = torch.from_numpy(frame)
                     obs[key] = rgb.permute(2, 0, 1)[None].float() / 255
+                if args.capture:
+                    capture["time"].append(robot.data.time)
+                    capture["qpos"].append(robot.data.qpos.copy())
+                    capture["qvel"].append(robot.data.qvel.copy())
+                    capture["cube_xyz"].append(robot.cube_pos())
+                return obs
+
+            def get_action():
                 with torch.inference_mode():
-                    action = postprocess(policy.select_action(preprocess(obs)))[0].cpu().numpy()
+                    action = postprocess(policy.select_action(preprocess(observe())))[0].cpu().numpy()
                 if action.shape != (6,) or not np.isfinite(action).all():
                     raise RuntimeError("ACT returned an invalid six-joint target")
                 return action
+
+            def capture_step(touching_both, supported, stable, placed):
+                capture["action"].append(robot.data.ctrl[:6].copy())
+                capture["bilateral_contact"].append(touching_both)
+                capture["box_support"].append(supported)
+                capture["settled"].append(stable)
+                capture["reward"].append(float(placed))
 
             policy.reset()
             with mujoco.viewer.launch_passive(robot.model, robot.data) as viewer:
                 viewer.cam.type = mujoco.mjtCamera.mjCAMERA_FIXED
                 viewer.cam.fixedcamid = robot.model.camera("fixed").id
-                result = rollout(robot, viewer, get_action, FPS, args.seconds)
+                result = rollout(robot, viewer, get_action, FPS, args.seconds,
+                                 on_step=capture_step if args.capture else None)
+                if args.capture and capture["action"]:
+                    observe()
+        if args.capture and capture["action"]:
+            n = len(capture["action"])
+            terminated = np.zeros(n, dtype=bool)
+            terminated[-1] = bool(result and result["settled_placement"])
+            truncated = np.zeros(n, dtype=bool)
+            truncated[-1] = not terminated[-1]
+            metadata = {"checkpoint": str(args.checkpoint), "fps": FPS, "start_xy": cube,
+                        "reference_episode": args.demo_episode if reference is not None else None,
+                        "viewer_closed": result is None, "result": result}
+            if reference is not None:
+                capture["reference_action"] = reference[1]
+                capture["reference_joint_state"] = reference[2]
+            args.capture.parent.mkdir(parents=True, exist_ok=True)
+            with args.capture.open("xb") as output:
+                np.savez_compressed(output, **capture, metadata=json.dumps(metadata),
+                                    terminated=terminated, truncated=truncated)
+            print(f"Saved {n} transitions to {args.capture}", flush=True)
         if result is None:
             print("Viewer closed. Episode stopped without a score.")
             break

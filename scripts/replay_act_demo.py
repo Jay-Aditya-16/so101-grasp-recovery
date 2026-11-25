@@ -9,32 +9,24 @@ import mujoco.viewer
 import numpy as np
 import pyarrow.parquet as pq
 
-from live_act_eval import rollout
 
-
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--tutorial", type=Path, required=True)
-    parser.add_argument("--dataset", type=Path, required=True)
-    parser.add_argument("--episode", type=int, default=0)
-    args = parser.parse_args()
-
-    sys.path.insert(0, str(args.tutorial.resolve()))
+def load_demo(dataset_root, episode):
+    """Load a reference trajectory and reconstruct its initial cube position."""
     from ch06.record_demos import FPS, IMG_H, IMG_W
     from common.robot import SO101Sim
     from common.vision import SimCamera, find_color_center
     from lerobot.datasets import LeRobotDataset
 
-    root = args.dataset.resolve()
+    root = dataset_root.resolve()
     dataset = LeRobotDataset("caspar/so101_pickplace_sim_150", root=root, video_backend="pyav")
-    if not 0 <= args.episode < dataset.num_episodes:
-        parser.error("--episode is outside the dataset")
+    if not 0 <= episode < dataset.num_episodes:
+        raise ValueError("Episode is outside the dataset")
     if dataset.fps != FPS:
         raise RuntimeError("The recorded and simulator control rates differ")
     rows = pq.read_table(
         root / "data",
         columns=["index", "action", "observation.state", "timestamp"],
-        filters=[("episode_index", "=", args.episode)],
+        filters=[("episode_index", "=", episode)],
     ).sort_by("index")
     actions = np.array(rows["action"].to_pylist(), dtype=np.float64)
     states = np.array(rows["observation.state"].to_pylist(), dtype=np.float64)
@@ -72,6 +64,22 @@ def main():
         camera.close()
         template.close()
 
+    return cube_xy, actions, states, box_alignment
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--tutorial", type=Path, required=True)
+    parser.add_argument("--dataset", type=Path, required=True)
+    parser.add_argument("--episode", type=int, default=0)
+    args = parser.parse_args()
+
+    sys.path.insert(0, str(args.tutorial.resolve()))
+    from ch06.record_demos import FPS
+    from common.robot import SO101Sim
+    from live_act_eval import rollout
+
+    cube_xy, actions, states, box_alignment = load_demo(args.dataset, args.episode)
     robot = SO101Sim(cube_pos=cube_xy, box_pos=box_xy, render=False)
     if not np.allclose(robot.data.qpos[:6], states[0], atol=1e-4):
         raise RuntimeError("The demonstration and simulator start from different joint poses")
