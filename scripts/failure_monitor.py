@@ -37,15 +37,17 @@ class GraspMonitor:
     A hidden object yields an unknown state, not a success claim.
     """
 
-    def __init__(self, close_threshold=0.10, lift_m=0.02, stationary_px=15):
+    def __init__(self, close_threshold=0.10, lift_m=0.02, stationary_px=15, max_age_frames=40):
         self.close_threshold = close_threshold
         self.lift_m = lift_m
         self.stationary_px = stationary_px
+        self.max_age_frames = max_age_frames
         self.reset()
 
     def reset(self):
         self.frame = 0
         self.last_visible = None
+        self.last_visible_frame = None
         self.close_center = None
         self.close_height = None
         self.closed = False
@@ -55,10 +57,12 @@ class GraspMonitor:
         center = red_center(top_rgb)
         if not self.closed and gripper_target < self.close_threshold:
             self.closed = True
-            self.close_center = self.last_visible
+            if self.last_visible_frame is not None and self.frame - self.last_visible_frame <= self.max_age_frames:
+                self.close_center = self.last_visible
             self.close_height = tip_height
         if center is not None:
             self.last_visible = center
+            self.last_visible_frame = self.frame
         if self.closed and self.event is None and tip_height - self.close_height >= self.lift_m:
             if center is None or self.close_center is None:
                 status, reason = "unknown", "cube obscured when gripper rose"

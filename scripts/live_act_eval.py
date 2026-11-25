@@ -75,6 +75,7 @@ def main():
     parser.add_argument("--demo-dataset", type=Path, help="Reconstruct the starting pose from this local dataset")
     parser.add_argument("--demo-episode", type=int, default=0)
     parser.add_argument("--capture", type=Path, help="Save one rollout as a compressed NumPy archive")
+    parser.add_argument("--monitor", action="store_true", help="Report suspected missed grasps during execution")
     args = parser.parse_args()
     if args.episodes < 1 or args.seconds <= 0:
         parser.error("--episodes and --seconds must be positive")
@@ -114,6 +115,11 @@ def main():
         )
 
     for episode in range(args.episodes):
+        if args.monitor:
+            from failure_monitor import GraspMonitor
+
+            monitor = GraspMonitor()
+            reported = False
         cube = reference[0].tolist() if reference is not None else random_cube(rng)
         robot = SO101Sim(cube_pos=cube, box_pos=(0.05, 0.22), render=False)
         if reference is not None and not np.allclose(robot.data.qpos[:6], reference[2][0], atol=1e-4):
@@ -147,10 +153,18 @@ def main():
                 return obs
 
             def get_action():
+                nonlocal reported
+                obs = observe()
                 with torch.inference_mode():
-                    action = postprocess(policy.select_action(preprocess(observe())))[0].cpu().numpy()
+                    action = postprocess(policy.select_action(preprocess(obs)))[0].cpu().numpy()
                 if action.shape != (6,) or not np.isfinite(action).all():
                     raise RuntimeError("ACT returned an invalid six-joint target")
+                if args.monitor:
+                    image = (obs["observation.images.top"][0].permute(1, 2, 0).numpy() * 255).round().astype(np.uint8)
+                    event = monitor.update(image, float(action[5]), float(robot.data.site_xpos[robot.site_id][2]))
+                    if event and not reported:
+                        print(f"Monitor at {robot.data.time:.2f}s: {event.status} — {event.reason}", flush=True)
+                        reported = True
                 return action
 
             def capture_step(touching_both, supported, stable, placed):
