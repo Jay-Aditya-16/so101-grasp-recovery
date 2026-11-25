@@ -39,6 +39,16 @@ LeRobot 0.6.1 holds out the last 12 of 117 episodes for offline validation. Norm
 
 For local evaluation, use the [Physical AI tutorial's chapter 6 simulator and ACT evaluator](https://github.com/ady95/physicalai_tutorial/tree/ea970233882d19e43fab3acf69cba1b26d10d495/ch06). Its recorder and evaluator match the dataset's task, camera keys, resolution, control rate and six-joint interface. Verify scene compatibility by replaying a demonstration before scoring the trained policy. Compare checkpoints on the same development poses, then evaluate the selected checkpoint on a separate set of test poses. Report grasp, lift and settled placement separately. Keep camera placement and calibration fixed and open a live MuJoCo view before the first rollout. [SO-101 setup and pose coverage experiments](https://huggingface.co/blog/sherryxychen/train-act-on-so-101)
 
+The local live runner uses the tutorial scene and the saved ACT processors. On macOS, run it with `mjpython` from an environment with MuJoCo 3.3.1 and LeRobot 0.6.1. Given a downloaded Colab checkpoint archive and a checkout of the tutorial revision above:
+
+```sh
+unzip ~/Downloads/020000.zip 'pretrained_model/*' -d checkpoints/single-cube-020000
+mjpython scripts/live_act_eval.py --tutorial ../so101-physicalai-tutorial \
+  --checkpoint checkpoints/single-cube-020000/pretrained_model --episodes 1
+```
+
+The viewer opens before motion. Closing it stops the evaluation. Each completed episode reports bilateral contact, peak lift, and whether the cube lifted at least 5 cm and then stayed supported by the box floor for at least half a second. A camera-only preflight is available with `--scene-check`. Reuse the same `--seed` and episode count for checkpoint comparisons.
+
 This is a tested, offline candidate-ranking prototype, not a robot policy or a simulator. It accepts externally supplied object regions, estimated widths, stability and reachability, and ranks feasible regions using observed outcomes. Exact object-class matching is deliberate: no visual similarity or physical understanding is claimed. Scores are heuristics, not calibrated probabilities. The caller must validate all inputs and robot motion independently.
 
 Run `python3 -m unittest discover -s tests -v` from this directory. `Memory.save` and `Memory.load` persist JSON experience records. Do not use unverified candidates to move hardware.
