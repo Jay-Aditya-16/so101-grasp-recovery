@@ -49,6 +49,15 @@ mjpython scripts/live_act_eval.py --tutorial ../so101-physicalai-tutorial \
 
 The viewer opens before motion. Closing it stops the evaluation. Each completed episode reports bilateral contact, peak lift, and whether the cube lifted at least 5 cm and then stayed supported by the box floor for at least half a second. A camera-only preflight is available with `--scene-check`. Reuse the same `--seed` and episode count for checkpoint comparisons.
 
+To check the simulator independently of ACT, replay targets from the pinned training dataset with the same live viewer:
+
+```sh
+mjpython scripts/replay_act_demo.py --tutorial ../so101-physicalai-tutorial \
+  --dataset datasets/caspar-single-cube --episode 0
+```
+
+The replay estimates the cube's start from the first overhead frame and checks that the box and starting joints match the scene. It applies the saved joint targets at 20 Hz and stops once the placement metric passes. Episode 0 passed locally. It lifted the cube 154 mm and settled it on the box floor after 154 targets, with a mean absolute joint tracking error of 0.01083 rad against the saved observations. This checks one trajectory and provides a successful reference for policy debugging.
+
 This is a tested, offline candidate-ranking prototype, not a robot policy or a simulator. It accepts externally supplied object regions, estimated widths, stability and reachability, and ranks feasible regions using observed outcomes. Exact object-class matching is deliberate: no visual similarity or physical understanding is claimed. Scores are heuristics, not calibrated probabilities. The caller must validate all inputs and robot motion independently.
 
 Run `python3 -m unittest discover -s tests -v` from this directory. `Memory.save` and `Memory.load` persist JSON experience records. Do not use unverified candidates to move hardware.
