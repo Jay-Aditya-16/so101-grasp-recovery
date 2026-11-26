@@ -1,0 +1,30 @@
+{
+  "trace": "datasets/local-rollouts/phase1-act-seed1002.npz",
+  "alert_frame": 101,
+  "path": {
+    "samples": 101,
+    "first_penetration": null,
+    "caveat": "Discrete kinematic samples only; no dynamic, swept-volume or real-world guarantee."
+  },
+  "estimate": {
+    "pixel_xy": [
+      161.0,
+      135.0
+    ],
+    "world_xy_m": [
+      0.2026578703585607,
+      -0.03986805537841041
+    ],
+    "bbox_xywh_px": [
+      156,
+      130,
+      11,
+      11
+    ],
+    "area_px": 121,
+    "assumed_top_height_m": 0.03
+  },
+  "actual_object_displacement_m": 1.734723475976807e-18,
+  "localization_error_mm": 1.9397393006501094,
+  "scope": "one simulator-only reobservation; no grasp or placement attempted"
+}

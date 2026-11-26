@@ -27,10 +27,12 @@ def estimate_object(rgb, camera_position, camera_rotation, fovy_deg, plane_z=0.0
     if x == 0 or y == 0 or x + width >= w or y + height >= h:
         return None
     u, v = centers[i]
+    if not np.isfinite(fovy_deg) or not 0 < fovy_deg < 180 or not np.isfinite(plane_z):
+        return None
     focal = (h / 2) / np.tan(np.deg2rad(fovy_deg) / 2)
     direction = np.asarray(camera_rotation).reshape(3, 3) @ np.array([(u - w / 2) / focal, -(v - h / 2) / focal, -1.0])
     origin = np.asarray(camera_position)
-    if not np.isfinite(direction).all() or abs(direction[2]) < 1e-8:
+    if not np.isfinite(origin).all() or not np.isfinite(direction).all() or abs(direction[2]) < 1e-8:
         return None
     distance = (plane_z - origin[2]) / direction[2]
     if distance <= 0:

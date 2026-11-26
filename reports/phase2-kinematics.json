@@ -1,0 +1,282 @@
+{
+  "scope": "offline kinematic candidate inspection; no motion executed",
+  "trials": [
+    {
+      "trace": "datasets/local-rollouts/act-020000-demo-000.npz",
+      "observation": "initial",
+      "frame": 0,
+      "object_estimate": {
+        "pixel_xy": [
+          151.0,
+          71.0
+        ],
+        "world_xy_m": [
+          0.17607916677295377,
+          0.130235647569474
+        ],
+        "bbox_xywh_px": [
+          146,
+          66,
+          11,
+          11
+        ],
+        "area_px": 121,
+        "assumed_top_height_m": 0.03
+      },
+      "proposal": {
+        "status": "candidate_only",
+        "target_xyz_m": [
+          0.17607916677295377,
+          0.130235647569474,
+          0.08
+        ],
+        "joint_target_rad": [
+          -0.8070388653048253,
+          -0.1125147303221442,
+          0.09779288495232019,
+          1.585450792388201,
+          -0.7603949170818007
+        ],
+        "solver_combined_error": 0.0006391522233102575,
+        "independent_fk_check": {
+          "valid": true,
+          "in_joint_limits": true,
+          "position_error_m": 0.0006355906939890445,
+          "downward_axis_dot": 0.999999997729982,
+          "site_xyz_m": [
+            0.1757369468371406,
+            0.1299290157473585,
+            0.07956086679528458
+          ]
+        },
+        "path_check": {
+          "samples": 101,
+          "first_penetration": null,
+          "caveat": "Discrete kinematic samples only; no dynamic, swept-volume or real-world guarantee."
+        }
+      },
+      "status": "candidate_only"
+    },
+    {
+      "trace": "datasets/local-rollouts/act-020000-demo-000.npz",
+      "observation": "alert",
+      "frame": 101,
+      "status": "abstain",
+      "reason": "object_not_reliably_visible",
+      "home_view_diagnostic": {
+        "samples": 101,
+        "first_penetration": null,
+        "caveat": "Discrete kinematic samples only; no dynamic, swept-volume or real-world guarantee."
+      }
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1001.npz",
+      "observation": "initial",
+      "frame": 0,
+      "object_estimate": {
+        "pixel_xy": [
+          152.0,
+          174.0
+        ],
+        "world_xy_m": [
+          0.17873703713151445,
+          -0.14352499936227747
+        ],
+        "bbox_xywh_px": [
+          147,
+          169,
+          11,
+          11
+        ],
+        "area_px": 121,
+        "assumed_top_height_m": 0.03
+      },
+      "proposal": {
+        "status": "candidate_only",
+        "target_xyz_m": [
+          0.17873703713151445,
+          -0.14352499936227747,
+          0.08
+        ],
+        "joint_target_rad": [
+          0.8369980833785908,
+          -0.02144281699037713,
+          -0.006726951066911055,
+          1.5989005897773032,
+          0.7862396685504847
+        ],
+        "solver_combined_error": 0.0007454731941173552,
+        "independent_fk_check": {
+          "valid": true,
+          "in_joint_limits": true,
+          "position_error_m": 0.0007425896365546909,
+          "downward_axis_dot": 0.9999999978545424,
+          "site_xyz_m": [
+            0.17832622763944372,
+            -0.14314024796343724,
+            0.07951560213601472
+          ]
+        },
+        "path_check": {
+          "samples": 101,
+          "first_penetration": null,
+          "caveat": "Discrete kinematic samples only; no dynamic, swept-volume or real-world guarantee."
+        }
+      },
+      "status": "candidate_only"
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1001.npz",
+      "observation": "alert",
+      "frame": 82,
+      "status": "abstain",
+      "reason": "object_not_reliably_visible",
+      "home_view_diagnostic": {
+        "samples": 101,
+        "first_penetration": null,
+        "caveat": "Discrete kinematic samples only; no dynamic, swept-volume or real-world guarantee."
+      }
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1002.npz",
+      "observation": "initial",
+      "frame": 0,
+      "object_estimate": {
+        "pixel_xy": [
+          161.0,
+          135.0
+        ],
+        "world_xy_m": [
+          0.2026578703585607,
+          -0.03986805537841041
+        ],
+        "bbox_xywh_px": [
+          156,
+          130,
+          11,
+          11
+        ],
+        "area_px": 121,
+        "assumed_top_height_m": 0.03
+      },
+      "proposal": {
+        "status": "candidate_only",
+        "target_xyz_m": [
+          0.2026578703585607,
+          -0.03986805537841041,
+          0.08
+        ],
+        "joint_target_rad": [
+          0.24962547393894957,
+          -0.32176396145941,
+          0.3135624491118933,
+          1.5789182552154721,
+          0.2353354702541042
+        ],
+        "solver_combined_error": 0.0008619139844682937,
+        "independent_fk_check": {
+          "valid": true,
+          "in_joint_limits": true,
+          "position_error_m": 0.0008582319705114792,
+          "downward_axis_dot": 0.9999999968331983,
+          "site_xyz_m": [
+            0.20214008381378898,
+            -0.039739848468092816,
+            0.07932767403931709
+          ]
+        },
+        "path_check": {
+          "samples": 101,
+          "first_penetration": null,
+          "caveat": "Discrete kinematic samples only; no dynamic, swept-volume or real-world guarantee."
+        }
+      },
+      "status": "candidate_only"
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1002.npz",
+      "observation": "alert",
+      "frame": 101,
+      "status": "abstain",
+      "reason": "object_not_reliably_visible",
+      "home_view_diagnostic": {
+        "samples": 101,
+        "first_penetration": null,
+        "caveat": "Discrete kinematic samples only; no dynamic, swept-volume or real-world guarantee."
+      }
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1003.npz",
+      "observation": "initial",
+      "frame": 0,
+      "object_estimate": {
+        "pixel_xy": [
+          151.0,
+          143.0
+        ],
+        "world_xy_m": [
+          0.17607916677295377,
+          -0.06113101824689596
+        ],
+        "bbox_xywh_px": [
+          146,
+          138,
+          11,
+          11
+        ],
+        "area_px": 121,
+        "assumed_top_height_m": 0.03
+      },
+      "proposal": {
+        "status": "candidate_only",
+        "target_xyz_m": [
+          0.17607916677295377,
+          -0.06113101824689596,
+          0.08
+        ],
+        "joint_target_rad": [
+          0.4459243299322377,
+          -0.4755888390153461,
+          0.44807859183628845,
+          1.5982011893834789,
+          0.4245553134892501
+        ],
+        "solver_combined_error": 0.0009523572355179586,
+        "independent_fk_check": {
+          "valid": true,
+          "in_joint_limits": true,
+          "position_error_m": 0.0009465085272594522,
+          "downward_axis_dot": 0.999999994447043,
+          "site_xyz_m": [
+            0.17564600898185329,
+            -0.06094008265657564,
+            0.07918036817989244
+          ]
+        },
+        "path_check": {
+          "samples": 101,
+          "first_penetration": null,
+          "caveat": "Discrete kinematic samples only; no dynamic, swept-volume or real-world guarantee."
+        }
+      },
+      "status": "candidate_only"
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1003.npz",
+      "observation": "alert",
+      "frame": 92,
+      "status": "abstain",
+      "reason": "object_not_reliably_visible",
+      "home_view_diagnostic": {
+        "samples": 101,
+        "first_penetration": {
+          "sample": 0,
+          "geom1": "fixed_jaw_sph_tip1",
+          "geom2": "cube_geom",
+          "penetration_m": 0.0018448841084796515
+        },
+        "caveat": "Discrete kinematic samples only; no dynamic, swept-volume or real-world guarantee."
+      }
+    }
+  ]
+}

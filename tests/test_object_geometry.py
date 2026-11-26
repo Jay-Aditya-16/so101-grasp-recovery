@@ -24,3 +24,9 @@ class GeometryTests(unittest.TestCase):
         image[:] = 0
         image[0:9, 40:49] = (255, 0, 0)
         self.assertIsNone(estimate_object(image, [0, 0, 1], np.eye(3), 90))
+
+    def test_invalid_camera_calibration_abstains(self):
+        image = np.zeros((100, 100, 3), dtype=np.uint8)
+        image[46:55, 46:55] = (255, 0, 0)
+        self.assertIsNone(estimate_object(image, [0, 0, float('nan')], np.eye(3), 90))
+        self.assertIsNone(estimate_object(image, [0, 0, 1], np.eye(3), 0))

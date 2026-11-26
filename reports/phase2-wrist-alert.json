@@ -1,0 +1,71 @@
+{
+  "scope": "alert wrist observations; red cube and assumed 30 mm height",
+  "trials": [
+    {
+      "trace": "datasets/local-rollouts/act-020000-demo-000.npz",
+      "frame": 101,
+      "estimate": null,
+      "gripper_world_xyz_m": [
+        0.18502460052189745,
+        0.12341312384347329,
+        0.04936447963179785
+      ]
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1001.npz",
+      "frame": 82,
+      "estimate": {
+        "pixel_xy": [
+          166.22504347826086,
+          69.57147826086957
+        ],
+        "world_xy_m": [
+          0.17998082144634664,
+          -0.13873816901400998
+        ],
+        "bbox_xywh_px": [
+          117,
+          18,
+          98,
+          106
+        ],
+        "area_px": 8625,
+        "assumed_top_height_m": 0.03
+      },
+      "gripper_world_xyz_m": [
+        0.188653306395287,
+        -0.17001522999285854,
+        0.05273537112024909
+      ],
+      "object_minus_gripper_xy_m": [
+        -0.008672484948940351,
+        0.03127706097884855
+      ],
+      "ground_truth_xy_m": [
+        0.18010873535456434,
+        -0.1450579073523883
+      ],
+      "localization_error_mm": 6.321032718906323
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1002.npz",
+      "frame": 101,
+      "estimate": null,
+      "gripper_world_xyz_m": [
+        0.21085400282844172,
+        -0.07456281201247365,
+        0.05962011475391876
+      ]
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1003.npz",
+      "frame": 92,
+      "estimate": null,
+      "gripper_world_xyz_m": [
+        0.19429724520709846,
+        -0.07601818211077764,
+        0.04069230831916966
+      ]
+    }
+  ]
+}
