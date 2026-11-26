@@ -58,6 +58,8 @@ Goal: replace unguided directional retries with corrections supported by the obs
 
 Initial object/gripper geometry is implemented and assessed on four existing traces. It abstains at all four monitor-alert frames because of occlusion or insufficient visible area; recovery control is not implemented. See [Phase 2 geometry](phase2-geometry.md).
 
+An initial monocular depth study is documented in [Phase 2 depth](phase2-monocular-depth.md): the model separated the visible cube from its surroundings initially but did not reliably order partial cube and gripper pixels at alerts. Its relative output requires independent metric calibration.
+
 1. Estimate the target object’s image region, center, orientation, approximate footprint/width, and confidence from the overhead view; use wrist view as a second, local view. Start with robust color/shape geometry in the fixed simulated scene and human review. Later compare a compact detector/segmenter or VLM; do not assume an LLM has precise metric geometry.
 2. Estimate gripper pose from joint state/forward kinematics and camera calibration. Compute object-to-gripper offset in a tabletop coordinate frame, with uncertainty. Fuse viewpoints only when calibrated and time-synchronized.
 3. Classify failure stage from observable evidence: missed approach, no closure/contact, slip/no lift, collision/occlusion, or unknown. Keep simulator contact/object state as labels for evaluation, not as controller input.
