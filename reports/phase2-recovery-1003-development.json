@@ -1,0 +1,15 @@
+[
+  {
+    "episode": 1,
+    "seed": 1003,
+    "start_xy": [
+      0.1779306537614339,
+      -0.06306315300200185
+    ],
+    "bilateral_gripper_contact": true,
+    "lifted_5cm": true,
+    "settled_placement": true,
+    "max_lift_m": 0.1601,
+    "recovery_events": []
+  }
+]

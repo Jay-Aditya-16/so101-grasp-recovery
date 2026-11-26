@@ -1,0 +1,91 @@
+[
+  {
+    "episode": 1,
+    "seed": 1001,
+    "start_xy": [
+      0.18010873535456434,
+      -0.1450579073523883
+    ],
+    "bilateral_gripper_contact": true,
+    "lifted_5cm": true,
+    "settled_placement": true,
+    "max_lift_m": 0.098,
+    "recovery_events": [
+      {
+        "state": "moving",
+        "time_s": 4.0999999999997705,
+        "reason": "observe"
+      },
+      {
+        "state": "observe",
+        "time_s": 8.049999999999358,
+        "reason": null
+      },
+      {
+        "state": "open",
+        "time_s": 8.099999999999374,
+        "reason": "observed cube at [0.17873703713151445, -0.14352499936227747]"
+      },
+      {
+        "state": "moving",
+        "time_s": 8.799999999999608,
+        "reason": "descend"
+      },
+      {
+        "state": "descend",
+        "time_s": 10.300000000000109,
+        "reason": null
+      },
+      {
+        "state": "moving",
+        "time_s": 10.350000000000126,
+        "reason": "close"
+      },
+      {
+        "state": "close",
+        "time_s": 11.850000000000627,
+        "reason": null
+      },
+      {
+        "state": "closing",
+        "time_s": 11.900000000000643,
+        "reason": null
+      },
+      {
+        "state": "moving",
+        "time_s": 12.900000000000977,
+        "reason": "transport"
+      },
+      {
+        "state": "transport",
+        "time_s": 14.400000000001478,
+        "reason": null
+      },
+      {
+        "state": "moving",
+        "time_s": 14.450000000001495,
+        "reason": "place"
+      },
+      {
+        "state": "place",
+        "time_s": 15.950000000001996,
+        "reason": null
+      },
+      {
+        "state": "moving",
+        "time_s": 16.00000000000201,
+        "reason": "release"
+      },
+      {
+        "state": "release",
+        "time_s": 17.50000000000118,
+        "reason": null
+      },
+      {
+        "state": "releasing",
+        "time_s": 17.550000000001152,
+        "reason": null
+      }
+    ]
+  }
+]
