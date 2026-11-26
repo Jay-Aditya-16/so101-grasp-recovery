@@ -1,0 +1,145 @@
+{
+  "scope": "initial observations only; red cube and assumed 30 mm height",
+  "trials": [
+    {
+      "trace": "datasets/local-rollouts/act-020000-demo-000.npz",
+      "estimate": {
+        "pixel_xy": [
+          151.0,
+          71.0
+        ],
+        "world_xy_m": [
+          0.17607916677295377,
+          0.130235647569474
+        ],
+        "bbox_xywh_px": [
+          146,
+          66,
+          11,
+          11
+        ],
+        "area_px": 121,
+        "assumed_top_height_m": 0.03
+      },
+      "gripper_world_xyz_m": [
+        0.10339221447662467,
+        -0.0009794652485835616,
+        0.409271870336174
+      ],
+      "object_minus_gripper_xy_m": [
+        0.0726869522963291,
+        0.13121511281805756
+      ],
+      "ground_truth_xy_m": [
+        0.17757676736550398,
+        0.1290642570069842
+      ],
+      "localization_error_mm": 1.901305705218636
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1001.npz",
+      "estimate": {
+        "pixel_xy": [
+          152.0,
+          174.0
+        ],
+        "world_xy_m": [
+          0.17873703713151445,
+          -0.14352499936227747
+        ],
+        "bbox_xywh_px": [
+          147,
+          169,
+          11,
+          11
+        ],
+        "area_px": 121,
+        "assumed_top_height_m": 0.03
+      },
+      "gripper_world_xyz_m": [
+        0.10339221447662467,
+        -0.0009794652485835616,
+        0.409271870336174
+      ],
+      "object_minus_gripper_xy_m": [
+        0.07534482265488979,
+        -0.14254553411369392
+      ],
+      "ground_truth_xy_m": [
+        0.18010873535456434,
+        -0.1450579073523883
+      ],
+      "localization_error_mm": 2.0570276909326806
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1002.npz",
+      "estimate": {
+        "pixel_xy": [
+          161.0,
+          135.0
+        ],
+        "world_xy_m": [
+          0.2026578703585607,
+          -0.03986805537841041
+        ],
+        "bbox_xywh_px": [
+          156,
+          130,
+          11,
+          11
+        ],
+        "area_px": 121,
+        "assumed_top_height_m": 0.03
+      },
+      "gripper_world_xyz_m": [
+        0.10339221447662467,
+        -0.0009794652485835616,
+        0.409271870336174
+      ],
+      "object_minus_gripper_xy_m": [
+        0.09926565588193603,
+        -0.038888590129826844
+      ],
+      "ground_truth_xy_m": [
+        0.20393701693241534,
+        -0.04132626407303629
+      ],
+      "localization_error_mm": 1.9397393006501094
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1003.npz",
+      "estimate": {
+        "pixel_xy": [
+          151.0,
+          143.0
+        ],
+        "world_xy_m": [
+          0.17607916677295377,
+          -0.06113101824689596
+        ],
+        "bbox_xywh_px": [
+          146,
+          138,
+          11,
+          11
+        ],
+        "area_px": 121,
+        "assumed_top_height_m": 0.03
+      },
+      "gripper_world_xyz_m": [
+        0.10339221447662467,
+        -0.0009794652485835616,
+        0.409271870336174
+      ],
+      "object_minus_gripper_xy_m": [
+        0.0726869522963291,
+        -0.060151552998312395
+      ],
+      "ground_truth_xy_m": [
+        0.1779306537614339,
+        -0.06306315300200185
+      ],
+      "localization_error_mm": 2.6760322831384893
+    }
+  ]
+}
