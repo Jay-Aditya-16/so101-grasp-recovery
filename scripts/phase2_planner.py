@@ -24,7 +24,7 @@ def check_pose(robot, q, target, max_position_error_m=0.005, min_direction_dot=0
             "downward_axis_dot": direction_dot, "site_xyz_m": xyz.tolist()}
 
 
-def inspect_path(robot, start, end, samples=101):
+def inspect_path(robot, start, end, samples=101, allow_cube_contact=False):
     """Sample joint interpolation for robot contacts; this is not continuous collision checking."""
     m = robot.model
     data = mujoco.MjData(m)
@@ -36,6 +36,8 @@ def inspect_path(robot, start, end, samples=101):
         mujoco.mj_forward(m, data)
         for c in data.contact:
             b1, b2 = int(m.geom_bodyid[c.geom1]), int(m.geom_bodyid[c.geom2])
+            if allow_cube_contact and robot.cube_id in (b1, b2):
+                continue
             if (b1 not in excluded or b2 not in excluded) and c.dist < -0.001:
                 collisions.append({"sample": i, "geom1": mujoco.mj_id2name(m, mujoco.mjtObj.mjOBJ_GEOM, c.geom1),
                                    "geom2": mujoco.mj_id2name(m, mujoco.mjtObj.mjOBJ_GEOM, c.geom2),

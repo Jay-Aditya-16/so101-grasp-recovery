@@ -11,6 +11,11 @@ import mujoco.viewer
 import numpy as np
 
 
+def placement_frame_supported(supported, jaw_contact, distance_xy, linear_speed):
+    """A settled frame requires box support, released jaws, centrality and low speed."""
+    return bool(supported and not jaw_contact and np.all(np.abs(distance_xy) <= 0.03) and linear_speed < 0.03)
+
+
 def rollout(robot, viewer, get_action, fps, seconds, on_step=None):
     cube_geom = robot.model.geom("cube_geom").id
     # The first box geom is the floor in the pinned tutorial scene.
@@ -42,12 +47,12 @@ def rollout(robot, viewer, get_action, fps, seconds, on_step=None):
                 cube_contacts.add(int(contact.geom2))
             elif contact.geom2 == cube_geom:
                 cube_contacts.add(int(contact.geom1))
-        touching_both = jaw_bodies <= {int(robot.model.geom_bodyid[geom]) for geom in cube_contacts}
+        contact_bodies = {int(robot.model.geom_bodyid[geom]) for geom in cube_contacts}
+        touching_both = jaw_bodies <= contact_bodies
         bilateral_contact |= touching_both
         supported = box_floor in cube_contacts
-        stable = supported and np.all(distance <= 0.03) and np.linalg.norm(
-            robot.data.joint("cube_free").qvel[:3]
-        ) < 0.03
+        stable = placement_frame_supported(supported, bool(jaw_bodies & contact_bodies), distance,
+                                           np.linalg.norm(robot.data.joint("cube_free").qvel[:3]))
         settled_frames = settled_frames + 1 if stable else 0
         placed = settled_frames >= round(0.5 * fps) and peak_height - start_height >= 0.05
         if on_step is not None:
@@ -76,7 +81,11 @@ def main():
     parser.add_argument("--demo-episode", type=int, default=0)
     parser.add_argument("--capture", type=Path, help="Save one rollout as a compressed NumPy archive")
     parser.add_argument("--monitor", action="store_true", help="Report suspected missed grasps during execution")
+    parser.add_argument("--recovery", action="store_true", help="Enable experimental simulator-only recovery on suspected misses")
+    parser.add_argument("--results", type=Path, help="Save episode results as JSON")
     args = parser.parse_args()
+    if args.recovery:
+        args.monitor = True
     if args.episodes < 1 or args.seconds <= 0:
         parser.error("--episodes and --seconds must be positive")
     if args.capture and (args.episodes != 1 or args.scene_check or args.capture.exists()):
@@ -114,6 +123,7 @@ def main():
             preprocessor_overrides={"device_processor": {"device": "cpu"}},
         )
 
+    episode_results = []
     for episode in range(args.episodes):
         if args.monitor:
             from failure_monitor import GraspMonitor
@@ -122,6 +132,9 @@ def main():
             reported = False
         cube = reference[0].tolist() if reference is not None else random_cube(rng)
         robot = SO101Sim(cube_pos=cube, box_pos=(0.05, 0.22), render=False)
+        if args.recovery:
+            from phase2_controller import RecoveryController
+            recovery = RecoveryController(robot, FPS)
         if reference is not None and not np.allclose(robot.data.qpos[:6], reference[2][0], atol=1e-4):
             raise RuntimeError("The recorded and simulated initial joint positions differ")
         capture = {key: [] for key in ("time", "qpos", "qvel", "cube_xyz", "top_rgb", "wrist_rgb",
@@ -155,16 +168,21 @@ def main():
             def get_action():
                 nonlocal reported
                 obs = observe()
+                image = (obs["observation.images.top"][0].permute(1, 2, 0).numpy() * 255).round().astype(np.uint8)
+                if args.recovery and recovery.state != "idle":
+                    return recovery.step(image)
                 with torch.inference_mode():
                     action = postprocess(policy.select_action(preprocess(obs)))[0].cpu().numpy()
                 if action.shape != (6,) or not np.isfinite(action).all():
                     raise RuntimeError("ACT returned an invalid six-joint target")
                 if args.monitor:
-                    image = (obs["observation.images.top"][0].permute(1, 2, 0).numpy() * 255).round().astype(np.uint8)
                     event = monitor.update(image, float(action[5]), float(robot.data.site_xpos[robot.site_id][2]))
                     if event and not reported:
                         print(f"Monitor at {robot.data.time:.2f}s: {event.status} — {event.reason}", flush=True)
                         reported = True
+                        if args.recovery and event.status == "suspected_miss":
+                            recovery.start()
+                            return recovery.step(image)
                 return action
 
             def capture_step(touching_both, supported, stable, placed):
@@ -202,7 +220,14 @@ def main():
         if result is None:
             print("Viewer closed. Episode stopped without a score.")
             break
-        print(json.dumps({"episode": episode + 1, "seed": args.seed, "start_xy": cube, **result}), flush=True)
+        summary = {"episode": episode + 1, "seed": args.seed, "start_xy": cube, **result}
+        if args.recovery:
+            summary["recovery_events"] = recovery.events
+        episode_results.append(summary)
+        print(json.dumps(summary), flush=True)
+    if args.results:
+        args.results.parent.mkdir(parents=True, exist_ok=True)
+        args.results.write_text(json.dumps(episode_results, indent=2) + "\n")
 
 
 if __name__ == "__main__":
