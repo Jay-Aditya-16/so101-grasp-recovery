@@ -1,0 +1,61 @@
+{
+  "model": "depth-anything/Depth-Anything-V2-Small-hf",
+  "revision": "5426e4f0f36572d16453bbda7a8389317b1bef99",
+  "device": "cpu",
+  "frame": "initial",
+  "interpretation": "relative model scores, not metres; higher predicted score indicates closer for this checkpoint; surrounding pixels may include other objects",
+  "trials": [
+    {
+      "trace": "datasets/local-rollouts/act-020000-demo-000.npz",
+      "status": "ok",
+      "inference_s": 0.7720498749986291,
+      "object_pixels": 121,
+      "ring_pixels": 608,
+      "object_relative_value": 0.7507163882255554,
+      "nearby_relative_value": 0.7114928960800171,
+      "object_minus_nearby": 0.03922349214553833,
+      "simulator_object_depth_m": 0.7699931859970093,
+      "simulator_nearby_depth_m": 0.8000017404556274,
+      "simulator_object_minus_nearby_m": -0.030008554458618164
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1001.npz",
+      "status": "ok",
+      "inference_s": 0.5645688750082627,
+      "object_pixels": 121,
+      "ring_pixels": 608,
+      "object_relative_value": 0.819100558757782,
+      "nearby_relative_value": 0.788882315158844,
+      "object_minus_nearby": 0.03021824359893799,
+      "simulator_object_depth_m": 0.7699931859970093,
+      "simulator_nearby_depth_m": 0.8000017404556274,
+      "simulator_object_minus_nearby_m": -0.030008554458618164
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1002.npz",
+      "status": "ok",
+      "inference_s": 0.5554742910899222,
+      "object_pixels": 121,
+      "ring_pixels": 608,
+      "object_relative_value": 0.7087037563323975,
+      "nearby_relative_value": 0.6860384345054626,
+      "object_minus_nearby": 0.022665321826934814,
+      "simulator_object_depth_m": 0.7699931859970093,
+      "simulator_nearby_depth_m": 0.8000017404556274,
+      "simulator_object_minus_nearby_m": -0.030008554458618164
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1003.npz",
+      "status": "ok",
+      "inference_s": 0.501168749993667,
+      "object_pixels": 121,
+      "ring_pixels": 608,
+      "object_relative_value": 0.7142609357833862,
+      "nearby_relative_value": 0.6723162531852722,
+      "object_minus_nearby": 0.041944682598114014,
+      "simulator_object_depth_m": 0.7699931859970093,
+      "simulator_nearby_depth_m": 0.8000017404556274,
+      "simulator_object_minus_nearby_m": -0.030008554458618164
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "model": "depth-anything/Depth-Anything-V2-Small-hf",
+  "revision": "5426e4f0f36572d16453bbda7a8389317b1bef99",
+  "device": "cpu",
+  "frame": "alert",
+  "interpretation": "relative model scores, not metres; higher predicted score indicates closer for this checkpoint; surrounding pixels may include other objects",
+  "trials": [
+    {
+      "trace": "datasets/local-rollouts/act-020000-demo-000.npz",
+      "frame": 101,
+      "status": "ok",
+      "inference_s": 0.6810091669904068,
+      "object_pixels": 24,
+      "ring_pixels": 448,
+      "object_relative_value": 2.94399356842041,
+      "nearby_relative_value": 3.05435848236084,
+      "object_minus_nearby": -0.11036491394042969,
+      "simulator_object_depth_m": 0.7716621160507202,
+      "simulator_nearby_depth_m": 0.6795099973678589,
+      "simulator_object_minus_nearby_m": 0.09215211868286133
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1001.npz",
+      "frame": 82,
+      "status": "ok",
+      "inference_s": 0.5420817920239642,
+      "object_pixels": 23,
+      "ring_pixels": 448,
+      "object_relative_value": 2.5812246799468994,
+      "nearby_relative_value": 2.4279346466064453,
+      "object_minus_nearby": 0.1532900333404541,
+      "simulator_object_depth_m": 0.7701049447059631,
+      "simulator_nearby_depth_m": 0.6810415983200073,
+      "simulator_object_minus_nearby_m": 0.08906334638595581
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1002.npz",
+      "frame": 101,
+      "status": "ok",
+      "inference_s": 0.6015441659837961,
+      "object_pixels": 22,
+      "ring_pixels": 448,
+      "object_relative_value": 2.638882637023926,
+      "nearby_relative_value": 2.593395709991455,
+      "object_minus_nearby": 0.0454869270324707,
+      "simulator_object_depth_m": 0.7701049447059631,
+      "simulator_nearby_depth_m": 0.6738078594207764,
+      "simulator_object_minus_nearby_m": 0.09629708528518677
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1003.npz",
+      "status": "no_red_object",
+      "inference_s": 0.4979358339915052
+    }
+  ]
+}
