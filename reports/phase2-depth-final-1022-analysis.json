@@ -1,0 +1,50 @@
+{
+  "scope": "simulator-only reference; observations scored at wrist depth decision time",
+  "trials": [
+    {
+      "trace": "datasets/local-rollouts/phase2-depth-final-1022.npz",
+      "archive_sha256": "0e07a525586b99d3cb4ee83bc0e2a7d849131053f0a600198e9d58c60562b37a",
+      "transitions": 376,
+      "observations": 377,
+      "result": {
+        "bilateral_gripper_contact": true,
+        "lifted_5cm": true,
+        "settled_placement": true,
+        "max_lift_m": 0.0952
+      },
+      "checks": [
+        {
+          "frame": 218,
+          "timestamp_s": 10.90000000000031,
+          "ground_truth_xy_m": [
+            0.14170134907962192,
+            0.09401402228920908
+          ],
+          "wrist_error_mm": 7.319623110615474,
+          "overhead_error_mm": 0.38249788466630374,
+          "depth": {
+            "time_s": 10.90000000000031,
+            "view": "wrist",
+            "wrist_xy_m": [
+              0.14068743296154407,
+              0.10126308130310585
+            ],
+            "overhead_xy_m": [
+              0.14152685211166474,
+              0.09435439772890464
+            ],
+            "view_disagreement_m": 0.006959492311801699,
+            "accepted": true,
+            "reason": "cube_closer",
+            "relative_contrast": 1.111208200454712,
+            "object_pixels": 3908,
+            "ring_pixels": 2353,
+            "wall_time_s": 1.6350147080374882,
+            "model": "depth-anything/Depth-Anything-V2-Small-hf",
+            "revision": "5426e4f0f36572d16453bbda7a8389317b1bef99"
+          }
+        }
+      ]
+    }
+  ]
+}

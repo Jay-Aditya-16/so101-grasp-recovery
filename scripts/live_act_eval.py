@@ -87,10 +87,19 @@ def main():
     parser.add_argument("--recovery", action="store_true", help="Enable experimental simulator-only recovery on suspected misses")
     parser.add_argument("--depth-gate", action="store_true", help="Use Depth Anything V2 relative-depth check during recovery")
     parser.add_argument("--depth-view", choices=("top", "wrist"), default="top", help="View used by the optional depth gate")
+    parser.add_argument("--recover-unknown-empty", action="store_true", help="Experimental empty-gripper fallback for unknown alerts")
+    parser.add_argument("--recover-unknown-stationary", action="store_true", help="Experimental fresh stationary-cube fallback for unknown alerts")
+    parser.add_argument("--retry-only", action="store_true", help="After return-to-view, reset ACT instead of using object-aware recovery")
     parser.add_argument("--results", type=Path, help="Save episode results as JSON")
     args = parser.parse_args()
     if args.depth_gate and not args.recovery:
         parser.error("--depth-gate requires --recovery")
+    if args.recover_unknown_empty and not args.recovery:
+        parser.error("--recover-unknown-empty requires --recovery")
+    if args.recover_unknown_stationary and not args.recovery:
+        parser.error("--recover-unknown-stationary requires --recovery")
+    if args.retry_only and (not args.recovery or args.depth_gate):
+        parser.error("--retry-only requires --recovery and cannot use --depth-gate")
     if args.recovery:
         args.monitor = True
     if args.episodes < 1 or args.seconds <= 0:
@@ -143,15 +152,18 @@ def main():
         if not args.scene_check and capture_path is None and not args.no_capture:
             capture_path = args.capture_dir / f"rollout-seed{args.seed}-episode{episode + 1}-{uuid.uuid4().hex}.npz"
         if args.monitor:
-            from failure_monitor import GraspMonitor
+            from failure_monitor import GraspMonitor, empty_closed_gripper, stationary_cube_after_unknown
 
             monitor = GraspMonitor()
             reported = False
+            empty_evidence_frames = 0
+            stationary_evidence_frames = 0
         cube = reference[0].tolist() if reference is not None else random_cube(rng)
         robot = SO101Sim(cube_pos=cube, box_pos=(0.05, 0.22), render=False)
         if args.recovery:
             from phase2_controller import RecoveryController
-            recovery = RecoveryController(robot, FPS, depth_gate=depth_gate, depth_view=args.depth_view)
+            recovery = RecoveryController(robot, FPS, depth_gate=depth_gate, depth_view=args.depth_view,
+                                          retry_only=args.retry_only)
         if reference is not None and not np.allclose(robot.data.qpos[:6], reference[2][0], atol=1e-4):
             raise RuntimeError("The recorded and simulated initial joint positions differ")
         capture = {key: [] for key in ("time", "qpos", "qvel", "cube_xyz", "top_rgb", "wrist_rgb",
@@ -183,10 +195,13 @@ def main():
                 return obs
 
             def get_action():
-                nonlocal reported
+                nonlocal reported, empty_evidence_frames, stationary_evidence_frames
                 obs = observe()
                 image = (obs["observation.images.top"][0].permute(1, 2, 0).numpy() * 255).round().astype(np.uint8)
-                if args.recovery and recovery.state != "idle":
+                if args.recovery and recovery.state == "policy_retry":
+                    policy.reset()
+                    recovery.log("retrying", "ACT resumed; further interventions disabled")
+                if args.recovery and recovery.state not in ("idle", "retrying"):
                     wrist = (obs["observation.images.wrist"][0].permute(1, 2, 0).numpy() * 255).round().astype(np.uint8)
                     return recovery.step(image, wrist)
                 with torch.inference_mode():
@@ -199,6 +214,25 @@ def main():
                         print(f"Monitor at {robot.data.time:.2f}s: {event.status} — {event.reason}", flush=True)
                         reported = True
                         if args.recovery and event.status == "suspected_miss":
+                            recovery.start()
+                            return recovery.step(image)
+                    if args.recovery and recovery.state == "idle" and args.recover_unknown_empty and event and event.status == "unknown":
+                        empty = empty_closed_gripper(float(action[5]), robot.gripper_opening())
+                        empty_evidence_frames = empty_evidence_frames + 1 if empty else 0
+                        if empty_evidence_frames >= 3:
+                            print("Monitor: unknown + 3 consecutive empty-closure frames; attempting recovery", flush=True)
+                            recovery.events.append({"state": "trigger", "time_s": float(robot.data.time),
+                                                    "reason": "unknown_empty_gripper"})
+                            recovery.start()
+                            return recovery.step(image)
+                    if args.recovery and recovery.state == "idle" and args.recover_unknown_stationary and event and event.status == "unknown":
+                        stationary = stationary_cube_after_unknown(image, monitor.close_center,
+                                                                   monitor.frame - 1 - event.frame, FPS)
+                        stationary_evidence_frames = stationary_evidence_frames + 1 if stationary else 0
+                        if stationary_evidence_frames >= 3:
+                            print("Monitor: unknown + 3 consecutive stationary-cube frames; attempting recovery", flush=True)
+                            recovery.events.append({"state": "trigger", "time_s": float(robot.data.time),
+                                                    "reason": "unknown_stationary_cube"})
                             recovery.start()
                             return recovery.step(image)
                 return action
@@ -231,7 +265,9 @@ def main():
                         "viewer_closed": result is None, "result": result}
             if args.recovery:
                 metadata.update(recovery_events=recovery.events, depth_checks=recovery.depth_checks,
-                                depth_view=args.depth_view if args.depth_gate else None)
+                                depth_view=args.depth_view if args.depth_gate else None,
+                                recover_unknown_empty=args.recover_unknown_empty,
+                                recover_unknown_stationary=args.recover_unknown_stationary, retry_only=args.retry_only)
             if reference is not None:
                 capture["reference_action"] = reference[1]
                 capture["reference_joint_state"] = reference[2]

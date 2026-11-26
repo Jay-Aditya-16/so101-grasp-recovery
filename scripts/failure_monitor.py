@@ -30,6 +30,20 @@ class MonitorEvent:
     reason: str
 
 
+def empty_closed_gripper(gripper_target, gripper_position):
+    """Evidence for an empty closure for this particular simulated 30 mm cube."""
+    return bool(np.isfinite(gripper_target) and np.isfinite(gripper_position)
+                and gripper_target < 0.1 and gripper_position < 0.03)
+
+
+def stationary_cube_after_unknown(image, previous_center, elapsed_frames, fps):
+    """Known-scene evidence only; requires a fresh visible red region after a delay."""
+    if previous_center is None or elapsed_frames < round(0.5 * fps):
+        return False
+    center = red_center(image)
+    return center is not None and bool(np.linalg.norm(center - previous_center) <= 15)
+
+
 class GraspMonitor:
     """Flag a possible miss after closure and upward movement.
 

@@ -1,0 +1,15 @@
+[
+  {
+    "episode": 1,
+    "seed": 1021,
+    "start_xy": [
+      0.17273685938956448,
+      -0.11486008474175907
+    ],
+    "bilateral_gripper_contact": false,
+    "lifted_5cm": false,
+    "settled_placement": false,
+    "max_lift_m": 0.0,
+    "capture_path": "datasets/local-rollouts/phase2-baseline-1021.npz"
+  }
+]

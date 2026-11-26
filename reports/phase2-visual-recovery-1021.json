@@ -1,0 +1,92 @@
+[
+  {
+    "episode": 1,
+    "seed": 1021,
+    "start_xy": [
+      0.17273685938956448,
+      -0.11486008474175907
+    ],
+    "bilateral_gripper_contact": true,
+    "lifted_5cm": true,
+    "settled_placement": false,
+    "max_lift_m": 0.096,
+    "capture_path": "datasets/local-rollouts/phase2-visual-recovery-1021.npz",
+    "recovery_events": [
+      {
+        "state": "trigger",
+        "time_s": 4.699999999999704,
+        "reason": "unknown_stationary_cube"
+      },
+      {
+        "state": "moving",
+        "time_s": 4.699999999999704,
+        "reason": "observe"
+      },
+      {
+        "state": "observe",
+        "time_s": 8.649999999999558,
+        "reason": null
+      },
+      {
+        "state": "open",
+        "time_s": 8.699999999999575,
+        "reason": "observed cube at [0.1707634260558324, -0.11185675679219259]"
+      },
+      {
+        "state": "moving",
+        "time_s": 9.399999999999809,
+        "reason": "descend"
+      },
+      {
+        "state": "descend",
+        "time_s": 10.90000000000031,
+        "reason": null
+      },
+      {
+        "state": "moving",
+        "time_s": 10.950000000000326,
+        "reason": "close"
+      },
+      {
+        "state": "close",
+        "time_s": 12.450000000000827,
+        "reason": null
+      },
+      {
+        "state": "closing",
+        "time_s": 12.500000000000844,
+        "reason": null
+      },
+      {
+        "state": "gripper_check",
+        "time_s": 13.500000000001178,
+        "reason": "after_closure",
+        "measured_rad": 0.15304248448072322,
+        "plausible": true
+      },
+      {
+        "state": "moving",
+        "time_s": 13.500000000001178,
+        "reason": "transport"
+      },
+      {
+        "state": "transport",
+        "time_s": 15.000000000001679,
+        "reason": null
+      },
+      {
+        "state": "gripper_check",
+        "time_s": 15.050000000001695,
+        "reason": "after_lift",
+        "measured_rad": 0.14765528308626133,
+        "plausible": true
+      },
+      {
+        "state": "aborted",
+        "time_s": 15.050000000001695,
+        "reason": "no IK solution with validated pose and sampled path: [{'valid': False, 'in_joint_limits': True, 'position_error_m': 0.17353587711575716, 'downward_axis_dot': -0.999929673134853, 'site_xyz_m': [0.05026888330191239, 0.2236360241331725, 0.2934975725380851]}, {'valid': False, 'in_joint_limits': True, 'position_error_m': 0.08647621998616714, 'downward_axis_dot': 0.8330305468650882, 'site_xyz_m': [0.04993177801859581, 0.2910816300336252, 0.16924970904096856]}, {'valid': False, 'in_joint_limits': True, 'position_error_m': 0.0005603921395091901, 'downward_axis_dot': 0.6799764676484171, 'site_xyz_m': [0.04996317845415947, 0.2194416561031837, 0.1200305878517321]}, {'valid': False, 'in_joint_limits': True, 'position_error_m': 0.0007015240299539713, 'downward_axis_dot': 0.2611289133594386, 'site_xyz_m': [0.049662438900880845, 0.21938964206285433, 0.12007517750679296]}]"
+      }
+    ],
+    "depth_checks": []
+  }
+]
