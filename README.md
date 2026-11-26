@@ -80,4 +80,6 @@ Run `python3 -m unittest discover -s tests -v` from this directory. `Memory.save
 
 See [the complete project roadmap](docs/project-roadmap.md) for the phased plan, research question, hardware constraints, evaluation gates, and physical deployment sequence. [Phase 1 research and results](docs/phase1-research.md) documents the monitor and the four unique exploratory ACT trials. The monitor flagged all three observed no-lift failures and abstained on the one successful lift/place because the cube was occluded; this small sample does not establish generalized accuracy and is not sufficient to enable automatic recovery.
 
+For a consolidated research summary, see the [project report PDF](reports/SO101-Project-Report.pdf) or its [editable source](docs/project-report.md). The report covers the simulator, ACT baseline, recovery experiments, varied-object and drawer results, limitations, and future phases.
+
 The trained ACT baseline has been evaluated in simulation; physical-arm trials and the recovery layer are pending.
