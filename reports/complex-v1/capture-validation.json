@@ -1,0 +1,79 @@
+[
+  {
+    "trace": "datasets/local-rollouts/complex-cube-control-recovery-1020.npz",
+    "scenario": "cube",
+    "transitions": 404,
+    "valid": true,
+    "problems": []
+  },
+  {
+    "trace": "datasets/local-rollouts/complex-drawer-act-1020.npz",
+    "scenario": "drawer",
+    "transitions": 500,
+    "valid": true,
+    "problems": []
+  },
+  {
+    "trace": "datasets/local-rollouts/complex-drawer-recovery-1020.npz",
+    "scenario": "drawer",
+    "transitions": 500,
+    "valid": true,
+    "problems": []
+  },
+  {
+    "trace": "datasets/local-rollouts/complex-green-act-1020.npz",
+    "scenario": "green_cube",
+    "transitions": 500,
+    "valid": true,
+    "problems": []
+  },
+  {
+    "trace": "datasets/local-rollouts/complex-green-recovery-1020.npz",
+    "scenario": "green_cube",
+    "transitions": 500,
+    "valid": true,
+    "problems": []
+  },
+  {
+    "trace": "datasets/local-rollouts/complex-small-act-1020.npz",
+    "scenario": "small_cube",
+    "transitions": 500,
+    "valid": true,
+    "problems": []
+  },
+  {
+    "trace": "datasets/local-rollouts/complex-small-recovery-1020.npz",
+    "scenario": "small_cube",
+    "transitions": 500,
+    "valid": true,
+    "problems": []
+  },
+  {
+    "trace": "datasets/local-rollouts/complex-sphere-act-1020.npz",
+    "scenario": "sphere",
+    "transitions": 500,
+    "valid": true,
+    "problems": []
+  },
+  {
+    "trace": "datasets/local-rollouts/complex-sphere-recovery-1020.npz",
+    "scenario": "sphere",
+    "transitions": 500,
+    "valid": true,
+    "problems": []
+  },
+  {
+    "trace": "datasets/local-rollouts/complex-two-objects-act-1020.npz",
+    "scenario": "two_objects",
+    "transitions": 500,
+    "valid": true,
+    "problems": []
+  },
+  {
+    "trace": "datasets/local-rollouts/complex-two-objects-recovery-1020.npz",
+    "scenario": "two_objects",
+    "transitions": 500,
+    "valid": true,
+    "problems": []
+  }
+]

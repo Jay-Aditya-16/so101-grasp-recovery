@@ -29,7 +29,14 @@ def inspect_path(robot, start, end, samples=101, allow_cube_contact=False):
     m = robot.model
     data = mujoco.MjData(m)
     data.qpos[:] = robot.data.qpos
-    excluded = {0, m.body("cube").id, m.body("box").id, m.body("cam_target").id}
+    root = int(m.jnt_bodyid[m.joint("shoulder_pan").id])
+    robot_bodies = set()
+    for body in range(1, m.nbody):
+        parent = body
+        while parent and parent != root:
+            parent = int(m.body_parentid[parent])
+        if parent == root:
+            robot_bodies.add(body)
     collisions = []
     for i, alpha in enumerate(np.linspace(0.0, 1.0, samples)):
         data.qpos[robot.arm_qadr] = (1 - alpha) * np.asarray(start) + alpha * np.asarray(end)
@@ -38,7 +45,7 @@ def inspect_path(robot, start, end, samples=101, allow_cube_contact=False):
             b1, b2 = int(m.geom_bodyid[c.geom1]), int(m.geom_bodyid[c.geom2])
             if allow_cube_contact and robot.cube_id in (b1, b2):
                 continue
-            if (b1 not in excluded or b2 not in excluded) and c.dist < -0.001:
+            if (b1 in robot_bodies or b2 in robot_bodies) and c.dist < -0.001:
                 collisions.append({"sample": i, "geom1": mujoco.mj_id2name(m, mujoco.mjtObj.mjOBJ_GEOM, c.geom1),
                                    "geom2": mujoco.mj_id2name(m, mujoco.mjtObj.mjOBJ_GEOM, c.geom2),
                                    "penetration_m": float(-c.dist)})

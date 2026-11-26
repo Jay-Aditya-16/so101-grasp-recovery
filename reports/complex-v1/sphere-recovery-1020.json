@@ -1,0 +1,120 @@
+[
+  {
+    "episode": 1,
+    "seed": 1020,
+    "scenario": "sphere",
+    "start_xy": [
+      0.21749943254634313,
+      -0.0679613479583263
+    ],
+    "bilateral_gripper_contact": true,
+    "lifted_5cm": true,
+    "settled_placement": false,
+    "max_lift_m": 0.0903,
+    "task": "pick_place",
+    "task_success": false,
+    "capture_path": "datasets/local-rollouts/complex-sphere-recovery-1020.npz",
+    "recovery_events": [
+      {
+        "state": "trigger",
+        "time_s": 4.699999999999704,
+        "reason": "unknown_stationary_cube"
+      },
+      {
+        "state": "moving",
+        "time_s": 4.699999999999704,
+        "reason": "observe"
+      },
+      {
+        "state": "observe",
+        "time_s": 8.649999999999558,
+        "reason": null
+      },
+      {
+        "state": "open",
+        "time_s": 8.699999999999575,
+        "reason": "observed cube at [0.21600762829587694, -0.0656212083223432]"
+      },
+      {
+        "state": "moving",
+        "time_s": 9.399999999999809,
+        "reason": "descend"
+      },
+      {
+        "state": "descend",
+        "time_s": 10.90000000000031,
+        "reason": null
+      },
+      {
+        "state": "moving",
+        "time_s": 10.950000000000326,
+        "reason": "close"
+      },
+      {
+        "state": "close",
+        "time_s": 12.450000000000827,
+        "reason": null
+      },
+      {
+        "state": "closing",
+        "time_s": 12.500000000000844,
+        "reason": null
+      },
+      {
+        "state": "gripper_check",
+        "time_s": 13.500000000001178,
+        "reason": "after_closure",
+        "measured_rad": 0.19605728160209684,
+        "plausible": true
+      },
+      {
+        "state": "moving",
+        "time_s": 13.500000000001178,
+        "reason": "transport"
+      },
+      {
+        "state": "transport",
+        "time_s": 15.000000000001679,
+        "reason": null
+      },
+      {
+        "state": "gripper_check",
+        "time_s": 15.050000000001695,
+        "reason": "after_lift",
+        "measured_rad": 0.15971740035637985,
+        "plausible": true
+      },
+      {
+        "state": "box_target",
+        "time_s": 15.050000000001695,
+        "xy_m": [
+          0.05,
+          0.22
+        ]
+      },
+      {
+        "state": "moving",
+        "time_s": 15.050000000001695,
+        "reason": "place"
+      },
+      {
+        "state": "place",
+        "time_s": 16.550000000001706,
+        "reason": null
+      },
+      {
+        "state": "gripper_check",
+        "time_s": 16.60000000000168,
+        "reason": "after_transport",
+        "measured_rad": -0.10000181817744283,
+        "plausible": false
+      },
+      {
+        "state": "aborted",
+        "time_s": 16.60000000000168,
+        "reason": "no plausible gripper obstruction at after_transport"
+      }
+    ],
+    "depth_checks": []
+  }
+]

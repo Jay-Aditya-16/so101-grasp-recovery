@@ -1,0 +1,20 @@
+[
+  {
+    "episode": 1,
+    "seed": 1020,
+    "scenario": "drawer",
+    "start_xy": [
+      0.8,
+      0.8
+    ],
+    "bilateral_gripper_contact": false,
+    "lifted_5cm": false,
+    "settled_placement": false,
+    "max_lift_m": 0.0,
+    "task": "drawer",
+    "task_success": false,
+    "drawer_opened_6cm": false,
+    "max_drawer_open_m": 0.0,
+    "capture_path": "datasets/local-rollouts/complex-drawer-act-1020.npz"
+  }
+]

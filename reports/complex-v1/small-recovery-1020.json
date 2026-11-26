@@ -1,0 +1,36 @@
+[
+  {
+    "episode": 1,
+    "seed": 1020,
+    "scenario": "small_cube",
+    "start_xy": [
+      0.21749943254634313,
+      -0.0679613479583263
+    ],
+    "bilateral_gripper_contact": false,
+    "lifted_5cm": false,
+    "settled_placement": false,
+    "max_lift_m": 0.0,
+    "task": "pick_place",
+    "task_success": false,
+    "capture_path": "datasets/local-rollouts/complex-small-recovery-1020.npz",
+    "recovery_events": [
+      {
+        "state": "moving",
+        "time_s": 5.049999999999666,
+        "reason": "observe"
+      },
+      {
+        "state": "observe",
+        "time_s": 8.999999999999675,
+        "reason": null
+      },
+      {
+        "state": "aborted",
+        "time_s": 9.049999999999692,
+        "reason": "object is not reliably visible"
+      }
+    ],
+    "depth_checks": []
+  }
+]
