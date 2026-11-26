@@ -1,0 +1,87 @@
+[
+  {
+    "scenario": "cube",
+    "target_geom_type": "mjGEOM_BOX",
+    "target_size_m": [
+      0.015,
+      0.015,
+      0.015
+    ],
+    "target_initial_z_m": 0.015,
+    "green_distractor_present": false
+  },
+  {
+    "scenario": "small_cube",
+    "target_geom_type": "mjGEOM_BOX",
+    "target_size_m": [
+      0.01,
+      0.01,
+      0.01
+    ],
+    "target_initial_z_m": 0.01,
+    "green_distractor_present": false
+  },
+  {
+    "scenario": "cuboid",
+    "target_geom_type": "mjGEOM_BOX",
+    "target_size_m": [
+      0.025,
+      0.012,
+      0.015
+    ],
+    "target_initial_z_m": 0.015,
+    "green_distractor_present": false
+  },
+  {
+    "scenario": "sphere",
+    "target_geom_type": "mjGEOM_SPHERE",
+    "target_size_m": [
+      0.018,
+      0.0,
+      0.0
+    ],
+    "target_initial_z_m": 0.018,
+    "green_distractor_present": false
+  },
+  {
+    "scenario": "green_cube",
+    "target_geom_type": "mjGEOM_BOX",
+    "target_size_m": [
+      0.015,
+      0.015,
+      0.015
+    ],
+    "target_initial_z_m": 0.015,
+    "green_distractor_present": false
+  },
+  {
+    "scenario": "two_objects",
+    "target_geom_type": "mjGEOM_BOX",
+    "target_size_m": [
+      0.025,
+      0.012,
+      0.015
+    ],
+    "target_initial_z_m": 0.015,
+    "green_distractor_present": true
+  },
+  {
+    "scenario": "drawer",
+    "target_geom_type": "mjGEOM_BOX",
+    "target_size_m": [
+      0.015,
+      0.015,
+      0.015
+    ],
+    "target_initial_z_m": 0.015,
+    "green_distractor_present": false,
+    "drawer_joint_range_m": [
+      0.0,
+      0.1
+    ],
+    "isolated_force_N": 0.5,
+    "isolated_duration_s": 0.2,
+    "drawer_before_m": 0.0,
+    "drawer_after_m": 0.042677998282383285
+  }
+]

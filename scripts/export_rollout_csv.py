@@ -24,9 +24,10 @@ def main():
                     flags[event["reason"]][index] = 1
             with (args.output_dir / (path.stem + ".csv")).open("w", newline="") as output:
                 writer = csv.writer(output)
-                writer.writerow(["time_s", "gripper_position", "gripper_target", "cube_z_m", *flags])
+                drawer = data["drawer_position"][:n] if "drawer_position" in data else np.full(n, np.nan)
+                writer.writerow(["time_s", "gripper_position", "gripper_target", "cube_z_m", *flags, "drawer_position_m"])
                 writer.writerows(zip(data["time"][:n], data["qpos"][:n, 5], data["action"][:, 5],
-                                     data["cube_xyz"][:n, 2], *flags.values()))
+                                     data["cube_xyz"][:n, 2], *flags.values(), drawer))
 
 
 if __name__ == "__main__":

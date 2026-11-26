@@ -1,0 +1,24 @@
+[
+  {
+    "trace": "datasets/local-rollouts/complex-two-objects-act-1020.npz",
+    "initial_xyz_m": [
+      0.24,
+      0.09,
+      0.015
+    ],
+    "max_displacement_m": 0.00015076671232995206,
+    "final_displacement_m": 0.00010775542021616673,
+    "note": "Simulator state label; motion includes normal settling and is not a contact detector."
+  },
+  {
+    "trace": "datasets/local-rollouts/complex-two-objects-recovery-1020.npz",
+    "initial_xyz_m": [
+      0.24,
+      0.09,
+      0.015
+    ],
+    "max_displacement_m": 0.00015076671232995206,
+    "final_displacement_m": 0.00010775542021616673,
+    "note": "Simulator state label; motion includes normal settling and is not a contact detector."
+  }
+]

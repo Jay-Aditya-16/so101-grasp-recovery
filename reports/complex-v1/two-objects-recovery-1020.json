@@ -1,0 +1,73 @@
+[
+  {
+    "episode": 1,
+    "seed": 1020,
+    "scenario": "two_objects",
+    "start_xy": [
+      0.21749943254634313,
+      -0.0679613479583263
+    ],
+    "bilateral_gripper_contact": true,
+    "lifted_5cm": false,
+    "settled_placement": false,
+    "max_lift_m": 0.0041,
+    "task": "pick_place",
+    "task_success": false,
+    "capture_path": "datasets/local-rollouts/complex-two-objects-recovery-1020.npz",
+    "recovery_events": [
+      {
+        "state": "moving",
+        "time_s": 3.899999999999792,
+        "reason": "observe"
+      },
+      {
+        "state": "observe",
+        "time_s": 7.8499999999993575,
+        "reason": null
+      },
+      {
+        "state": "open",
+        "time_s": 7.899999999999352,
+        "reason": "observed cube at [0.21637199595296064, -0.09229727888974466]"
+      },
+      {
+        "state": "moving",
+        "time_s": 8.599999999999541,
+        "reason": "descend"
+      },
+      {
+        "state": "descend",
+        "time_s": 10.100000000000042,
+        "reason": null
+      },
+      {
+        "state": "moving",
+        "time_s": 10.150000000000059,
+        "reason": "close"
+      },
+      {
+        "state": "close",
+        "time_s": 11.65000000000056,
+        "reason": null
+      },
+      {
+        "state": "closing",
+        "time_s": 11.700000000000577,
+        "reason": null
+      },
+      {
+        "state": "gripper_check",
+        "time_s": 12.70000000000091,
+        "reason": "after_closure",
+        "measured_rad": -0.09915974439426074,
+        "plausible": false
+      },
+      {
+        "state": "aborted",
+        "time_s": 12.70000000000091,
+        "reason": "no plausible gripper obstruction at after_closure"
+      }
+    ],
+    "depth_checks": []
+  }
+]

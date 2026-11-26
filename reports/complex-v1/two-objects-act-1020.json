@@ -1,0 +1,18 @@
+[
+  {
+    "episode": 1,
+    "seed": 1020,
+    "scenario": "two_objects",
+    "start_xy": [
+      0.21749943254634313,
+      -0.0679613479583263
+    ],
+    "bilateral_gripper_contact": false,
+    "lifted_5cm": false,
+    "settled_placement": false,
+    "max_lift_m": 0.0043,
+    "task": "pick_place",
+    "task_success": false,
+    "capture_path": "datasets/local-rollouts/complex-two-objects-act-1020.npz"
+  }
+]

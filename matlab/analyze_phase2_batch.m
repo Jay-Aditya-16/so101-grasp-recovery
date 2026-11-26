@@ -6,6 +6,7 @@ if ~exist(outputdir, 'dir'), mkdir(outputdir); end
 names = strings(numel(files), 1); peaks = zeros(numel(files), 1);
 finalGrip = zeros(numel(files), 1); closeTime = nan(numel(files), 1);
 closureGrip = nan(numel(files), 1); liftGrip = nan(numel(files), 1); transportGrip = nan(numel(files), 1);
+drawerTravel = nan(numel(files), 1);
 fig = figure('Visible', 'off', 'Color', 'white');
 tiledlayout(2, 1); ax1 = nexttile; hold(ax1, 'on');
 ax2 = nexttile; hold(ax2, 'on');
@@ -22,6 +23,9 @@ for i = 1:numel(files)
         index = find(data.after_lift, 1); if ~isempty(index), liftGrip(i) = data.gripper_position(index); end
         index = find(data.after_transport, 1); if ~isempty(index), transportGrip(i) = data.gripper_position(index); end
     end
+    if ismember('drawer_position_m', data.Properties.VariableNames) && any(~isnan(data.drawer_position_m))
+        drawerTravel(i) = 1000 * max(data.drawer_position_m - data.drawer_position_m(1));
+    end
     plot(ax1, data.time_s, 1000*(data.cube_z_m - data.cube_z_m(1)), 'DisplayName', char(names(i)));
     plot(ax2, data.time_s, data.gripper_position, 'DisplayName', char(names(i)));
 end
@@ -30,9 +34,9 @@ ylabel(ax2, 'Gripper joint (rad)'); xlabel(ax2, 'Simulated time (s)'); grid(ax2,
 legend(ax1, 'Location', 'eastoutside', 'Interpreter', 'none', 'TextColor', 'black', 'Color', 'white');
 exportgraphics(fig, fullfile(outputdir, 'phase2_rollout_comparison.png'), 'Resolution', 150);
 close(fig);
-summary = table(names, peaks, finalGrip, closeTime, closureGrip, liftGrip, transportGrip, 'VariableNames', ...
+summary = table(names, peaks, finalGrip, closeTime, closureGrip, liftGrip, transportGrip, drawerTravel, 'VariableNames', ...
     {'trace','peak_lift_mm','final_gripper_rad','first_close_command_s', ...
-    'recovery_after_closure_rad','recovery_after_lift_rad','recovery_after_transport_rad'});
+    'recovery_after_closure_rad','recovery_after_lift_rad','recovery_after_transport_rad','max_drawer_travel_mm'});
 writetable(summary, fullfile(outputdir, 'phase2_matlab_summary.csv'));
 disp(summary);
 end
