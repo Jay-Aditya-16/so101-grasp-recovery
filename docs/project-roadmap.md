@@ -40,7 +40,7 @@ These are hypotheses to test, not promised outcomes. Success is defined by indep
 
 **Gate:** stable reproduction of both expert replay and baseline result, plus a frozen train/development/test pose split before comparing recovery variants.
 
-### Phase 1 — Failure monitoring and outcome data (prototype implemented; validation incomplete)
+### Phase 1 — Failure monitoring and outcome data (prototype and minimal exploratory evaluation complete)
 
 1. Capture RGB views, joint observation/command, timestamps, and episode outcome for baseline rollouts.
 2. Run the current known-scene red-cube visual monitor with proprioception-derived gripper height. It emits `suspected_miss` or `unknown`; it does not control motion and must not read simulator ground truth.
@@ -48,9 +48,9 @@ These are hypotheses to test, not promised outcomes. Success is defined by indep
 4. Measure missed detections, false alarms, abstentions, and detection delay on disjoint positive/negative scenes; include movement, occlusion, and lighting changes.
 5. Review a small number of traces in MATLAB and retain compact, reproducible traces and plots.
 
-**Evidence so far:** two ACT failure rollouts were flagged (simulated time 5.05 s and 4.10 s); one successful expert example returned `unknown` due to occlusion. This is not a false-positive/negative rate or proof of generalization. The current detector is scene/color-specific and heuristic. MATLAB analysis of the first failure measured 9.17 mm peak lift. Seven unit tests pass for the existing code.
+**Evidence so far:** four unique live-viewer ACT trials were analyzed (three no-lift failures and one successful lift/place). All three failures received `suspected_miss`; the successful trial abstained as `unknown` due to occlusion. It raised no false alarm on that one success, but verified no successes. Closure-to-alert delay was 0.6–1.8 simulated seconds. Duplicate traces are removed by content hash. These are exploratory counts, not a reliable false-alarm or generalization estimate. The current detector is scene/color-specific and heuristic. MATLAB analysis of the first failure measured 9.17 mm peak lift.
 
-**Gate:** predeclared thresholds and a held-out monitor evaluation that reports all four outcomes (TP, FP, TN, FN), abstentions, and latency. If monitor performance is weak, improve sensing/labels before enabling recovery.
+**Phase 1 exit:** the monitor is implemented, non-controlling, replayable, and evaluated on a minimal labeled set with failures, a success, and explicit abstention accounting. **Deployment gate remains open:** collect a larger held-out set with predeclared thresholds and enough successes/failures to estimate misses, false alarms, coverage, and latency. Do not enable automatic recovery based on this sample. If monitor performance is weak, improve sensing/labels before recovery.
 
 ### Phase 2 — Object-aware diagnosis and grounded correction (next)
 
@@ -133,7 +133,7 @@ The following references informed the roadmap and are starting points, not proof
 | Dataset and ACT checkpoint | Dataset revision and 20k checkpoint available | Add checkpoint provenance/hash manifest if archive is retained |
 | Expert replay | Episode 0 passes | One demonstration only |
 | ACT baseline | Failed on matched pose and seed 1001 | Two failure traces; more disjoint trials needed |
-| Phase 1 monitor | Implemented, offline replayable | Two failures flagged; successful expert abstained; validation incomplete |
+| Phase 1 monitor | Minimal exploratory evaluation complete | 3/3 failures alerted; 1/1 success abstained; 4 unique trials; no deployment claim |
 | MATLAB trace analysis | Ran on initial failure | 9.17 mm max lift; extend to labeled batch analysis |
 | Phase 2 object-aware correction | Not yet implemented | Begin with calibrated object/gripper geometry and held-out sim trials |
 | Online RL/memory | Planned | Wait for safe candidate set and reliable reward labels |
