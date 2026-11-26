@@ -52,9 +52,11 @@ These are hypotheses to test, not promised outcomes. Success is defined by indep
 
 **Phase 1 exit:** the monitor is implemented, non-controlling, replayable, and evaluated on a minimal labeled set with failures, a success, and explicit abstention accounting. **Deployment gate remains open:** collect a larger held-out set with predeclared thresholds and enough successes/failures to estimate misses, false alarms, coverage, and latency. Do not enable automatic recovery based on this sample. If monitor performance is weak, improve sensing/labels before recovery.
 
-### Phase 2 — Object-aware diagnosis and grounded correction (next)
+### Phase 2 — Object-aware diagnosis and grounded correction (in progress)
 
 Goal: replace unguided directional retries with corrections supported by the observed scene.
+
+Initial object/gripper geometry is implemented and assessed on four existing traces. It abstains at all four monitor-alert frames because of occlusion or insufficient visible area; recovery control is not implemented. See [Phase 2 geometry](phase2-geometry.md).
 
 1. Estimate the target object’s image region, center, orientation, approximate footprint/width, and confidence from the overhead view; use wrist view as a second, local view. Start with robust color/shape geometry in the fixed simulated scene and human review. Later compare a compact detector/segmenter or VLM; do not assume an LLM has precise metric geometry.
 2. Estimate gripper pose from joint state/forward kinematics and camera calibration. Compute object-to-gripper offset in a tabletop coordinate frame, with uncertainty. Fuse viewpoints only when calibrated and time-synchronized.
@@ -135,7 +137,7 @@ The following references informed the roadmap and are starting points, not proof
 | ACT baseline | Failed on matched pose and seed 1001 | Two failure traces; more disjoint trials needed |
 | Phase 1 monitor | Minimal exploratory evaluation complete | 3/3 failures alerted; 1/1 success abstained; 4 unique trials; no deployment claim |
 | MATLAB trace analysis | Ran on initial failure | 9.17 mm max lift; extend to labeled batch analysis |
-| Phase 2 object-aware correction | Not yet implemented | Begin with calibrated object/gripper geometry and held-out sim trials |
+| Phase 2 object-aware correction | Geometry prototype in progress | Initial localization evaluated; alert-frame occlusion blocks reliable correction |
 | Online RL/memory | Planned | Wait for safe candidate set and reliable reward labels |
 | Physical arm recovery | Not yet evaluated | Complete simulation gates and safety checklist first |
 

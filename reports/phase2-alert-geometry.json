@@ -1,0 +1,45 @@
+{
+  "scope": "alert observations; red cube and assumed 30 mm height",
+  "trials": [
+    {
+      "trace": "datasets/local-rollouts/act-020000-demo-000.npz",
+      "frame": 101,
+      "estimate": null,
+      "gripper_world_xyz_m": [
+        0.18502460052189745,
+        0.12341312384347329,
+        0.04936447963179785
+      ]
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1001.npz",
+      "frame": 82,
+      "estimate": null,
+      "gripper_world_xyz_m": [
+        0.188653306395287,
+        -0.17001522999285854,
+        0.05273537112024909
+      ]
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1002.npz",
+      "frame": 101,
+      "estimate": null,
+      "gripper_world_xyz_m": [
+        0.21085400282844172,
+        -0.07456281201247365,
+        0.05962011475391876
+      ]
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1003.npz",
+      "frame": 92,
+      "estimate": null,
+      "gripper_world_xyz_m": [
+        0.19429724520709846,
+        -0.07601818211077764,
+        0.04069230831916966
+      ]
+    }
+  ]
+}
