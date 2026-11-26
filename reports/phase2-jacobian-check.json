@@ -1,0 +1,46 @@
+{
+  "method": "central finite difference, epsilon 1e-6 rad",
+  "results": [
+    {
+      "trace": "datasets/local-rollouts/act-020000-demo-000.npz",
+      "frame": 0,
+      "max_jacobian_difference_m_per_rad": 7.618415620580521e-11
+    },
+    {
+      "trace": "datasets/local-rollouts/act-020000-demo-000.npz",
+      "frame": 120,
+      "max_jacobian_difference_m_per_rad": 4.377651019460416e-11
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1001.npz",
+      "frame": 0,
+      "max_jacobian_difference_m_per_rad": 7.618415620580521e-11
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1001.npz",
+      "frame": 120,
+      "max_jacobian_difference_m_per_rad": 8.862366396300558e-11
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1002.npz",
+      "frame": 0,
+      "max_jacobian_difference_m_per_rad": 7.618415620580521e-11
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1002.npz",
+      "frame": 120,
+      "max_jacobian_difference_m_per_rad": 4.667348452169762e-11
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1003.npz",
+      "frame": 0,
+      "max_jacobian_difference_m_per_rad": 7.618415620580521e-11
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1003.npz",
+      "frame": 95,
+      "max_jacobian_difference_m_per_rad": 5.133671265866724e-11
+    }
+  ],
+  "max_difference_m_per_rad": 8.862366396300558e-11
+}
