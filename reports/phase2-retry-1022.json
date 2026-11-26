@@ -1,0 +1,43 @@
+[
+  {
+    "episode": 1,
+    "seed": 1022,
+    "start_xy": [
+      0.14170134907962192,
+      0.09401402228920908
+    ],
+    "bilateral_gripper_contact": true,
+    "lifted_5cm": false,
+    "settled_placement": false,
+    "max_lift_m": 0.0059,
+    "capture_path": "datasets/local-rollouts/phase2-retry-1022.npz",
+    "recovery_events": [
+      {
+        "state": "trigger",
+        "time_s": 4.64999999999971,
+        "reason": "unknown_stationary_cube"
+      },
+      {
+        "state": "moving",
+        "time_s": 4.64999999999971,
+        "reason": "observe"
+      },
+      {
+        "state": "observe",
+        "time_s": 8.599999999999541,
+        "reason": null
+      },
+      {
+        "state": "policy_retry",
+        "time_s": 8.649999999999558,
+        "reason": "restart ACT from the observation pose"
+      },
+      {
+        "state": "retrying",
+        "time_s": 8.699999999999575,
+        "reason": "ACT resumed; further interventions disabled"
+      }
+    ],
+    "depth_checks": []
+  }
+]

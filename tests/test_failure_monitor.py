@@ -5,7 +5,7 @@ from pathlib import Path
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from failure_monitor import GraspMonitor
+from failure_monitor import GraspMonitor, empty_closed_gripper, stationary_cube_after_unknown
 
 
 def frame(x=None):
@@ -16,6 +16,18 @@ def frame(x=None):
 
 
 class GraspMonitorTests(unittest.TestCase):
+    def test_stationary_fallback_requires_visible_object_and_delay(self):
+        image = np.zeros((100, 100, 3), dtype=np.uint8)
+        image[46:55, 46:55] = [255, 0, 0]
+        self.assertFalse(stationary_cube_after_unknown(image, [50, 50], 9, 20))
+        self.assertTrue(stationary_cube_after_unknown(image, [50, 50], 10, 20))
+        self.assertFalse(stationary_cube_after_unknown(image, [10, 10], 10, 20))
+        self.assertFalse(stationary_cube_after_unknown(np.zeros_like(image), [50, 50], 10, 20))
+    def test_empty_closure_requires_finite_closed_target_and_position(self):
+        self.assertTrue(empty_closed_gripper(-0.1, -0.08))
+        self.assertFalse(empty_closed_gripper(-0.1, 0.147))
+        self.assertFalse(empty_closed_gripper(1.2, -0.08))
+        self.assertFalse(empty_closed_gripper(-0.1, float("nan")))
     def test_stationary_cube_after_lift_is_suspected_miss(self):
         monitor = GraspMonitor()
         self.assertIsNone(monitor.update(frame(30), 1.0, 0.10))

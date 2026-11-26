@@ -1,0 +1,119 @@
+[
+  {
+    "episode": 1,
+    "seed": 1011,
+    "start_xy": [
+      0.1976332984286582,
+      0.017566820234902376
+    ],
+    "bilateral_gripper_contact": true,
+    "lifted_5cm": true,
+    "settled_placement": false,
+    "max_lift_m": 0.0962,
+    "capture_path": "datasets/local-rollouts/phase2-unknown-recovery-1011.npz",
+    "recovery_events": [
+      {
+        "state": "trigger",
+        "time_s": 6.949999999999457,
+        "reason": "unknown_empty_gripper"
+      },
+      {
+        "state": "moving",
+        "time_s": 6.949999999999457,
+        "reason": "observe"
+      },
+      {
+        "state": "observe",
+        "time_s": 10.90000000000031,
+        "reason": null
+      },
+      {
+        "state": "open",
+        "time_s": 10.950000000000326,
+        "reason": "observed cube at [0.19734212964143932, 0.018605092509924856]"
+      },
+      {
+        "state": "moving",
+        "time_s": 11.65000000000056,
+        "reason": "descend"
+      },
+      {
+        "state": "descend",
+        "time_s": 13.15000000000106,
+        "reason": null
+      },
+      {
+        "state": "moving",
+        "time_s": 13.200000000001078,
+        "reason": "close"
+      },
+      {
+        "state": "close",
+        "time_s": 14.700000000001578,
+        "reason": null
+      },
+      {
+        "state": "closing",
+        "time_s": 14.750000000001595,
+        "reason": null
+      },
+      {
+        "state": "gripper_check",
+        "time_s": 15.75000000000193,
+        "reason": "after_closure",
+        "measured_rad": 0.15197362532464537,
+        "plausible": true
+      },
+      {
+        "state": "moving",
+        "time_s": 15.75000000000193,
+        "reason": "transport"
+      },
+      {
+        "state": "transport",
+        "time_s": 17.250000000001318,
+        "reason": null
+      },
+      {
+        "state": "gripper_check",
+        "time_s": 17.30000000000129,
+        "reason": "after_lift",
+        "measured_rad": 0.1476106140094135,
+        "plausible": true
+      },
+      {
+        "state": "moving",
+        "time_s": 17.30000000000129,
+        "reason": "place"
+      },
+      {
+        "state": "place",
+        "time_s": 18.80000000000046,
+        "reason": null
+      },
+      {
+        "state": "gripper_check",
+        "time_s": 18.85000000000043,
+        "reason": "after_transport",
+        "measured_rad": 0.14690559734034656,
+        "plausible": true
+      },
+      {
+        "state": "moving",
+        "time_s": 18.85000000000043,
+        "reason": "release"
+      },
+      {
+        "state": "release",
+        "time_s": 20.3499999999996,
+        "reason": null
+      },
+      {
+        "state": "releasing",
+        "time_s": 20.399999999999572,
+        "reason": null
+      }
+    ],
+    "depth_checks": []
+  }
+]

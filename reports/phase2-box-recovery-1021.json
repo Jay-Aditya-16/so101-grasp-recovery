@@ -1,0 +1,127 @@
+[
+  {
+    "episode": 1,
+    "seed": 1021,
+    "start_xy": [
+      0.17273685938956448,
+      -0.11486008474175907
+    ],
+    "bilateral_gripper_contact": true,
+    "lifted_5cm": true,
+    "settled_placement": true,
+    "max_lift_m": 0.098,
+    "capture_path": "datasets/local-rollouts/phase2-box-recovery-1021.npz",
+    "recovery_events": [
+      {
+        "state": "trigger",
+        "time_s": 4.699999999999704,
+        "reason": "unknown_stationary_cube"
+      },
+      {
+        "state": "moving",
+        "time_s": 4.699999999999704,
+        "reason": "observe"
+      },
+      {
+        "state": "observe",
+        "time_s": 8.649999999999558,
+        "reason": null
+      },
+      {
+        "state": "open",
+        "time_s": 8.699999999999575,
+        "reason": "observed cube at [0.1707634260558324, -0.11185675679219259]"
+      },
+      {
+        "state": "moving",
+        "time_s": 9.399999999999809,
+        "reason": "descend"
+      },
+      {
+        "state": "descend",
+        "time_s": 10.90000000000031,
+        "reason": null
+      },
+      {
+        "state": "moving",
+        "time_s": 10.950000000000326,
+        "reason": "close"
+      },
+      {
+        "state": "close",
+        "time_s": 12.450000000000827,
+        "reason": null
+      },
+      {
+        "state": "closing",
+        "time_s": 12.500000000000844,
+        "reason": null
+      },
+      {
+        "state": "gripper_check",
+        "time_s": 13.500000000001178,
+        "reason": "after_closure",
+        "measured_rad": 0.15304248448072322,
+        "plausible": true
+      },
+      {
+        "state": "moving",
+        "time_s": 13.500000000001178,
+        "reason": "transport"
+      },
+      {
+        "state": "transport",
+        "time_s": 15.000000000001679,
+        "reason": null
+      },
+      {
+        "state": "gripper_check",
+        "time_s": 15.050000000001695,
+        "reason": "after_lift",
+        "measured_rad": 0.14765528308626133,
+        "plausible": true
+      },
+      {
+        "state": "box_target",
+        "time_s": 15.050000000001695,
+        "xy_m": [
+          0.065,
+          0.22
+        ]
+      },
+      {
+        "state": "moving",
+        "time_s": 15.050000000001695,
+        "reason": "place"
+      },
+      {
+        "state": "place",
+        "time_s": 16.550000000001706,
+        "reason": null
+      },
+      {
+        "state": "gripper_check",
+        "time_s": 16.60000000000168,
+        "reason": "after_transport",
+        "measured_rad": 0.14658325628061092,
+        "plausible": true
+      },
+      {
+        "state": "moving",
+        "time_s": 16.60000000000168,
+        "reason": "release"
+      },
+      {
+        "state": "release",
+        "time_s": 18.100000000000847,
+        "reason": null
+      },
+      {
+        "state": "releasing",
+        "time_s": 18.15000000000082,
+        "reason": null
+      }
+    ],
+    "depth_checks": []
+  }
+]

@@ -9,7 +9,7 @@ from phase2_planner import check_pose, inspect_path
 class RecoveryController:
     """One recovery attempt after a suspected miss; no simulator object state input."""
 
-    def __init__(self, robot, fps=20, depth_gate=None, depth_view="top"):
+    def __init__(self, robot, fps=20, depth_gate=None, depth_view="top", retry_only=False):
         self.robot, self.fps = robot, fps
         self.state = "idle"
         self.reason = None
@@ -17,6 +17,7 @@ class RecoveryController:
         self.command = None
         self.depth_gate = depth_gate
         self.depth_view = depth_view
+        self.retry_only = retry_only
         self.depth_checks = []
 
     def log(self, state, reason=None):
@@ -40,32 +41,54 @@ class RecoveryController:
         from common.ik import solve_ik
         from common.robot import ARM_JOINTS, SITE, DOWN
         target = np.asarray(xyz, dtype=float)
+        targets = [target]
+        if next_state == "place":
+            # Select among points inside the known box, keeping 15 mm margin
+            # against the 30 mm scoring region; no cube-contact state is used.
+            for dx, dy in ((0.015, 0), (0, -0.015), (0.015, -0.015), (-0.015, 0), (0, 0.015)):
+                targets.append(target + np.array([dx, dy, 0.0]))
         seeds = [self.robot.q_arm, self.robot.model.key_qpos[0, self.robot.arm_qadr].copy()]
         checks = []
         # During transport, try position-only IK if the five-DOF arm cannot reach
         # the exact downward orientation, and independently limit tool tilt.
         directions = (DOWN, None) if allow_cube_contact else (DOWN,)
-        for direction in directions:
-            for seed in seeds:
-                scratch = mujoco.MjData(self.robot.model)
-                scratch.qpos[:] = self.robot.data.qpos
-                scratch.qpos[self.robot.arm_qadr] = seed
-                q, _ = solve_ik(self.robot.model, scratch, SITE, target, direction, ARM_JOINTS)
-                # The box lies to the side of this five-joint arm. Test up to
-                # ~46 degrees of tool tilt for transfer, subject to path checks.
-                min_dot = 0.70 if direction is None and next_state in ("place", "release") else 0.90
-                check = check_pose(self.robot, q, target, min_direction_dot=min_dot if direction is None else 0.98)
-                checks.append(check)
-                if check["valid"]:
-                    path = inspect_path(self.robot, self.robot.q_arm, q, allow_cube_contact=allow_cube_contact)
-                    if path["first_penetration"] is None:
-                        self.move(q, 1.5, next_state, grip, allow_cube_contact)
-                        return
+        for candidate in targets:
+            for direction in directions:
+                for seed in seeds:
+                    scratch = mujoco.MjData(self.robot.model)
+                    scratch.qpos[:] = self.robot.data.qpos
+                    scratch.qpos[self.robot.arm_qadr] = seed
+                    q, _ = solve_ik(self.robot.model, scratch, SITE, candidate, direction, ARM_JOINTS)
+                    # The box lies to the side of this five-joint arm. Test up to
+                    # ~46 degrees of tool tilt for transfer, subject to path checks.
+                    min_dot = 0.70 if direction is None and next_state in ("place", "release") else 0.90
+                    check = check_pose(self.robot, q, candidate, min_direction_dot=min_dot if direction is None else 0.98)
+                    checks.append(check)
+                    if check["valid"]:
+                        path = inspect_path(self.robot, self.robot.q_arm, q, allow_cube_contact=allow_cube_contact)
+                        if path["first_penetration"] is None:
+                            if next_state == "place":
+                                self.place_xy = candidate[:2].copy()
+                                self.events.append({"state": "box_target", "time_s": float(self.robot.data.time),
+                                                    "xy_m": self.place_xy.tolist()})
+                            self.move(q, 1.5, next_state, grip, allow_cube_contact)
+                            return
         self.log("aborted", f"no IK solution with validated pose and sampled path: {checks}")
 
     def start(self):
         home = self.robot.model.key_qpos[0, self.robot.arm_qadr].copy()
         self.move(home, 4.0, "observe")
+
+    def check_gripper(self, stage):
+        """A closed jaw blocked by the known cube is evidence, not proof, of a grasp."""
+        measured = float(self.robot.gripper_opening())
+        plausible = bool(np.isfinite(measured) and 0.08 <= measured <= 0.8)
+        self.events.append({"state": "gripper_check", "time_s": float(self.robot.data.time),
+                            "reason": stage, "measured_rad": measured, "plausible": plausible})
+        print(f"Gripper check ({stage}): {measured:.3f} rad; plausible={plausible}", flush=True)
+        if not plausible:
+            self.log("aborted", f"no plausible gripper obstruction at {stage}")
+        return plausible
 
     def step(self, top_rgb, wrist_rgb=None):
         robot = self.robot
@@ -77,6 +100,9 @@ class RecoveryController:
                 self.log(self.next_state)
             return command
         if self.state == "observe":
+            if self.retry_only:
+                self.log("policy_retry", "restart ACT from the observation pose")
+                return robot.data.ctrl[:6].copy()
             cam = robot.model.camera("top").id
             obj = estimate_object(top_rgb, robot.data.cam_xpos[cam], robot.data.cam_xmat[cam], robot.model.cam_fovy[cam])
             if obj is None:
@@ -124,13 +150,16 @@ class RecoveryController:
         elif self.state == "closing":
             self.wait -= 1
             if self.wait <= 0:
-                self.target([*self.xy, 0.12], "transport", -0.1, allow_cube_contact=True)
+                if self.check_gripper("after_closure"):
+                    self.target([*self.xy, 0.12], "transport", -0.1, allow_cube_contact=True)
             return np.r_[robot.q_arm, -0.1]
         elif self.state == "transport":
             # The box pose is fixed task configuration in this tutorial scene.
-            self.target([0.05, 0.22, 0.12], "place", -0.1, allow_cube_contact=True)
+            if self.check_gripper("after_lift"):
+                self.target([0.05, 0.22, 0.12], "place", -0.1, allow_cube_contact=True)
         elif self.state == "place":
-            self.target([0.05, 0.22, 0.06], "release", -0.1, allow_cube_contact=True)
+            if self.check_gripper("after_transport"):
+                self.target([*self.place_xy, 0.06], "release", -0.1, allow_cube_contact=True)
         elif self.state == "release":
             self.log("releasing")
             self.wait = round(1.0 * self.fps)
