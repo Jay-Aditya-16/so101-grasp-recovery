@@ -1,0 +1,60 @@
+{
+  "unique_labeled_trials": 4,
+  "failed_trials": 3,
+  "successful_trials": 1,
+  "suspected_miss_alerts": 3,
+  "failure_detection_fraction": 1.0,
+  "false_alarms_on_success": 0,
+  "abstentions": 1,
+  "interpretation": "Exploratory only; small, scene-specific sample. Abstentions are not counted as correct success predictions.",
+  "traces": [
+    {
+      "trace": "datasets/local-rollouts/act-020000-demo-000.npz",
+      "trace_sha256": "4f7efcab53c9cdaacaa15e511022c0dc7343379946df56103130e4a323de3ef9",
+      "outcome": "failure_no_lift",
+      "monitor": "suspected_miss",
+      "alert_time_s": 5.05,
+      "closure_time_s": 3.25,
+      "alert_after_closure_s": 1.8,
+      "lifted_5cm": false,
+      "settled_placement": false,
+      "reason": "gripper rose while cube remained near its prior image position"
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1001.npz",
+      "trace_sha256": "3e599e236d0f305f3352305e3abd8a59d1eac848c2a1dd353200b4160bbf46d5",
+      "outcome": "failure_no_lift",
+      "monitor": "suspected_miss",
+      "alert_time_s": 4.1,
+      "closure_time_s": 3.5,
+      "alert_after_closure_s": 0.6,
+      "lifted_5cm": false,
+      "settled_placement": false,
+      "reason": "gripper rose while cube remained near its prior image position"
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1002.npz",
+      "trace_sha256": "768b9b3798410c433a00b3c2b4af896f07c5d6ffdbbea17ab46924be43922b03",
+      "outcome": "failure_no_lift",
+      "monitor": "suspected_miss",
+      "alert_time_s": 5.05,
+      "closure_time_s": 3.45,
+      "alert_after_closure_s": 1.6,
+      "lifted_5cm": false,
+      "settled_placement": false,
+      "reason": "gripper rose while cube remained near its prior image position"
+    },
+    {
+      "trace": "datasets/local-rollouts/phase1-act-seed1003.npz",
+      "trace_sha256": "b237814232e47e3ff2e958c1c2b69c07938b391464d8778f7712e9a7dc8b815a",
+      "outcome": "success",
+      "monitor": "unknown",
+      "alert_time_s": 4.6,
+      "closure_time_s": 2.9,
+      "alert_after_closure_s": 1.7,
+      "lifted_5cm": true,
+      "settled_placement": true,
+      "reason": "cube obscured when gripper rose"
+    }
+  ]
+}

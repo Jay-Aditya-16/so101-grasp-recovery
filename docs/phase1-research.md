@@ -10,16 +10,35 @@ Relevant open research:
 - [V-JEPA 2](https://github.com/facebookresearch/vjepa2) offers action-conditioned prediction for planning. Its published robot checkpoint has its own embodiment and compute requirements. Benchmark compatibility before using it for SO-101.
 - [RecoveryChaining](https://arxiv.org/abs/2410.13979) and [RESPRECT](https://arxiv.org/abs/2401.14858) motivate learned recovery and residual reinforcement learning after reliable outcome labels exist.
 
-## Initial evidence
+## Evaluation and evidence (2026-11-26)
 
-On the saved 20k ACT failure for demonstration 0, the monitor flagged a suspected miss at 5.05 s simulated time. The reference is the last red cube detection before closure, 35 frames (1.75 s) old. Motion or occlusion during that gap could invalidate the inference. The successful expert demonstration returned unknown because the cube was occluded at the check. These are two exploratory examples, not accuracy estimates.
+The monitor was evaluated on live-viewer rollouts of the saved 20k ACT checkpoint. Offline replay of captured traces uses only top-camera RGB, commanded gripper position, and tip height from forward kinematics for the alert decision. MuJoCo outcome fields are used only as labels. Duplicate trace content is removed by SHA-256 before aggregation.
 
-Next collect labeled, disjoint successful and failed scenes with moved cubes, lighting variation, occlusion and non-red objects. Score missed grasps and false alarms independently, report abstentions and detection latency, and compare against simulator outcomes and human video labels. Use a separate pose set to select thresholds. Record model, scene revision, pose and timing for each run.
+| Unique trial | Ground-truth outcome | Monitor | Alert after first close command |
+|---|---|---|---:|
+| Matched demo-0 pose | No 5 cm lift | `suspected_miss` | 1.8 s |
+| Seed 1001 | No 5 cm lift | `suspected_miss` | 0.6 s |
+| Seed 1002 | No 5 cm lift | `suspected_miss` | 1.6 s |
+| Seed 1003 | Lift and settled placement | `unknown` (cube occluded) | 1.7 s |
 
-Use `--monitor` with `scripts/live_act_eval.py` to show live alerts. Use `matlab/analyze_rollout.m` on a CSV with time_s, gripper_position, gripper_target, cube_z_m. The cube position in this plot is privileged simulator data, used for analysis rather than monitor decisions.
+Across these **four unique exploratory trials**, it flagged all 3 no-lift failures (3/3) and made no suspected-miss alert on the single success (0/1). It abstained on that success. Observed trial coverage is 3/4; it did not verify any success. These counts are too small and scene-specific to estimate general accuracy, recall, or false-alarm rate. Two demo-0 captures were identical and are counted once.
 
-## Minimal evaluation at seed 1001
+The alert delay relative to first commanded closure was 0.6–1.8 simulated seconds. This is closure-to-alert timing, not latency from the physical onset of failure and not wall-clock inference time. The detector uses the last visible cube position before closing, so motion or occlusion during that gap may invalidate the inference.
 
-The ACT checkpoint was run in the live viewer at seed 1001. The monitor flagged suspected miss at 4.10 s simulated time. The ground-truth evaluator reported no bilateral contact, no 5 cm lift, and no placement in the 12 s episode. Its 240 transitions are saved locally as `datasets/local-rollouts/phase1-act-seed1001.npz`.
+Next collect labeled, disjoint successful and failed scenes with moved cubes, lighting variation, occlusion and non-red objects. Score missed grasps and false alarms independently, report abstentions and detection delay, and compare against simulator outcomes and human video labels. Use separate poses for threshold selection and final evaluation. Record model, scene revision, pose and timing for each run.
 
-Offline replay using `scripts/evaluate_monitor_trace.py` reproduced both alerts: the previous demo-0 failed ACT attempt at 5.05 s and seed 1001 at 4.10 s. Both timed out without a 5 cm lift. The separately observed successful expert demonstration returned unknown owing to occlusion. The two failures and one successful example are exploratory, with no new false alarm on the expert; this is not a measured false-positive rate and is insufficient to validate generalization. Time values are simulated time, not wall-clock inference latency. Pose selection and thresholds were not blinded. The previous MATLAB analysis of demo-0 reported peak cube lift 9.17 mm.
+Use `--monitor` with `scripts/live_act_eval.py` to show live alerts. Reproduce the four-trial offline summary (with rollout archives available locally) using:
+
+```sh
+PYTHONPATH=/private/tmp/so101-lerobot-public061 HF_HOME=/private/tmp/so101-dataset-validation \
+  /Users/jayaditya/so101-lerobot-juxi/.venv/bin/python scripts/evaluate_monitor_trace.py \
+  --tutorial ../so101-physicalai-tutorial --json-out reports/phase1-monitor-evaluation.json \
+  datasets/local-rollouts/act-020000-demo-000.npz \
+  datasets/local-rollouts/phase1-act-seed1001.npz \
+  datasets/local-rollouts/phase1-act-seed1002.npz \
+  datasets/local-rollouts/phase1-act-seed1003.npz
+```
+
+The evaluator emits deduplicated trace hashes, outcome labels, alerts, abstentions, and closure-to-alert times. Run `matlab/analyze_rollout.m` on a CSV with time_s, gripper_position, gripper_target, cube_z_m. Cube position in MATLAB plots is privileged simulator data used for analysis, never for monitor decisions.
+
+The MATLAB analysis of demo-0 measured 9.17 mm peak lift. Phase 1 completes the monitoring prototype and minimal data/analysis pass. It does **not** establish a generalized or deployment-ready failure detector; expand the held-out set before automated recovery uses these alerts.

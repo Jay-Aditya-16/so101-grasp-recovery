@@ -76,4 +76,8 @@ Run `python3 -m unittest discover -s tests -v` from this directory. `Memory.save
 4. Integrate controlled retries, logging and memory updates only after verified outcomes. Compare baseline, retry-only, diagnosis without memory, and diagnosis with memory on matched trials.
 5. Calibrate and validate separately on the real arm. A sim-trained policy is not assumed to transfer.
 
-The pretrained ACT rollout and physical trials are pending.
+## Project plan and Phase 1 status
+
+See [the complete project roadmap](docs/project-roadmap.md) for the phased plan, research question, hardware constraints, evaluation gates, and physical deployment sequence. [Phase 1 research and results](docs/phase1-research.md) documents the monitor and the four unique exploratory ACT trials. The monitor flagged all three observed no-lift failures and abstained on the one successful lift/place because the cube was occluded; this small sample does not establish generalized accuracy and is not sufficient to enable automatic recovery.
+
+The trained ACT baseline has been evaluated in simulation; physical-arm trials and the recovery layer are pending.
