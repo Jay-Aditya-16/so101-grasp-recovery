@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import sys
 import time
+import uuid
 
 import mujoco
 import mujoco.viewer
@@ -80,16 +81,24 @@ def main():
     parser.add_argument("--demo-dataset", type=Path, help="Reconstruct the starting pose from this local dataset")
     parser.add_argument("--demo-episode", type=int, default=0)
     parser.add_argument("--capture", type=Path, help="Save one rollout as a compressed NumPy archive")
+    parser.add_argument("--capture-dir", type=Path, default=Path("datasets/local-rollouts"), help="Directory for automatically saved trial archives")
+    parser.add_argument("--no-capture", action="store_true", help="Do not automatically save a rollout archive")
     parser.add_argument("--monitor", action="store_true", help="Report suspected missed grasps during execution")
     parser.add_argument("--recovery", action="store_true", help="Enable experimental simulator-only recovery on suspected misses")
+    parser.add_argument("--depth-gate", action="store_true", help="Use Depth Anything V2 relative-depth check during recovery")
+    parser.add_argument("--depth-view", choices=("top", "wrist"), default="top", help="View used by the optional depth gate")
     parser.add_argument("--results", type=Path, help="Save episode results as JSON")
     args = parser.parse_args()
+    if args.depth_gate and not args.recovery:
+        parser.error("--depth-gate requires --recovery")
     if args.recovery:
         args.monitor = True
     if args.episodes < 1 or args.seconds <= 0:
         parser.error("--episodes and --seconds must be positive")
     if args.capture and (args.episodes != 1 or args.scene_check or args.capture.exists()):
         parser.error("--capture requires one rollout and a new output path")
+    if args.capture and args.no_capture:
+        parser.error("--capture and --no-capture cannot be combined")
     if not args.scene_check and (
         args.checkpoint is None or not (args.checkpoint / "model.safetensors").is_file()
     ):
@@ -123,8 +132,16 @@ def main():
             preprocessor_overrides={"device_processor": {"device": "cpu"}},
         )
 
+    depth_gate = None
+    if args.depth_gate:
+        from depth_gate import DepthAnythingGate
+        print("Loading Depth Anything V2 Small for recovery.", flush=True)
+        depth_gate = DepthAnythingGate()
     episode_results = []
     for episode in range(args.episodes):
+        capture_path = args.capture
+        if not args.scene_check and capture_path is None and not args.no_capture:
+            capture_path = args.capture_dir / f"rollout-seed{args.seed}-episode{episode + 1}-{uuid.uuid4().hex}.npz"
         if args.monitor:
             from failure_monitor import GraspMonitor
 
@@ -134,7 +151,7 @@ def main():
         robot = SO101Sim(cube_pos=cube, box_pos=(0.05, 0.22), render=False)
         if args.recovery:
             from phase2_controller import RecoveryController
-            recovery = RecoveryController(robot, FPS)
+            recovery = RecoveryController(robot, FPS, depth_gate=depth_gate, depth_view=args.depth_view)
         if reference is not None and not np.allclose(robot.data.qpos[:6], reference[2][0], atol=1e-4):
             raise RuntimeError("The recorded and simulated initial joint positions differ")
         capture = {key: [] for key in ("time", "qpos", "qvel", "cube_xyz", "top_rgb", "wrist_rgb",
@@ -154,11 +171,11 @@ def main():
                 for camera, key in camera_keys.items():
                     renderer.update_scene(robot.data, camera=camera)
                     frame = renderer.render().copy()
-                    if args.capture:
+                    if capture_path:
                         capture["top_rgb" if camera == "top" else "wrist_rgb"].append(frame)
                     rgb = torch.from_numpy(frame)
                     obs[key] = rgb.permute(2, 0, 1)[None].float() / 255
-                if args.capture:
+                if capture_path:
                     capture["time"].append(robot.data.time)
                     capture["qpos"].append(robot.data.qpos.copy())
                     capture["qvel"].append(robot.data.qvel.copy())
@@ -170,7 +187,8 @@ def main():
                 obs = observe()
                 image = (obs["observation.images.top"][0].permute(1, 2, 0).numpy() * 255).round().astype(np.uint8)
                 if args.recovery and recovery.state != "idle":
-                    return recovery.step(image)
+                    wrist = (obs["observation.images.wrist"][0].permute(1, 2, 0).numpy() * 255).round().astype(np.uint8)
+                    return recovery.step(image, wrist)
                 with torch.inference_mode():
                     action = postprocess(policy.select_action(preprocess(obs)))[0].cpu().numpy()
                 if action.shape != (6,) or not np.isfinite(action).all():
@@ -197,32 +215,39 @@ def main():
                 viewer.cam.type = mujoco.mjtCamera.mjCAMERA_FIXED
                 viewer.cam.fixedcamid = robot.model.camera("fixed").id
                 result = rollout(robot, viewer, get_action, FPS, args.seconds,
-                                 on_step=capture_step if args.capture else None)
-                if args.capture and capture["action"]:
+                                 on_step=capture_step if capture_path else None)
+                if capture_path and capture["action"]:
                     observe()
-        if args.capture and capture["action"]:
+        if capture_path and capture["action"]:
             n = len(capture["action"])
             terminated = np.zeros(n, dtype=bool)
             terminated[-1] = bool(result and result["settled_placement"])
             truncated = np.zeros(n, dtype=bool)
             truncated[-1] = not terminated[-1]
             metadata = {"checkpoint": str(args.checkpoint), "fps": FPS, "start_xy": cube,
+                        "seed": args.seed, "episode": episode + 1,
+                        "mode": "recovery" if args.recovery else "act",
                         "reference_episode": args.demo_episode if reference is not None else None,
                         "viewer_closed": result is None, "result": result}
+            if args.recovery:
+                metadata.update(recovery_events=recovery.events, depth_checks=recovery.depth_checks,
+                                depth_view=args.depth_view if args.depth_gate else None)
             if reference is not None:
                 capture["reference_action"] = reference[1]
                 capture["reference_joint_state"] = reference[2]
-            args.capture.parent.mkdir(parents=True, exist_ok=True)
-            with args.capture.open("xb") as output:
+            capture_path.parent.mkdir(parents=True, exist_ok=True)
+            with capture_path.open("xb") as output:
                 np.savez_compressed(output, **capture, metadata=json.dumps(metadata),
                                     terminated=terminated, truncated=truncated)
-            print(f"Saved {n} transitions to {args.capture}", flush=True)
+            print(f"Saved {n} transitions to {capture_path}", flush=True)
         if result is None:
             print("Viewer closed. Episode stopped without a score.")
             break
         summary = {"episode": episode + 1, "seed": args.seed, "start_xy": cube, **result}
+        summary["capture_path"] = str(capture_path) if capture_path else None
         if args.recovery:
             summary["recovery_events"] = recovery.events
+            summary["depth_checks"] = recovery.depth_checks
         episode_results.append(summary)
         print(json.dumps(summary), flush=True)
     if args.results:

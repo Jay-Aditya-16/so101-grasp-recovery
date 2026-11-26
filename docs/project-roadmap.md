@@ -64,6 +64,8 @@ An offline approach candidate, Jacobian check, wrist-view evaluation and two liv
 
 A first integrated simulator-only grasp and placement controller is now in place; [the integrated experiment](phase2-integrated.md) records development trials and one new paired seed. Robustness evaluation, verified intermediate outcomes and a retry-only baseline remain unfinished.
 
+The [two-view depth experiment](phase2-two-view-depth.md) connects overhead localization and an optional wrist-camera Depth Anything V2 check. Two placements succeeded, but the wrist position estimate was less accurate than the overhead estimate in both; no depth benefit is established. Trial capture is enabled by default for future runs.
+
 1. Estimate the target object’s image region, center, orientation, approximate footprint/width, and confidence from the overhead view; use wrist view as a second, local view. Start with robust color/shape geometry in the fixed simulated scene and human review. Later compare a compact detector/segmenter or VLM; do not assume an LLM has precise metric geometry.
 2. Estimate gripper pose from joint state/forward kinematics and camera calibration. Compute object-to-gripper offset in a tabletop coordinate frame, with uncertainty. Fuse viewpoints only when calibrated and time-synchronized.
 3. Classify failure stage from observable evidence: missed approach, no closure/contact, slip/no lift, collision/occlusion, or unknown. Keep simulator contact/object state as labels for evaluation, not as controller input.

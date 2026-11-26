@@ -1,0 +1,95 @@
+{
+  "scope": "simulator-only reference; observations scored at wrist depth decision time",
+  "trials": [
+    {
+      "trace": "datasets/local-rollouts/phase2-wrist-depth-1010.npz",
+      "archive_sha256": "a8f9022401ac7c5ff0ddab6b986a8177a0026376424ef26cc0de919c87266bb5",
+      "transitions": 384,
+      "observations": 385,
+      "result": {
+        "bilateral_gripper_contact": true,
+        "lifted_5cm": true,
+        "settled_placement": true,
+        "max_lift_m": 0.0959
+      },
+      "checks": [
+        {
+          "frame": 226,
+          "timestamp_s": 11.300000000000443,
+          "ground_truth_xy_m": [
+            0.17927375100296347,
+            0.008994173683192606
+          ],
+          "wrist_error_mm": 7.540947949661798,
+          "overhead_error_mm": 1.7230317615919784,
+          "depth": {
+            "time_s": 11.300000000000443,
+            "view": "wrist",
+            "wrist_xy_m": [
+              0.17854428833388397,
+              0.01649975695126231
+            ],
+            "overhead_xy_m": [
+              0.17873703713151445,
+              0.010631481434242775
+            ],
+            "view_disagreement_m": 0.005871440167679381,
+            "accepted": true,
+            "reason": "cube_closer",
+            "relative_contrast": 1.0888155698776245,
+            "object_pixels": 3830,
+            "ring_pixels": 2336,
+            "wall_time_s": 1.7406817919109017,
+            "model": "depth-anything/Depth-Anything-V2-Small-hf",
+            "revision": "5426e4f0f36572d16453bbda7a8389317b1bef99"
+          }
+        }
+      ]
+    },
+    {
+      "trace": "datasets/local-rollouts/phase2-wrist-depth-1001.npz",
+      "archive_sha256": "bb4207b375a9d5aa97b47ab8030693324a726128a7f8f027af49f419ef64593f",
+      "transitions": 366,
+      "observations": 367,
+      "result": {
+        "bilateral_gripper_contact": true,
+        "lifted_5cm": true,
+        "settled_placement": true,
+        "max_lift_m": 0.1014
+      },
+      "checks": [
+        {
+          "frame": 207,
+          "timestamp_s": 10.350000000000126,
+          "ground_truth_xy_m": [
+            0.18010873535456434,
+            -0.1450579073523883
+          ],
+          "wrist_error_mm": 7.645255006274006,
+          "overhead_error_mm": 2.0570276909326806,
+          "depth": {
+            "time_s": 10.350000000000126,
+            "view": "wrist",
+            "wrist_xy_m": [
+              0.1795257309918878,
+              -0.13743491384431958
+            ],
+            "overhead_xy_m": [
+              0.17873703713151445,
+              -0.14352499936227747
+            ],
+            "view_disagreement_m": 0.006140942893516521,
+            "accepted": true,
+            "reason": "cube_closer",
+            "relative_contrast": 1.1820374727249146,
+            "object_pixels": 3817,
+            "ring_pixels": 2368,
+            "wall_time_s": 1.4762925419490784,
+            "model": "depth-anything/Depth-Anything-V2-Small-hf",
+            "revision": "5426e4f0f36572d16453bbda7a8389317b1bef99"
+          }
+        }
+      ]
+    }
+  ]
+}

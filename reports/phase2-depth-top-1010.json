@@ -1,0 +1,104 @@
+[
+  {
+    "episode": 1,
+    "seed": 1010,
+    "start_xy": [
+      0.17927375100296347,
+      0.008994173683192606
+    ],
+    "bilateral_gripper_contact": true,
+    "lifted_5cm": true,
+    "settled_placement": true,
+    "max_lift_m": 0.0962,
+    "recovery_events": [
+      {
+        "state": "moving",
+        "time_s": 5.049999999999666,
+        "reason": "observe"
+      },
+      {
+        "state": "observe",
+        "time_s": 8.999999999999675,
+        "reason": null
+      },
+      {
+        "state": "open",
+        "time_s": 9.049999999999692,
+        "reason": "observed cube at [0.17873703713151445, 0.010631481434242775]"
+      },
+      {
+        "state": "moving",
+        "time_s": 9.749999999999925,
+        "reason": "descend"
+      },
+      {
+        "state": "descend",
+        "time_s": 11.250000000000426,
+        "reason": null
+      },
+      {
+        "state": "moving",
+        "time_s": 11.300000000000443,
+        "reason": "close"
+      },
+      {
+        "state": "close",
+        "time_s": 12.800000000000944,
+        "reason": null
+      },
+      {
+        "state": "closing",
+        "time_s": 12.85000000000096,
+        "reason": null
+      },
+      {
+        "state": "moving",
+        "time_s": 13.850000000001295,
+        "reason": "transport"
+      },
+      {
+        "state": "transport",
+        "time_s": 15.350000000001796,
+        "reason": null
+      },
+      {
+        "state": "moving",
+        "time_s": 15.400000000001812,
+        "reason": "place"
+      },
+      {
+        "state": "place",
+        "time_s": 16.900000000001512,
+        "reason": null
+      },
+      {
+        "state": "moving",
+        "time_s": 16.950000000001484,
+        "reason": "release"
+      },
+      {
+        "state": "release",
+        "time_s": 18.450000000000653,
+        "reason": null
+      },
+      {
+        "state": "releasing",
+        "time_s": 18.500000000000625,
+        "reason": null
+      }
+    ],
+    "depth_checks": [
+      {
+        "time_s": 9.049999999999692,
+        "accepted": true,
+        "reason": "cube_closer",
+        "relative_contrast": 0.030912697315216064,
+        "object_pixels": 121,
+        "ring_pixels": 608,
+        "wall_time_s": 1.4155431250110269,
+        "model": "depth-anything/Depth-Anything-V2-Small-hf",
+        "revision": "5426e4f0f36572d16453bbda7a8389317b1bef99"
+      }
+    ]
+  }
+]

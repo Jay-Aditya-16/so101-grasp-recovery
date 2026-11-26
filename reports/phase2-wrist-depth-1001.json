@@ -1,0 +1,114 @@
+[
+  {
+    "episode": 1,
+    "seed": 1001,
+    "start_xy": [
+      0.18010873535456434,
+      -0.1450579073523883
+    ],
+    "bilateral_gripper_contact": true,
+    "lifted_5cm": true,
+    "settled_placement": true,
+    "max_lift_m": 0.1014,
+    "recovery_events": [
+      {
+        "state": "moving",
+        "time_s": 4.0999999999997705,
+        "reason": "observe"
+      },
+      {
+        "state": "observe",
+        "time_s": 8.049999999999358,
+        "reason": null
+      },
+      {
+        "state": "open",
+        "time_s": 8.099999999999374,
+        "reason": "observed cube at [0.17873703713151445, -0.14352499936227747]"
+      },
+      {
+        "state": "moving",
+        "time_s": 8.799999999999608,
+        "reason": "descend"
+      },
+      {
+        "state": "descend",
+        "time_s": 10.300000000000109,
+        "reason": null
+      },
+      {
+        "state": "moving",
+        "time_s": 10.350000000000126,
+        "reason": "close"
+      },
+      {
+        "state": "close",
+        "time_s": 11.850000000000627,
+        "reason": null
+      },
+      {
+        "state": "closing",
+        "time_s": 11.900000000000643,
+        "reason": null
+      },
+      {
+        "state": "moving",
+        "time_s": 12.900000000000977,
+        "reason": "transport"
+      },
+      {
+        "state": "transport",
+        "time_s": 14.400000000001478,
+        "reason": null
+      },
+      {
+        "state": "moving",
+        "time_s": 14.450000000001495,
+        "reason": "place"
+      },
+      {
+        "state": "place",
+        "time_s": 15.950000000001996,
+        "reason": null
+      },
+      {
+        "state": "moving",
+        "time_s": 16.00000000000201,
+        "reason": "release"
+      },
+      {
+        "state": "release",
+        "time_s": 17.50000000000118,
+        "reason": null
+      },
+      {
+        "state": "releasing",
+        "time_s": 17.550000000001152,
+        "reason": null
+      }
+    ],
+    "depth_checks": [
+      {
+        "time_s": 10.350000000000126,
+        "view": "wrist",
+        "wrist_xy_m": [
+          0.1795257309918878,
+          -0.13743491384431958
+        ],
+        "overhead_xy_m": [
+          0.17873703713151445,
+          -0.14352499936227747
+        ],
+        "view_disagreement_m": 0.006140942893516521,
+        "accepted": true,
+        "reason": "cube_closer",
+        "relative_contrast": 1.1820374727249146,
+        "object_pixels": 3817,
+        "ring_pixels": 2368,
+        "wall_time_s": 1.4762925419490784,
+        "model": "depth-anything/Depth-Anything-V2-Small-hf",
+        "revision": "5426e4f0f36572d16453bbda7a8389317b1bef99"
+      }
+    ]
+  }
+]

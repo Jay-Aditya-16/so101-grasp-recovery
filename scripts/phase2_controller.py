@@ -9,12 +9,15 @@ from phase2_planner import check_pose, inspect_path
 class RecoveryController:
     """One recovery attempt after a suspected miss; no simulator object state input."""
 
-    def __init__(self, robot, fps=20):
+    def __init__(self, robot, fps=20, depth_gate=None, depth_view="top"):
         self.robot, self.fps = robot, fps
         self.state = "idle"
         self.reason = None
         self.events = []
         self.command = None
+        self.depth_gate = depth_gate
+        self.depth_view = depth_view
+        self.depth_checks = []
 
     def log(self, state, reason=None):
         self.state, self.reason = state, reason
@@ -64,7 +67,7 @@ class RecoveryController:
         home = self.robot.model.key_qpos[0, self.robot.arm_qadr].copy()
         self.move(home, 4.0, "observe")
 
-    def step(self, top_rgb):
+    def step(self, top_rgb, wrist_rgb=None):
         robot = self.robot
         if self.state == "moving":
             self.index += 1
@@ -79,6 +82,13 @@ class RecoveryController:
             if obj is None:
                 self.log("aborted", "object is not reliably visible")
             else:
+                if self.depth_gate is not None and self.depth_view == "top":
+                    decision = self.depth_gate(top_rgb)
+                    self.depth_checks.append({"time_s": float(robot.data.time), **decision})
+                    print(f"Depth gate: {decision}", flush=True)
+                    if not decision["accepted"]:
+                        self.log("aborted", f"depth gate: {decision['reason']}")
+                        return robot.data.ctrl[:6].copy()
                 self.xy = np.asarray(obj["world_xy_m"])
                 self.log("open", f"observed cube at {self.xy.tolist()}")
                 self.wait = round(0.7 * self.fps)
@@ -88,6 +98,25 @@ class RecoveryController:
                 self.target([*self.xy, 0.08], "descend", 1.2)
             return np.r_[robot.q_arm, 1.2]
         elif self.state == "descend":
+            if self.depth_gate is not None and self.depth_view == "wrist":
+                if wrist_rgb is None:
+                    self.log("aborted", "wrist image unavailable")
+                    return robot.data.ctrl[:6].copy()
+                cam = robot.model.camera("wrist_cam").id
+                wrist_obj = estimate_object(wrist_rgb, robot.data.cam_xpos[cam], robot.data.cam_xmat[cam], robot.model.cam_fovy[cam])
+                if wrist_obj is None:
+                    self.log("aborted", "object not reliably visible from wrist")
+                    return robot.data.ctrl[:6].copy()
+                wrist_xy = np.asarray(wrist_obj["world_xy_m"])
+                disagreement = float(np.linalg.norm(wrist_xy - self.xy))
+                decision = self.depth_gate(wrist_rgb)
+                self.depth_checks.append({"time_s": float(robot.data.time), "view": "wrist", "wrist_xy_m": wrist_xy.tolist(),
+                                          "overhead_xy_m": self.xy.tolist(), "view_disagreement_m": disagreement, **decision})
+                print(f"Wrist depth gate: {self.depth_checks[-1]}", flush=True)
+                if not decision["accepted"] or disagreement > 0.01:
+                    self.log("aborted", "wrist depth or camera agreement check failed")
+                    return robot.data.ctrl[:6].copy()
+                self.xy = wrist_xy
             self.target([*self.xy, 0.02], "close", 1.2, allow_cube_contact=True)
         elif self.state == "close":
             self.log("closing")
