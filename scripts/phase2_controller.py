@@ -9,7 +9,7 @@ from phase2_planner import check_pose, inspect_path
 class RecoveryController:
     """One recovery attempt after a suspected miss; no simulator object state input."""
 
-    def __init__(self, robot, fps=20, depth_gate=None, depth_view="top", retry_only=False):
+    def __init__(self, robot, fps=20, depth_gate=None, depth_view="top", retry_only=False, bandit=None, bandit_mode=None):
         self.robot, self.fps = robot, fps
         self.state = "idle"
         self.reason = None
@@ -19,6 +19,8 @@ class RecoveryController:
         self.depth_view = depth_view
         self.retry_only = retry_only
         self.depth_checks = []
+        self.bandit, self.bandit_mode = bandit, bandit_mode
+        self.bandit_selection = None
 
     def log(self, state, reason=None):
         self.state, self.reason = state, reason
@@ -45,14 +47,28 @@ class RecoveryController:
         if next_state == "place":
             # Select among points inside the known box, keeping 15 mm margin
             # against the 30 mm scoring region; no cube-contact state is used.
-            for dx, dy in ((0.015, 0), (0, -0.015), (0.015, -0.015), (-0.015, 0), (0, 0.015)):
+            from placement_bandit import OFFSETS
+            for dx, dy in OFFSETS[1:]:
                 targets.append(target + np.array([dx, dy, 0.0]))
+        action_ids = None
+        scores = None
+        if next_state == "place" and self.bandit is not None:
+            from placement_bandit import ACTIONS
+            try:
+                ranking, scores = self.bandit.ranked(self.xy)
+            except ValueError as exc:
+                self.log("aborted", f"bandit context rejected: {exc}")
+                return
+            action_ids = list(ACTIONS)
+            if self.bandit_mode == "active":
+                targets = [targets[ACTIONS.index(action)] for action in ranking]
+                action_ids = ranking
         seeds = [self.robot.q_arm, self.robot.model.key_qpos[0, self.robot.arm_qadr].copy()]
         checks = []
         # During transport, try position-only IK if the five-DOF arm cannot reach
         # the exact downward orientation, and independently limit tool tilt.
         directions = (DOWN, None) if allow_cube_contact else (DOWN,)
-        for candidate in targets:
+        for candidate_index, candidate in enumerate(targets):
             for direction in directions:
                 for seed in seeds:
                     scratch = mujoco.MjData(self.robot.model)
@@ -69,6 +85,12 @@ class RecoveryController:
                         if path["first_penetration"] is None:
                             if next_state == "place":
                                 self.place_xy = candidate[:2].copy()
+                                if action_ids is not None:
+                                    self.bandit_selection = {"action": action_ids[candidate_index],
+                                        "observed_xy_m": self.xy.tolist(), "mode": self.bandit_mode,
+                                        "scores": scores}
+                                    self.events.append({"state": "bandit_selection", "time_s": float(self.robot.data.time),
+                                                        **self.bandit_selection})
                                 self.events.append({"state": "box_target", "time_s": float(self.robot.data.time),
                                                     "xy_m": self.place_xy.tolist()})
                             self.move(q, 1.5, next_state, grip, allow_cube_contact)

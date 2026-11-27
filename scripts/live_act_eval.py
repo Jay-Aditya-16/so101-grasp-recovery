@@ -132,8 +132,17 @@ def main():
     parser.add_argument("--recover-unknown-empty", action="store_true", help="Experimental empty-gripper fallback for unknown alerts")
     parser.add_argument("--recover-unknown-stationary", action="store_true", help="Experimental fresh stationary-cube fallback for unknown alerts")
     parser.add_argument("--retry-only", action="store_true", help="After return-to-view, reset ACT instead of using object-aware recovery")
+    parser.add_argument("--bandit-mode", choices=("shadow", "active"), help="Experimental simulator placement ranking; shadow preserves Phase II ordering")
+    parser.add_argument("--bandit-memory", type=Path, help="Persistent Phase III trial memory (single process only)")
+    parser.add_argument("--bandit-frozen", action="store_true", help="Score with existing memory without recording evaluation outcomes")
     parser.add_argument("--results", type=Path, help="Save episode results as JSON")
     args = parser.parse_args()
+    if bool(args.bandit_mode) != bool(args.bandit_memory):
+        parser.error("--bandit-mode and --bandit-memory must be provided together")
+    if args.bandit_frozen and (not args.bandit_mode or not args.bandit_memory.is_file()):
+        parser.error("--bandit-frozen requires an existing bandit memory")
+    if args.bandit_mode and (not args.recovery or args.retry_only or args.scenario != "cube" or args.scene_check):
+        parser.error("Phase III requires object-aware recovery in the original cube simulation")
     if args.depth_gate and not args.recovery:
         parser.error("--depth-gate requires --recovery")
     if args.recover_unknown_empty and not args.recovery:
@@ -191,6 +200,10 @@ def main():
         from depth_gate import DepthAnythingGate
         print("Loading Depth Anything V2 Small for recovery.", flush=True)
         depth_gate = DepthAnythingGate()
+    bandit = None
+    if args.bandit_mode:
+        from placement_bandit import PlacementBandit
+        bandit = PlacementBandit(args.bandit_memory)
     episode_results = []
     for episode in range(args.episodes):
         capture_path = args.capture
@@ -211,7 +224,7 @@ def main():
         if args.recovery:
             from phase2_controller import RecoveryController
             recovery = RecoveryController(robot, FPS, depth_gate=depth_gate, depth_view=args.depth_view,
-                                          retry_only=args.retry_only)
+                                          retry_only=args.retry_only, bandit=bandit, bandit_mode=args.bandit_mode)
         if reference is not None and not np.allclose(robot.data.qpos[:6], reference[2][0], atol=1e-4):
             raise RuntimeError("The recorded and simulated initial joint positions differ")
         capture = {key: [] for key in ("time", "qpos", "qvel", "cube_xyz", "top_rgb", "wrist_rgb",
@@ -305,6 +318,17 @@ def main():
                                  task="drawer" if args.scenario == "drawer" else "pick_place", scenario=args.scenario)
                 if capture_path and capture["action"]:
                     observe()
+        if bandit is not None and recovery.bandit_selection is not None:
+            from placement_bandit import verified_outcome
+            record = verified_outcome(recovery.bandit_selection, recovery.events, result, float(robot.data.time),
+                                      uuid.uuid4().hex, args.seed, episode + 1, args.bandit_mode)
+            if record is not None and not args.bandit_frozen:
+                bandit.update(record)
+                recovery.events.append({"state": "bandit_update", "time_s": float(robot.data.time), **record})
+                print(f"Phase III memory updated: {record}", flush=True)
+            else:
+                recovery.events.append({"state": "bandit_no_update", "time_s": float(robot.data.time),
+                                        "reason": "memory frozen" if args.bandit_frozen else "viewer interrupted or placement release not observed long enough"})
         if capture_path and capture["action"]:
             n = len(capture["action"])
             terminated = np.zeros(n, dtype=bool)
@@ -314,7 +338,7 @@ def main():
             metadata = {"checkpoint": str(args.checkpoint), "fps": FPS, "start_xy": cube,
                         "seed": args.seed, "episode": episode + 1,
                         "scenario": args.scenario,
-                        "mode": "recovery" if args.recovery else "act",
+                        "mode": "recovery" if args.recovery else "act", "bandit_mode": args.bandit_mode,
                         "reference_episode": args.demo_episode if reference is not None else None,
                         "viewer_closed": result is None, "result": result}
             if args.recovery:
