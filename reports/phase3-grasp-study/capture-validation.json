@@ -1,0 +1,44 @@
+[
+  {
+    "trace": "datasets/local-rollouts/borges-1030-low.npz",
+    "scenario": "cube",
+    "transitions": 382,
+    "valid": true,
+    "problems": []
+  },
+  {
+    "trace": "datasets/local-rollouts/borges-1030-center.npz",
+    "scenario": "cube",
+    "transitions": 382,
+    "valid": true,
+    "problems": []
+  },
+  {
+    "trace": "datasets/local-rollouts/borges-1030-high.npz",
+    "scenario": "cube",
+    "transitions": 500,
+    "valid": true,
+    "problems": []
+  },
+  {
+    "trace": "datasets/local-rollouts/borges-1031-low.npz",
+    "scenario": "cube",
+    "transitions": 383,
+    "valid": true,
+    "problems": []
+  },
+  {
+    "trace": "datasets/local-rollouts/borges-1031-center.npz",
+    "scenario": "cube",
+    "transitions": 382,
+    "valid": true,
+    "problems": []
+  },
+  {
+    "trace": "datasets/local-rollouts/borges-1031-high.npz",
+    "scenario": "cube",
+    "transitions": 382,
+    "valid": true,
+    "problems": []
+  }
+]

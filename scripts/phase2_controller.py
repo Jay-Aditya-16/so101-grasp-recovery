@@ -9,7 +9,7 @@ from phase2_planner import check_pose, inspect_path, cone_directions
 class RecoveryController:
     """One recovery attempt after a suspected miss; no simulator object state input."""
 
-    def __init__(self, robot, fps=20, depth_gate=None, depth_view="top", retry_only=False, bandit=None, bandit_mode=None, experimental_cone_ik=False):
+    def __init__(self, robot, fps=20, depth_gate=None, depth_view="top", retry_only=False, bandit=None, bandit_mode=None, experimental_cone_ik=False, grasp_candidate="center"):
         self.robot, self.fps = robot, fps
         self.state = "idle"
         self.reason = None
@@ -22,6 +22,10 @@ class RecoveryController:
         self.bandit, self.bandit_mode = bandit, bandit_mode
         self.bandit_selection = None
         self.experimental_cone_ik = experimental_cone_ik
+        self.grasp_heights = {"low": 0.015, "center": 0.020, "high": 0.025}
+        if grasp_candidate not in self.grasp_heights:
+            raise ValueError("unknown cube grasp candidate")
+        self.grasp_candidate = grasp_candidate
 
     def log(self, state, reason=None):
         self.state, self.reason = state, reason
@@ -91,6 +95,12 @@ class RecoveryController:
                                 if pass_name == "cone40":
                                     self.events.append({"state": "experimental_cone_ik", "time_s": float(self.robot.data.time),
                                                         "target": next_state, "direction": direction.tolist(),
+                                                        "position_error_m": check["position_error_m"],
+                                                        "downward_axis_dot": check["downward_axis_dot"]})
+                                if next_state == "close":
+                                    self.events.append({"state": "grasp_candidate", "time_s": float(self.robot.data.time),
+                                                        "candidate": self.grasp_candidate, "target_xyz_m": candidate.tolist(),
+                                                        "predicted_site_xyz_m": check["site_xyz_m"],
                                                         "position_error_m": check["position_error_m"],
                                                         "downward_axis_dot": check["downward_axis_dot"]})
                                 if next_state == "place":
@@ -175,7 +185,7 @@ class RecoveryController:
                     self.log("aborted", "wrist depth or camera agreement check failed")
                     return robot.data.ctrl[:6].copy()
                 self.xy = wrist_xy
-            self.target([*self.xy, 0.02], "close", 1.2, allow_cube_contact=True)
+            self.target([*self.xy, self.grasp_heights[self.grasp_candidate]], "close", 1.2, allow_cube_contact=True)
         elif self.state == "close":
             self.log("closing")
             self.wait = round(1.0 * self.fps)

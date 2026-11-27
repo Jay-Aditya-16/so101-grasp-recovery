@@ -1,0 +1,52 @@
+{
+  "schema": "so101-grasp-bandit-beta-v1",
+  "candidates": [
+    "low",
+    "center",
+    "high"
+  ],
+  "records": [
+    {
+      "trial_id": "bc5e71c1836c7581a59214961de00630703538c2c988024dfa79dc59eb51ad99",
+      "pose_class": "fixed_red_cube_assumed_single_class",
+      "candidate": "low",
+      "reward": 1,
+      "evidence": "offline_complete_task_outcome"
+    },
+    {
+      "trial_id": "ce8ec42b25cb0731a48c7bcd8b47b0377e00a2d9caf39a36ab9fb922e960da8c",
+      "pose_class": "fixed_red_cube_assumed_single_class",
+      "candidate": "center",
+      "reward": 1,
+      "evidence": "offline_complete_task_outcome"
+    },
+    {
+      "trial_id": "15fec7a067598d18f66dec88f3b739698702c000598166661217cbc865325652",
+      "pose_class": "fixed_red_cube_assumed_single_class",
+      "candidate": "high",
+      "reward": 0,
+      "evidence": "offline_complete_task_outcome"
+    },
+    {
+      "trial_id": "25644596debf0276b271a11b7240434fb7d64db11f7c8638158e444550be4726",
+      "pose_class": "fixed_red_cube_assumed_single_class",
+      "candidate": "low",
+      "reward": 1,
+      "evidence": "offline_complete_task_outcome"
+    },
+    {
+      "trial_id": "f42a79cec4658c758924c2a7d7ea5cd2dde6c559bf51400d2c0b6fcc5da3b07b",
+      "pose_class": "fixed_red_cube_assumed_single_class",
+      "candidate": "center",
+      "reward": 1,
+      "evidence": "offline_complete_task_outcome"
+    },
+    {
+      "trial_id": "3d3f422c223172374db61a62f38f11296c93a3bab600c960986a96f069d90018",
+      "pose_class": "fixed_red_cube_assumed_single_class",
+      "candidate": "high",
+      "reward": 1,
+      "evidence": "offline_complete_task_outcome"
+    }
+  ]
+}

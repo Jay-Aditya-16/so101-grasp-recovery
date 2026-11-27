@@ -1,0 +1,128 @@
+[
+  {
+    "status": "evaluated_lift_proxy",
+    "label": 1,
+    "peak_lift_since_closing_m": 0.10232510788901172,
+    "bilateral_contact_seen": true,
+    "closing_time_s": 12.70000000000091,
+    "lift_check_time_s": 15.250000000001762,
+    "post_transport_obstruction_plausible": true,
+    "candidate": "low",
+    "candidate_target_xyz_m": [
+      0.1476744453837555,
+      -0.1119348913601477,
+      0.015
+    ],
+    "source": "datasets/local-rollouts/borges-1030-low.npz",
+    "sha256": "bc5e71c1836c7581a59214961de00630703538c2c988024dfa79dc59eb51ad99",
+    "seed": 1030,
+    "scenario": "cube",
+    "task_success": true,
+    "label_source": "privileged MuJoCo state and contact; offline only"
+  },
+  {
+    "status": "evaluated_lift_proxy",
+    "label": 1,
+    "peak_lift_since_closing_m": 0.09771952638771264,
+    "bilateral_contact_seen": true,
+    "closing_time_s": 12.70000000000091,
+    "lift_check_time_s": 15.250000000001762,
+    "post_transport_obstruction_plausible": true,
+    "candidate": "center",
+    "candidate_target_xyz_m": [
+      0.1476744453837555,
+      -0.1119348913601477,
+      0.02
+    ],
+    "source": "datasets/local-rollouts/borges-1030-center.npz",
+    "sha256": "ce8ec42b25cb0731a48c7bcd8b47b0377e00a2d9caf39a36ab9fb922e960da8c",
+    "seed": 1030,
+    "scenario": "cube",
+    "task_success": true,
+    "label_source": "privileged MuJoCo state and contact; offline only"
+  },
+  {
+    "status": "evaluated_lift_proxy",
+    "label": 1,
+    "peak_lift_since_closing_m": 0.09070810058841233,
+    "bilateral_contact_seen": true,
+    "closing_time_s": 12.70000000000091,
+    "lift_check_time_s": 15.250000000001762,
+    "post_transport_obstruction_plausible": false,
+    "candidate": "high",
+    "candidate_target_xyz_m": [
+      0.1476744453837555,
+      -0.1119348913601477,
+      0.025
+    ],
+    "source": "datasets/local-rollouts/borges-1030-high.npz",
+    "sha256": "15fec7a067598d18f66dec88f3b739698702c000598166661217cbc865325652",
+    "seed": 1030,
+    "scenario": "cube",
+    "task_success": false,
+    "label_source": "privileged MuJoCo state and contact; offline only"
+  },
+  {
+    "status": "evaluated_lift_proxy",
+    "label": 1,
+    "peak_lift_since_closing_m": 0.10380380659669682,
+    "bilateral_contact_seen": true,
+    "closing_time_s": 12.750000000000927,
+    "lift_check_time_s": 15.300000000001779,
+    "post_transport_obstruction_plausible": true,
+    "candidate": "low",
+    "candidate_target_xyz_m": [
+      0.20143884711140128,
+      0.14470405463412017,
+      0.015
+    ],
+    "source": "datasets/local-rollouts/borges-1031-low.npz",
+    "sha256": "25644596debf0276b271a11b7240434fb7d64db11f7c8638158e444550be4726",
+    "seed": 1031,
+    "scenario": "cube",
+    "task_success": true,
+    "label_source": "privileged MuJoCo state and contact; offline only"
+  },
+  {
+    "status": "evaluated_lift_proxy",
+    "label": 1,
+    "peak_lift_since_closing_m": 0.09654134797373101,
+    "bilateral_contact_seen": true,
+    "closing_time_s": 12.750000000000927,
+    "lift_check_time_s": 15.300000000001779,
+    "post_transport_obstruction_plausible": true,
+    "candidate": "center",
+    "candidate_target_xyz_m": [
+      0.20143884711140128,
+      0.14470405463412017,
+      0.02
+    ],
+    "source": "datasets/local-rollouts/borges-1031-center.npz",
+    "sha256": "f42a79cec4658c758924c2a7d7ea5cd2dde6c559bf51400d2c0b6fcc5da3b07b",
+    "seed": 1031,
+    "scenario": "cube",
+    "task_success": true,
+    "label_source": "privileged MuJoCo state and contact; offline only"
+  },
+  {
+    "status": "evaluated_lift_proxy",
+    "label": 1,
+    "peak_lift_since_closing_m": 0.0906405518117369,
+    "bilateral_contact_seen": true,
+    "closing_time_s": 12.750000000000927,
+    "lift_check_time_s": 15.300000000001779,
+    "post_transport_obstruction_plausible": true,
+    "candidate": "high",
+    "candidate_target_xyz_m": [
+      0.20143884711140128,
+      0.14470405463412017,
+      0.025
+    ],
+    "source": "datasets/local-rollouts/borges-1031-high.npz",
+    "sha256": "3d3f422c223172374db61a62f38f11296c93a3bab600c960986a96f069d90018",
+    "seed": 1031,
+    "scenario": "cube",
+    "task_success": true,
+    "label_source": "privileged MuJoCo state and contact; offline only"
+  }
+]

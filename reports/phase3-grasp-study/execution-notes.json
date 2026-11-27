@@ -1,0 +1,1 @@
+{"initial_parallel_attempts":[{"seed":1030,"candidate":"low","status":"completed"},{"seed":1031,"candidate":"high","status":"intentionally_terminated_during_startup_due_to_memory_pressure","capture":null}],"resumption":"Remaining conditions rerun one process at a time; interrupted attempt is not a failure label."}

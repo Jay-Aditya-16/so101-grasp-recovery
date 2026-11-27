@@ -20,3 +20,23 @@ class GripperEvidenceTests(unittest.TestCase):
             controller = RecoveryController(robot)
             self.assertFalse(controller.check_gripper("after_lift"))
             self.assertEqual(controller.state, "aborted")
+
+
+class GraspCandidateTests(unittest.TestCase):
+    def test_cube_contact_heights_are_named_and_preserve_xy(self):
+        import numpy as np
+        for name, z in (("low", .015), ("center", .020), ("high", .025)):
+            robot = SimpleNamespace(data=SimpleNamespace(ctrl=np.zeros(6)))
+            controller = RecoveryController(robot, grasp_candidate=name)
+            controller.state = 'descend'
+            controller.xy = np.array([.2, -.03])
+            calls = []
+            controller.target = lambda *args, **kwargs: calls.append((args, kwargs))
+            controller.step(np.zeros((1,1,3)))
+            self.assertEqual(calls[0][0][0], [.2, -.03, z])
+            self.assertEqual(calls[0][0][1], 'close')
+            self.assertTrue(calls[0][1]['allow_cube_contact'])
+
+    def test_unknown_candidate_rejected(self):
+        with self.assertRaises(ValueError):
+            RecoveryController(SimpleNamespace(), grasp_candidate='unrecognized')
