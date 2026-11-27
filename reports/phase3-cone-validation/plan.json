@@ -1,0 +1,1 @@
+{"seeds":[1031],"conditions_in_order":["cone","phase2"],"horizon_s":25,"scene":"cube","note":"One untouched seed, chosen before rollouts. Smoke test only; no success-rate inference."}

@@ -1,0 +1,53 @@
+{
+  "scope": "Recorded observation vs simulator truth, offline only; not a calibrated uncertainty estimate",
+  "rows": [
+    {
+      "trace": "datasets/local-rollouts/phase3-dev-1020.npz",
+      "seed": 1020,
+      "frame": 201,
+      "time_s": 10.050000000000026,
+      "observed_xy_m": [
+        0.21613122856080297,
+        -0.06534272050738442
+      ],
+      "simulator_truth_xy_m": [
+        0.21749943254634313,
+        -0.0679613479583263
+      ],
+      "xy_error_mm": 2.954520582577544,
+      "settled_placement": true
+    },
+    {
+      "trace": "datasets/local-rollouts/phase3-dev-1022.npz",
+      "seed": 1022,
+      "frame": 173,
+      "time_s": 8.649999999999558,
+      "observed_xy_m": [
+        0.14152685211166474,
+        0.09435439772890464
+      ],
+      "simulator_truth_xy_m": [
+        0.14170134907962192,
+        0.09401402228920908
+      ],
+      "xy_error_mm": 0.38249788466630374,
+      "settled_placement": true
+    },
+    {
+      "trace": "datasets/local-rollouts/phase3-v2-phase2-1030.npz",
+      "seed": 1030,
+      "frame": 178,
+      "time_s": 8.899999999999642,
+      "observed_xy_m": [
+        0.1476744453837555,
+        -0.1119348913601477
+      ],
+      "simulator_truth_xy_m": [
+        0.14848151396114262,
+        -0.1138391485008478
+      ],
+      "xy_error_mm": 2.0682250715318675,
+      "settled_placement": false
+    }
+  ]
+}

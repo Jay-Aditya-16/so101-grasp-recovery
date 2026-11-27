@@ -3,13 +3,13 @@ import numpy as np
 import mujoco
 
 from object_geometry import estimate_object
-from phase2_planner import check_pose, inspect_path
+from phase2_planner import check_pose, inspect_path, cone_directions
 
 
 class RecoveryController:
     """One recovery attempt after a suspected miss; no simulator object state input."""
 
-    def __init__(self, robot, fps=20, depth_gate=None, depth_view="top", retry_only=False, bandit=None, bandit_mode=None):
+    def __init__(self, robot, fps=20, depth_gate=None, depth_view="top", retry_only=False, bandit=None, bandit_mode=None, experimental_cone_ik=False):
         self.robot, self.fps = robot, fps
         self.state = "idle"
         self.reason = None
@@ -21,6 +21,7 @@ class RecoveryController:
         self.depth_checks = []
         self.bandit, self.bandit_mode = bandit, bandit_mode
         self.bandit_selection = None
+        self.experimental_cone_ik = experimental_cone_ik
 
     def log(self, state, reason=None):
         self.state, self.reason = state, reason
@@ -68,33 +69,42 @@ class RecoveryController:
         # During transport, try position-only IK if the five-DOF arm cannot reach
         # the exact downward orientation, and independently limit tool tilt.
         directions = (DOWN, None) if allow_cube_contact else (DOWN,)
-        for candidate_index, candidate in enumerate(targets):
-            for direction in directions:
-                for seed in seeds:
-                    scratch = mujoco.MjData(self.robot.model)
-                    scratch.qpos[:] = self.robot.data.qpos
-                    scratch.qpos[self.robot.arm_qadr] = seed
-                    q, _ = solve_ik(self.robot.model, scratch, SITE, candidate, direction, ARM_JOINTS)
-                    # The box lies to the side of this five-joint arm. Test up to
-                    # ~46 degrees of tool tilt for transfer, subject to path checks.
-                    min_dot = 0.70 if direction is None and next_state in ("place", "release") else 0.90
-                    check = check_pose(self.robot, q, candidate, min_direction_dot=min_dot if direction is None else 0.98)
-                    checks.append(check)
-                    if check["valid"]:
-                        path = inspect_path(self.robot, self.robot.q_arm, q, allow_cube_contact=allow_cube_contact)
-                        if path["first_penetration"] is None:
-                            if next_state == "place":
-                                self.place_xy = candidate[:2].copy()
-                                if action_ids is not None:
-                                    self.bandit_selection = {"action": action_ids[candidate_index],
-                                        "observed_xy_m": self.xy.tolist(), "mode": self.bandit_mode,
-                                        "scores": scores}
-                                    self.events.append({"state": "bandit_selection", "time_s": float(self.robot.data.time),
-                                                        **self.bandit_selection})
-                                self.events.append({"state": "box_target", "time_s": float(self.robot.data.time),
-                                                    "xy_m": self.place_xy.tolist()})
-                            self.move(q, 1.5, next_state, grip, allow_cube_contact)
-                            return
+        # Keep the original search first. Only the explicit simulator experiment
+        # samples tool axes inside the unchanged transfer orientation limit.
+        passes = [("baseline", directions)]
+        if self.experimental_cone_ik and next_state in ("place", "release") and allow_cube_contact:
+            passes.append(("cone40", tuple(cone_directions())))
+        for pass_name, pass_directions in passes:
+            for candidate_index, candidate in enumerate(targets):
+                for direction in pass_directions:
+                    for seed in seeds:
+                        scratch = mujoco.MjData(self.robot.model)
+                        scratch.qpos[:] = self.robot.data.qpos
+                        scratch.qpos[self.robot.arm_qadr] = seed
+                        q, _ = solve_ik(self.robot.model, scratch, SITE, candidate, direction, ARM_JOINTS)
+                        min_dot = 0.70 if next_state in ("place", "release") and (direction is None or pass_name == "cone40") else (0.90 if direction is None else 0.98)
+                        check = check_pose(self.robot, q, candidate, min_direction_dot=min_dot)
+                        checks.append(check)
+                        if check["valid"]:
+                            path = inspect_path(self.robot, self.robot.q_arm, q, allow_cube_contact=allow_cube_contact)
+                            if path["first_penetration"] is None:
+                                if pass_name == "cone40":
+                                    self.events.append({"state": "experimental_cone_ik", "time_s": float(self.robot.data.time),
+                                                        "target": next_state, "direction": direction.tolist(),
+                                                        "position_error_m": check["position_error_m"],
+                                                        "downward_axis_dot": check["downward_axis_dot"]})
+                                if next_state == "place":
+                                    self.place_xy = candidate[:2].copy()
+                                    if action_ids is not None:
+                                        self.bandit_selection = {"action": action_ids[candidate_index],
+                                            "observed_xy_m": self.xy.tolist(), "mode": self.bandit_mode,
+                                            "scores": scores}
+                                        self.events.append({"state": "bandit_selection", "time_s": float(self.robot.data.time),
+                                                            **self.bandit_selection})
+                                    self.events.append({"state": "box_target", "time_s": float(self.robot.data.time),
+                                                        "xy_m": self.place_xy.tolist()})
+                                self.move(q, 1.5, next_state, grip, allow_cube_contact)
+                                return
         self.log("aborted", f"no IK solution with validated pose and sampled path: {checks}")
 
     def start(self):

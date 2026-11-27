@@ -1,0 +1,23 @@
+[
+  {
+    "trace": "datasets/local-rollouts/phase3-cone-1030.npz",
+    "scenario": "cube",
+    "transitions": 382,
+    "valid": true,
+    "problems": []
+  },
+  {
+    "trace": "datasets/local-rollouts/phase3-cone-1031.npz",
+    "scenario": "cube",
+    "transitions": 382,
+    "valid": true,
+    "problems": []
+  },
+  {
+    "trace": "datasets/local-rollouts/phase3-phase2-1031.npz",
+    "scenario": "cube",
+    "transitions": 382,
+    "valid": true,
+    "problems": []
+  }
+]

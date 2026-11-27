@@ -1,0 +1,521 @@
+{
+  "trace": "datasets/local-rollouts/phase3-v2-phase2-1030.npz",
+  "requested_time_s": 15.25,
+  "matched_time_s": 15.250000000001762,
+  "target_xyz_m": [
+    0.05,
+    0.22,
+    0.12
+  ],
+  "candidate_count": 20,
+  "records": [
+    {
+      "direction": "down",
+      "seed": "current",
+      "solver_error": 0.17713271083125193,
+      "joint_target_rad": [
+        1.6308325501674648,
+        -1.7453293,
+        -1.69,
+        1.658063,
+        -0.09052731930322863
+      ],
+      "pose": {
+        "valid": false,
+        "in_joint_limits": true,
+        "position_error_m": 0.11983312627397923,
+        "downward_axis_dot": -0.9787606885690858,
+        "site_xyz_m": [
+          0.05221128848893358,
+          0.2568438452744417,
+          0.23400710250334036
+        ]
+      },
+      "sampled_path": null,
+      "rigid_cube_path": null
+    },
+    {
+      "direction": "down",
+      "seed": "home",
+      "solver_error": 0.5599462979656356,
+      "joint_target_rad": [
+        -1.5719285336271627,
+        0.3708562046355286,
+        -1.0443559566771137,
+        1.658063,
+        -1.147665006542522
+      ],
+      "pose": {
+        "valid": false,
+        "in_joint_limits": true,
+        "position_error_m": 0.08647621998616443,
+        "downward_axis_dot": 0.8330305468650981,
+        "site_xyz_m": [
+          0.04993177801859587,
+          0.2910816300336235,
+          0.16924970904096628
+        ]
+      },
+      "sampled_path": null,
+      "rigid_cube_path": null
+    },
+    {
+      "direction": "position_only",
+      "seed": "current",
+      "solver_error": 0.0006902118076622937,
+      "joint_target_rad": [
+        -1.475818302956705,
+        -0.9320760904082577,
+        0.9050276694109545,
+        0.7080882862706006,
+        1.040764270897128
+      ],
+      "pose": {
+        "valid": false,
+        "in_joint_limits": true,
+        "position_error_m": 0.0006902118076622937,
+        "downward_axis_dot": 0.6296012547773013,
+        "site_xyz_m": [
+          0.04993499965815772,
+          0.21931345483239623,
+          0.12002868846173537
+        ]
+      },
+      "sampled_path": null,
+      "rigid_cube_path": null
+    },
+    {
+      "direction": "position_only",
+      "seed": "home",
+      "solver_error": 0.0007015240299539818,
+      "joint_target_rad": [
+        -1.5106071275772734,
+        -1.2875192091814316,
+        1.5093777506253085,
+        0.042332966857420676,
+        0.28240631059603893
+      ],
+      "pose": {
+        "valid": false,
+        "in_joint_limits": true,
+        "position_error_m": 0.0007015240299539818,
+        "downward_axis_dot": 0.2611289133594389,
+        "site_xyz_m": [
+          0.04966243890088082,
+          0.21938964206285433,
+          0.12007517750679293
+        ]
+      },
+      "sampled_path": null,
+      "rigid_cube_path": null
+    },
+    {
+      "direction": "cone40_0",
+      "seed": "current",
+      "solver_error": 1.0353497354340284,
+      "joint_target_rad": [
+        0.014338222249356566,
+        -1.7453293,
+        -0.47386088742222754,
+        1.658063,
+        0.41528202407218207
+      ],
+      "pose": {
+        "valid": false,
+        "in_joint_limits": true,
+        "position_error_m": 0.30098348441359846,
+        "downward_axis_dot": -0.5321408755735323,
+        "site_xyz_m": [
+          -0.003231142891235425,
+          0.0045236376381548255,
+          0.32329151625080305
+        ]
+      },
+      "sampled_path": null,
+      "rigid_cube_path": null
+    },
+    {
+      "direction": "cone40_0",
+      "seed": "home",
+      "solver_error": 1.035308770638212,
+      "joint_target_rad": [
+        0.014287628110332701,
+        -1.7453293,
+        -0.47299798352106787,
+        1.658063,
+        0.38747863557710593
+      ],
+      "pose": {
+        "valid": false,
+        "in_joint_limits": true,
+        "position_error_m": 0.30123015978998646,
+        "downward_axis_dot": -0.5314100949317011,
+        "site_xyz_m": [
+          -0.003122694953866953,
+          0.004204737930870865,
+          0.3233469776427844
+        ]
+      },
+      "sampled_path": null,
+      "rigid_cube_path": null
+    },
+    {
+      "direction": "cone40_1",
+      "seed": "current",
+      "solver_error": 0.14695327590898066,
+      "joint_target_rad": [
+        -0.8416146276535588,
+        -1.199300681681619,
+        0.8485488962716015,
+        1.2241950441597178,
+        -0.2736224007809923
+      ],
+      "pose": {
+        "valid": false,
+        "in_joint_limits": true,
+        "position_error_m": 0.14243696559331798,
+        "downward_axis_dot": 0.7665447063397576,
+        "site_xyz_m": [
+          0.15621897028717602,
+          0.1251010035956091,
+          0.12000005892052508
+        ]
+      },
+      "sampled_path": null,
+      "rigid_cube_path": null
+    },
+    {
+      "direction": "cone40_1",
+      "seed": "home",
+      "solver_error": 0.13979864373481188,
+      "joint_target_rad": [
+        -0.8386954107221869,
+        -1.2051763476410626,
+        0.8510448842806739,
+        1.2274958321726674,
+        0.3539034238301253
+      ],
+      "pose": {
+        "valid": false,
+        "in_joint_limits": true,
+        "position_error_m": 0.13553107134235015,
+        "downward_axis_dot": 0.7664940415507984,
+        "site_xyz_m": [
+          0.15080465018586356,
+          0.12940698812762558,
+          0.11999994788098757
+        ]
+      },
+      "sampled_path": null,
+      "rigid_cube_path": null
+    },
+    {
+      "direction": "cone40_2",
+      "seed": "current",
+      "solver_error": 0.003586855785809957,
+      "joint_target_rad": [
+        -1.5690436761322373,
+        -0.728653052171227,
+        0.6441207328369741,
+        0.957197701129781,
+        -0.5761287636545909
+      ],
+      "pose": {
+        "valid": true,
+        "in_joint_limits": true,
+        "position_error_m": 0.0034051840951921882,
+        "downward_axis_dot": 0.7660449289365822,
+        "site_xyz_m": [
+          0.046594821130899564,
+          0.22000596586761934,
+          0.11999999771028334
+        ]
+      },
+      "sampled_path": {
+        "samples": 101,
+        "first_penetration": null,
+        "caveat": "Discrete kinematic samples only; no dynamic, swept-volume or real-world guarantee."
+      },
+      "rigid_cube_path": {
+        "samples": 101,
+        "first_penetration": null
+      }
+    },
+    {
+      "direction": "cone40_2",
+      "seed": "home",
+      "solver_error": 0.008216198201000682,
+      "joint_target_rad": [
+        -1.56680965378212,
+        -0.7452898939560657,
+        0.6643619212936278,
+        0.9535965121345747,
+        -0.12631778805792415
+      ],
+      "pose": {
+        "valid": false,
+        "in_joint_limits": true,
+        "position_error_m": 0.007805809268941403,
+        "downward_axis_dot": 0.7660469586463343,
+        "site_xyz_m": [
+          0.042194252767841736,
+          0.22003112058387916,
+          0.11999999797518555
+        ]
+      },
+      "sampled_path": null,
+      "rigid_cube_path": null
+    },
+    {
+      "direction": "cone40_3",
+      "seed": "current",
+      "solver_error": 0.6569915149439696,
+      "joint_target_rad": [
+        1.91986,
+        -1.4921727048822169,
+        -1.69,
+        1.658063,
+        -2.7438473
+      ],
+      "pose": {
+        "valid": false,
+        "in_joint_limits": true,
+        "position_error_m": 0.19169577580556094,
+        "downward_axis_dot": -0.9989103776042021,
+        "site_xyz_m": [
+          0.10184536254834899,
+          0.1850408700687664,
+          0.30121034208448827
+        ]
+      },
+      "sampled_path": null,
+      "rigid_cube_path": null
+    },
+    {
+      "direction": "cone40_3",
+      "seed": "home",
+      "solver_error": 0.2836640787976466,
+      "joint_target_rad": [
+        -1.91986,
+        -0.6580403924137157,
+        0.46112688296401183,
+        1.1175340838645,
+        -2.7438473
+      ],
+      "pose": {
+        "valid": false,
+        "in_joint_limits": true,
+        "position_error_m": 0.08166298469301951,
+        "downward_axis_dot": 0.7959774233033147,
+        "site_xyz_m": [
+          -0.02653507607645058,
+          0.19152582212054448,
+          0.12066812651001732
+        ]
+      },
+      "sampled_path": null,
+      "rigid_cube_path": null
+    },
+    {
+      "direction": "cone40_4",
+      "seed": "current",
+      "solver_error": 0.6315777062701632,
+      "joint_target_rad": [
+        -0.5535813845614079,
+        1.7453293,
+        -1.69,
+        1.658063,
+        -1.2502732974079658
+      ],
+      "pose": {
+        "valid": false,
+        "in_joint_limits": true,
+        "position_error_m": 0.31264163093740543,
+        "downward_axis_dot": 0.9898504098639451,
+        "site_xyz_m": [
+          0.25917118387159055,
+          0.12231050828070936,
+          -0.0908292400038114
+        ]
+      },
+      "sampled_path": null,
+      "rigid_cube_path": null
+    },
+    {
+      "direction": "cone40_4",
+      "seed": "home",
+      "solver_error": 0.6095195644802535,
+      "joint_target_rad": [
+        -1.91986,
+        -0.142028185904435,
+        -0.16276337844709365,
+        1.5961117280815829,
+        -2.7438473
+      ],
+      "pose": {
+        "valid": false,
+        "in_joint_limits": true,
+        "position_error_m": 0.08167013091672573,
+        "downward_axis_dot": 0.9612000717408369,
+        "site_xyz_m": [
+          -0.02652960881222481,
+          0.19151080083378044,
+          0.12126284990020063
+        ]
+      },
+      "sampled_path": null,
+      "rigid_cube_path": null
+    },
+    {
+      "direction": "cone40_5",
+      "seed": "current",
+      "solver_error": 0.6586066064654854,
+      "joint_target_rad": [
+        1.91986,
+        -1.7453293,
+        -0.20564734279293306,
+        1.658063,
+        -2.6909721775924065
+      ],
+      "pose": {
+        "valid": false,
+        "in_joint_limits": true,
+        "position_error_m": 0.28521436571896785,
+        "downward_axis_dot": -0.2887429877479617,
+        "site_xyz_m": [
+          0.029162184244518004,
+          -0.012917809498239063,
+          0.2832859879645396
+        ]
+      },
+      "sampled_path": null,
+      "rigid_cube_path": null
+    },
+    {
+      "direction": "cone40_5",
+      "seed": "home",
+      "solver_error": 0.9301923588936575,
+      "joint_target_rad": [
+        -1.91986,
+        0.40550890694894703,
+        -1.2214403747944709,
+        1.658063,
+        -2.7438473
+      ],
+      "pose": {
+        "valid": false,
+        "in_joint_limits": true,
+        "position_error_m": 0.13360316589555934,
+        "downward_axis_dot": 0.7460641457526672,
+        "site_xyz_m": [
+          -0.055402674575301625,
+          0.27083943443780395,
+          0.184462656133095
+        ]
+      },
+      "sampled_path": null,
+      "rigid_cube_path": null
+    },
+    {
+      "direction": "cone40_6",
+      "seed": "current",
+      "solver_error": 0.920988865036483,
+      "joint_target_rad": [
+        1.5704768272386473,
+        -1.7094305138978612,
+        -1.69,
+        1.658063,
+        1.3757686239388351
+      ],
+      "pose": {
+        "valid": false,
+        "in_joint_limits": true,
+        "position_error_m": 0.12803961365571093,
+        "downward_axis_dot": -0.9854879713631484,
+        "site_xyz_m": [
+          0.05017228603954959,
+          0.2441685919722628,
+          0.2457377912351834
+        ]
+      },
+      "sampled_path": null,
+      "rigid_cube_path": null
+    },
+    {
+      "direction": "cone40_6",
+      "seed": "home",
+      "solver_error": 0.7258983493762181,
+      "joint_target_rad": [
+        1.91986,
+        -1.7453293,
+        1.69,
+        1.658063,
+        2.8412063
+      ],
+      "pose": {
+        "valid": false,
+        "in_joint_limits": true,
+        "position_error_m": 0.2898117599351314,
+        "downward_axis_dot": 0.9994900454445481,
+        "site_xyz_m": [
+          0.03149830741813609,
+          -0.032237528503685615,
+          -0.021508914145564842
+        ]
+      },
+      "sampled_path": null,
+      "rigid_cube_path": null
+    },
+    {
+      "direction": "cone40_7",
+      "seed": "current",
+      "solver_error": 1.0030496508627038,
+      "joint_target_rad": [
+        0.8326684694644911,
+        -1.7453293,
+        -1.0067268645655667,
+        1.658063,
+        0.776894730690872
+      ],
+      "pose": {
+        "valid": false,
+        "in_joint_limits": true,
+        "position_error_m": 0.24667949709699447,
+        "downward_axis_dot": -0.8884666209359451,
+        "site_xyz_m": [
+          -0.05449431234642564,
+          0.11396070032180666,
+          0.31669107732439733
+        ]
+      },
+      "sampled_path": null,
+      "rigid_cube_path": null
+    },
+    {
+      "direction": "cone40_7",
+      "seed": "home",
+      "solver_error": 0.950198556236077,
+      "joint_target_rad": [
+        0.854477710331916,
+        -1.0035035338118716,
+        -1.69,
+        1.658063,
+        0.022380910875911986
+      ],
+      "pose": {
+        "valid": false,
+        "in_joint_limits": true,
+        "position_error_m": 0.3221297531902715,
+        "downward_axis_dot": -0.8600871769641756,
+        "site_xyz_m": [
+          -0.02894505761389901,
+          0.07677370655050132,
+          0.3975274484325496
+        ]
+      },
+      "sampled_path": null,
+      "rigid_cube_path": null
+    }
+  ],
+  "limitations": "Offline kinematic replay only; source state includes simulator ground truth. Rigid-cube path assumes no slip and ignores cube-robot contact; no continuous swept-volume, dynamic or real-world safety guarantees."
+}

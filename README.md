@@ -85,3 +85,5 @@ For a consolidated research summary, see the [project report PDF](reports/SO101-
 The trained ACT baseline has been evaluated in simulation; physical-arm trials and the recovery layer are pending.
 
 Phase III has started with a simulation-only contextual placement bandit. See [the implementation, initial tests, and limits](docs/phase3-placement-bandit.md).
+
+The [Phase III ablation and implementation roadmap](docs/phase3-implementation-roadmap.md) records a simulator-only tilted IK experiment, grasp-stage data preparation, and the evidence required before testing grasp bandits or world models in the controller.
