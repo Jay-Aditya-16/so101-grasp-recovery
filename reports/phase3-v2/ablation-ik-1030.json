@@ -1,0 +1,309 @@
+{
+  "trace": "datasets/local-rollouts/phase3-v2-phase2-1030.npz",
+  "seed": 1030,
+  "time_s": 15.250000000001762,
+  "frame": 305,
+  "thresholds": {
+    "0.98": {
+      "feasible_solver_outputs": 0,
+      "candidates": [],
+      "max_tilt_deg": 11.478340954533579
+    },
+    "0.7": {
+      "feasible_solver_outputs": 0,
+      "candidates": [],
+      "max_tilt_deg": 45.5729959991943
+    },
+    "0.65": {
+      "feasible_solver_outputs": 2,
+      "candidates": [
+        "x_plus_y_minus",
+        "y_minus"
+      ],
+      "max_tilt_deg": 49.45839812649548
+    },
+    "0.6": {
+      "feasible_solver_outputs": 6,
+      "candidates": [
+        "center",
+        "x_minus",
+        "x_plus",
+        "x_plus_y_minus",
+        "y_minus",
+        "y_plus"
+      ],
+      "max_tilt_deg": 53.13010235415599
+    }
+  },
+  "reproduction": {
+    "max_position_error_difference_m": 0.0,
+    "max_axis_dot_difference": 0.0
+  },
+  "solutions": [
+    {
+      "candidate": "center",
+      "direction": "down",
+      "seed": "current",
+      "position_error_m": 0.11983312627397923,
+      "axis_dot": -0.9787606885690858,
+      "in_joint_limits": true,
+      "path": null
+    },
+    {
+      "candidate": "center",
+      "direction": "down",
+      "seed": "home",
+      "position_error_m": 0.08647621998616443,
+      "axis_dot": 0.8330305468650981,
+      "in_joint_limits": true,
+      "path": null
+    },
+    {
+      "candidate": "center",
+      "direction": "position_only",
+      "seed": "current",
+      "position_error_m": 0.0006902118076622937,
+      "axis_dot": 0.6296012547773013,
+      "in_joint_limits": true,
+      "path": {
+        "samples": 101,
+        "first_penetration": null,
+        "caveat": "Discrete kinematic samples only; no dynamic, swept-volume or real-world guarantee."
+      }
+    },
+    {
+      "candidate": "center",
+      "direction": "position_only",
+      "seed": "home",
+      "position_error_m": 0.0007015240299539818,
+      "axis_dot": 0.2611289133594389,
+      "in_joint_limits": true,
+      "path": {
+        "samples": 101,
+        "first_penetration": null,
+        "caveat": "Discrete kinematic samples only; no dynamic, swept-volume or real-world guarantee."
+      }
+    },
+    {
+      "candidate": "x_plus",
+      "direction": "down",
+      "seed": "current",
+      "position_error_m": 0.11943446499867029,
+      "axis_dot": -0.9787606885690854,
+      "in_joint_limits": true,
+      "path": null
+    },
+    {
+      "candidate": "x_plus",
+      "direction": "down",
+      "seed": "home",
+      "position_error_m": 0.08971763522896613,
+      "axis_dot": 0.816574208533107,
+      "in_joint_limits": true,
+      "path": null
+    },
+    {
+      "candidate": "x_plus",
+      "direction": "position_only",
+      "seed": "current",
+      "position_error_m": 0.0006106519526983221,
+      "axis_dot": 0.6373018833074556,
+      "in_joint_limits": true,
+      "path": {
+        "samples": 101,
+        "first_penetration": null,
+        "caveat": "Discrete kinematic samples only; no dynamic, swept-volume or real-world guarantee."
+      }
+    },
+    {
+      "candidate": "x_plus",
+      "direction": "position_only",
+      "seed": "home",
+      "position_error_m": 0.0008613247361100986,
+      "axis_dot": 0.26813164728546274,
+      "in_joint_limits": true,
+      "path": {
+        "samples": 101,
+        "first_penetration": null,
+        "caveat": "Discrete kinematic samples only; no dynamic, swept-volume or real-world guarantee."
+      }
+    },
+    {
+      "candidate": "y_minus",
+      "direction": "down",
+      "seed": "current",
+      "position_error_m": 0.1638297404446853,
+      "axis_dot": -0.9994056784985327,
+      "in_joint_limits": true,
+      "path": null
+    },
+    {
+      "candidate": "y_minus",
+      "direction": "down",
+      "seed": "home",
+      "position_error_m": 0.06156281773347427,
+      "axis_dot": 0.9212946151334882,
+      "in_joint_limits": true,
+      "path": null
+    },
+    {
+      "candidate": "y_minus",
+      "direction": "position_only",
+      "seed": "current",
+      "position_error_m": 0.0006700323448673105,
+      "axis_dot": 0.657109140045983,
+      "in_joint_limits": true,
+      "path": {
+        "samples": 101,
+        "first_penetration": null,
+        "caveat": "Discrete kinematic samples only; no dynamic, swept-volume or real-world guarantee."
+      }
+    },
+    {
+      "candidate": "y_minus",
+      "direction": "position_only",
+      "seed": "home",
+      "position_error_m": 0.0006893972498727209,
+      "axis_dot": 0.2783620293125807,
+      "in_joint_limits": true,
+      "path": {
+        "samples": 101,
+        "first_penetration": null,
+        "caveat": "Discrete kinematic samples only; no dynamic, swept-volume or real-world guarantee."
+      }
+    },
+    {
+      "candidate": "x_plus_y_minus",
+      "direction": "down",
+      "seed": "current",
+      "position_error_m": 0.16191966656377496,
+      "axis_dot": -0.9991344027166833,
+      "in_joint_limits": true,
+      "path": null
+    },
+    {
+      "candidate": "x_plus_y_minus",
+      "direction": "down",
+      "seed": "home",
+      "position_error_m": 0.06547835786196458,
+      "axis_dot": 0.9102383140710386,
+      "in_joint_limits": true,
+      "path": null
+    },
+    {
+      "candidate": "x_plus_y_minus",
+      "direction": "position_only",
+      "seed": "current",
+      "position_error_m": 0.000583411085010309,
+      "axis_dot": 0.6644937511431431,
+      "in_joint_limits": true,
+      "path": {
+        "samples": 101,
+        "first_penetration": null,
+        "caveat": "Discrete kinematic samples only; no dynamic, swept-volume or real-world guarantee."
+      }
+    },
+    {
+      "candidate": "x_plus_y_minus",
+      "direction": "position_only",
+      "seed": "home",
+      "position_error_m": 0.0006808638978796704,
+      "axis_dot": 0.2721895097425359,
+      "in_joint_limits": true,
+      "path": {
+        "samples": 101,
+        "first_penetration": null,
+        "caveat": "Discrete kinematic samples only; no dynamic, swept-volume or real-world guarantee."
+      }
+    },
+    {
+      "candidate": "x_minus",
+      "direction": "down",
+      "seed": "current",
+      "position_error_m": 0.11992071461345477,
+      "axis_dot": -0.9787606885690852,
+      "in_joint_limits": true,
+      "path": null
+    },
+    {
+      "candidate": "x_minus",
+      "direction": "down",
+      "seed": "home",
+      "position_error_m": 0.08250319422505947,
+      "axis_dot": 0.8507348458110587,
+      "in_joint_limits": true,
+      "path": null
+    },
+    {
+      "candidate": "x_minus",
+      "direction": "position_only",
+      "seed": "current",
+      "position_error_m": 0.0007644224491877569,
+      "axis_dot": 0.6363556087465125,
+      "in_joint_limits": true,
+      "path": {
+        "samples": 101,
+        "first_penetration": null,
+        "caveat": "Discrete kinematic samples only; no dynamic, swept-volume or real-world guarantee."
+      }
+    },
+    {
+      "candidate": "x_minus",
+      "direction": "position_only",
+      "seed": "home",
+      "position_error_m": 0.0006069247156602622,
+      "axis_dot": 0.2567812767021047,
+      "in_joint_limits": true,
+      "path": {
+        "samples": 101,
+        "first_penetration": null,
+        "caveat": "Discrete kinematic samples only; no dynamic, swept-volume or real-world guarantee."
+      }
+    },
+    {
+      "candidate": "y_plus",
+      "direction": "down",
+      "seed": "current",
+      "position_error_m": 0.11609707962599339,
+      "axis_dot": -0.9787606885690854,
+      "in_joint_limits": true,
+      "path": null
+    },
+    {
+      "candidate": "y_plus",
+      "direction": "down",
+      "seed": "home",
+      "position_error_m": 0.08848198717724456,
+      "axis_dot": 0.7895714270921931,
+      "in_joint_limits": true,
+      "path": null
+    },
+    {
+      "candidate": "y_plus",
+      "direction": "position_only",
+      "seed": "current",
+      "position_error_m": 0.000709610294823862,
+      "axis_dot": 0.6076576196434839,
+      "in_joint_limits": true,
+      "path": {
+        "samples": 101,
+        "first_penetration": null,
+        "caveat": "Discrete kinematic samples only; no dynamic, swept-volume or real-world guarantee."
+      }
+    },
+    {
+      "candidate": "y_plus",
+      "direction": "position_only",
+      "seed": "home",
+      "position_error_m": 0.0005300125250240849,
+      "axis_dot": 0.29037888378790144,
+      "in_joint_limits": true,
+      "path": {
+        "samples": 101,
+        "first_penetration": null,
+        "caveat": "Discrete kinematic samples only; no dynamic, swept-volume or real-world guarantee."
+      }
+    }
+  ],
+  "scope": "Offline FK/IK and sampled path counterfactual only; no action executed, no carried-object sweep, dynamics or physical safety validation."
+}

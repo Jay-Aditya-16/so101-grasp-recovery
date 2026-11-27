@@ -3,6 +3,15 @@ import numpy as np
 import mujoco
 
 
+
+def cone_directions(tilt_deg=40, azimuth_count=8):
+    if not 0 <= tilt_deg < 90 or azimuth_count < 1:
+        raise ValueError('invalid cone sample settings')
+    tilt = np.deg2rad(tilt_deg)
+    for phi in np.linspace(0, 2 * np.pi, azimuth_count, endpoint=False):
+        yield np.array([np.sin(tilt) * np.cos(phi), np.sin(tilt) * np.sin(phi), -np.cos(tilt)])
+
+
 def check_pose(robot, q, target, max_position_error_m=0.005, min_direction_dot=0.98):
     """Independently verify FK position, downward tool axis and joint bounds."""
     q = np.asarray(q, dtype=float)
