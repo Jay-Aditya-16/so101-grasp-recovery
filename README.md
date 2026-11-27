@@ -83,3 +83,5 @@ See [the complete project roadmap](docs/project-roadmap.md) for the phased plan,
 For a consolidated research summary, see the [project report PDF](reports/SO101-Project-Report.pdf) or its [editable source](docs/project-report.md). The report covers the simulator, ACT baseline, recovery experiments, varied-object and drawer results, limitations, and future phases.
 
 The trained ACT baseline has been evaluated in simulation; physical-arm trials and the recovery layer are pending.
+
+Phase III has started with a simulation-only contextual placement bandit. See [the implementation, initial tests, and limits](docs/phase3-placement-bandit.md).

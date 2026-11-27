@@ -1,0 +1,172 @@
+[
+  {
+    "episode": 1,
+    "seed": 1020,
+    "scenario": "cube",
+    "start_xy": [
+      0.21749943254634313,
+      -0.0679613479583263
+    ],
+    "bilateral_gripper_contact": true,
+    "lifted_5cm": true,
+    "settled_placement": true,
+    "max_lift_m": 0.0963,
+    "task": "pick_place",
+    "task_success": true,
+    "capture_path": "datasets/local-rollouts/phase3-frozen-1020.npz",
+    "recovery_events": [
+      {
+        "state": "moving",
+        "time_s": 6.049999999999556,
+        "reason": "observe"
+      },
+      {
+        "state": "observe",
+        "time_s": 10.000000000000009,
+        "reason": null
+      },
+      {
+        "state": "open",
+        "time_s": 10.050000000000026,
+        "reason": "observed cube at [0.21613122856080297, -0.06534272050738442]"
+      },
+      {
+        "state": "moving",
+        "time_s": 10.75000000000026,
+        "reason": "descend"
+      },
+      {
+        "state": "descend",
+        "time_s": 12.25000000000076,
+        "reason": null
+      },
+      {
+        "state": "moving",
+        "time_s": 12.300000000000777,
+        "reason": "close"
+      },
+      {
+        "state": "close",
+        "time_s": 13.800000000001278,
+        "reason": null
+      },
+      {
+        "state": "closing",
+        "time_s": 13.850000000001295,
+        "reason": null
+      },
+      {
+        "state": "gripper_check",
+        "time_s": 14.850000000001629,
+        "reason": "after_closure",
+        "measured_rad": 0.15289350375737107,
+        "plausible": true
+      },
+      {
+        "state": "moving",
+        "time_s": 14.850000000001629,
+        "reason": "transport"
+      },
+      {
+        "state": "transport",
+        "time_s": 16.350000000001817,
+        "reason": null
+      },
+      {
+        "state": "gripper_check",
+        "time_s": 16.40000000000179,
+        "reason": "after_lift",
+        "measured_rad": 0.14762958179582683,
+        "plausible": true
+      },
+      {
+        "state": "bandit_selection",
+        "time_s": 16.40000000000179,
+        "action": "center",
+        "observed_xy_m": [
+          0.21613122856080297,
+          -0.06534272050738442
+        ],
+        "mode": "active",
+        "scores": {
+          "center": {
+            "mean": 0.6297019037438453,
+            "uncertainty": 0.7002663656799454,
+            "score": 0.8047684951638316
+          },
+          "x_plus": {
+            "mean": 0.0,
+            "uncertainty": 1.0760119081263155,
+            "score": 0.2690029770315789
+          },
+          "y_minus": {
+            "mean": 0.0,
+            "uncertainty": 1.0760119081263155,
+            "score": 0.2690029770315789
+          },
+          "x_plus_y_minus": {
+            "mean": 0.0,
+            "uncertainty": 1.0760119081263155,
+            "score": 0.2690029770315789
+          },
+          "x_minus": {
+            "mean": 0.0,
+            "uncertainty": 1.0760119081263155,
+            "score": 0.2690029770315789
+          },
+          "y_plus": {
+            "mean": 0.0,
+            "uncertainty": 1.0760119081263155,
+            "score": 0.2690029770315789
+          }
+        }
+      },
+      {
+        "state": "box_target",
+        "time_s": 16.40000000000179,
+        "xy_m": [
+          0.05,
+          0.22
+        ]
+      },
+      {
+        "state": "moving",
+        "time_s": 16.40000000000179,
+        "reason": "place"
+      },
+      {
+        "state": "place",
+        "time_s": 17.900000000000958,
+        "reason": null
+      },
+      {
+        "state": "gripper_check",
+        "time_s": 17.95000000000093,
+        "reason": "after_transport",
+        "measured_rad": 0.14672311723740142,
+        "plausible": true
+      },
+      {
+        "state": "moving",
+        "time_s": 17.95000000000093,
+        "reason": "release"
+      },
+      {
+        "state": "release",
+        "time_s": 19.4500000000001,
+        "reason": null
+      },
+      {
+        "state": "releasing",
+        "time_s": 19.50000000000007,
+        "reason": null
+      },
+      {
+        "state": "bandit_no_update",
+        "time_s": 20.199999999999683,
+        "reason": "memory frozen"
+      }
+    ],
+    "depth_checks": []
+  }
+]

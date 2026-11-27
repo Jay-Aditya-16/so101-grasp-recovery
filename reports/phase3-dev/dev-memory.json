@@ -1,0 +1,39 @@
+{
+  "schema": "so101-placement-bandit-v1",
+  "actions": [
+    "center",
+    "x_plus",
+    "y_minus",
+    "x_plus_y_minus",
+    "x_minus",
+    "y_plus"
+  ],
+  "records": [
+    {
+      "id": "bf314679fa9140a5b13ed4b525dadbf3",
+      "action": "center",
+      "observed_xy_m": [
+        0.21613122856080297,
+        -0.06534272050738442
+      ],
+      "reward": 1,
+      "seed": 1020,
+      "episode": 1,
+      "mode": "active",
+      "evidence": "simulated_settled_placement_after_release"
+    },
+    {
+      "id": "42ce215b93a147b1b72398535efc87a3",
+      "action": "center",
+      "observed_xy_m": [
+        0.14152685211166474,
+        0.09435439772890464
+      ],
+      "reward": 1,
+      "seed": 1022,
+      "episode": 1,
+      "mode": "active",
+      "evidence": "simulated_settled_placement_after_release"
+    }
+  ]
+}
