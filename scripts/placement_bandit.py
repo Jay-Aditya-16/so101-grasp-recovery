@@ -53,7 +53,7 @@ class PlacementBandit:
                 if record["action"] == action:
                     f = features(record["observed_xy_m"])
                     a += np.outer(f, f)
-                    b += record["reward"] * f
+                    b += (2 * record["reward"] - 1) * f
             mean = float(x @ np.linalg.solve(a, b))
             uncertainty = float(np.sqrt(x @ np.linalg.solve(a, x)))
             output[action] = {"mean": mean, "uncertainty": uncertainty, "score": mean + ALPHA * uncertainty}
@@ -95,3 +95,20 @@ def verified_outcome(selection, events, result, time_s, trial_id, seed, episode,
     return {"id": trial_id, "action": selection["action"], "observed_xy_m": selection["observed_xy_m"],
             "reward": int(result["settled_placement"]), "seed": seed, "episode": episode,
             "mode": mode, "evidence": "simulated_settled_placement_after_release"}
+
+
+def summarize_trial(selection, result, record, frozen):
+    """Summarize all trials, including censored outcomes; never invent a label."""
+    if result is None:
+        status = "interrupted"
+    elif selection is None:
+        status = "no_placement_selection"
+    elif record is None:
+        status = "unverified_placement"
+    elif frozen:
+        status = "verified_frozen"
+    else:
+        status = "verified_updated"
+    return {"status": status, "action": selection["action"] if selection else None,
+            "reward": record["reward"] if record is not None else None,
+            "learner": "centered-linear-ucb-v1"}

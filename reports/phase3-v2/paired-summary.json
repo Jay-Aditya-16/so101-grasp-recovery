@@ -1,0 +1,13 @@
+{
+  "paired_trials": 1,
+  "both_succeed": 0,
+  "only_phase2": 0,
+  "only_phase3": 0,
+  "both_fail": 1,
+  "phase2_successes": 0,
+  "phase3_successes": 0,
+  "success_difference": 0.0,
+  "mcnemar_exact_two_sided_p": 1.0,
+  "memory_sha256": "2e0447fe065b89343ed926ff357a83c242e3e102ed58a39365cfe2bc673cfa98",
+  "limitations": "Checks manifest consistency, not authenticity or causal validity. Small samples have low power."
+}

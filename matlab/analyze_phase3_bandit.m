@@ -10,7 +10,7 @@ for i = 1:6
         r = data.records(j);
         if strcmp(r.action, actions{i})
             z = [1; (r.observed_xy_m(1)-.20)/.10; r.observed_xy_m(2)/.18];
-            A = A + z*z'; b = b + double(r.reward)*z;
+            A = A + z*z'; b = b + (2*double(r.reward)-1)*z;
         end
     end
     means(i) = f'*(A\b);

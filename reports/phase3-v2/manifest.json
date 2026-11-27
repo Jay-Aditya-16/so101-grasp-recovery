@@ -1,0 +1,42 @@
+{
+  "schema": "phase3-paired-evaluation-v1",
+  "heldout_seeds": [
+    1030
+  ],
+  "checkpoint_sha256": "974eda64112cb6505fa45d06bc9f74c9f848cc0db4416b8eab86a7021140a142",
+  "horizon_s": 25,
+  "trials": [
+    {
+      "seed": 1030,
+      "scenario": "cube",
+      "checkpoint_sha256": "974eda64112cb6505fa45d06bc9f74c9f848cc0db4416b8eab86a7021140a142",
+      "horizon_s": 25.0,
+      "start_xy": [
+        0.15244643849748193,
+        -0.11947608087849057
+      ],
+      "task_success": false,
+      "frozen": false,
+      "memory_sha256_before": null,
+      "memory_sha256_after": null,
+      "condition": "phase2",
+      "interrupted": false
+    },
+    {
+      "seed": 1030,
+      "scenario": "cube",
+      "checkpoint_sha256": "974eda64112cb6505fa45d06bc9f74c9f848cc0db4416b8eab86a7021140a142",
+      "horizon_s": 25.0,
+      "start_xy": [
+        0.15244643849748193,
+        -0.11947608087849057
+      ],
+      "task_success": false,
+      "frozen": true,
+      "memory_sha256_before": "2e0447fe065b89343ed926ff357a83c242e3e102ed58a39365cfe2bc673cfa98",
+      "memory_sha256_after": "2e0447fe065b89343ed926ff357a83c242e3e102ed58a39365cfe2bc673cfa98",
+      "condition": "phase3_frozen",
+      "interrupted": false
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+[
+  {
+    "episode": 1,
+    "seed": 1030,
+    "scenario": "cube",
+    "start_xy": [
+      0.15244643849748193,
+      -0.11947608087849057
+    ],
+    "checkpoint_sha256": "974eda64112cb6505fa45d06bc9f74c9f848cc0db4416b8eab86a7021140a142",
+    "horizon_s": 25.0,
+    "bandit_mode": "active",
+    "frozen": true,
+    "memory_sha256_before": "2e0447fe065b89343ed926ff357a83c242e3e102ed58a39365cfe2bc673cfa98",
+    "memory_sha256_after": "2e0447fe065b89343ed926ff357a83c242e3e102ed58a39365cfe2bc673cfa98",
+    "bilateral_gripper_contact": true,
+    "lifted_5cm": true,
+    "settled_placement": false,
+    "max_lift_m": 0.0976,
+    "task": "pick_place",
+    "task_success": false,
+    "capture_path": "datasets/local-rollouts/phase3-v2-bandit-1030.npz",
+    "recovery_events": [
+      {
+        "state": "trigger",
+        "time_s": 4.899999999999682,
+        "reason": "unknown_empty_gripper"
+      },
+      {
+        "state": "moving",
+        "time_s": 4.899999999999682,
+        "reason": "observe"
+      },
+      {
+        "state": "observe",
+        "time_s": 8.849999999999625,
+        "reason": null
+      },
+      {
+        "state": "open",
+        "time_s": 8.899999999999642,
+        "reason": "observed cube at [0.1476744453837555, -0.1119348913601477]"
+      },
+      {
+        "state": "moving",
+        "time_s": 9.599999999999875,
+        "reason": "descend"
+      },
+      {
+        "state": "descend",
+        "time_s": 11.100000000000376,
+        "reason": null
+      },
+      {
+        "state": "moving",
+        "time_s": 11.150000000000393,
+        "reason": "close"
+      },
+      {
+        "state": "close",
+        "time_s": 12.650000000000894,
+        "reason": null
+      },
+      {
+        "state": "closing",
+        "time_s": 12.70000000000091,
+        "reason": null
+      },
+      {
+        "state": "gripper_check",
+        "time_s": 13.700000000001245,
+        "reason": "after_closure",
+        "measured_rad": 0.17480904511744294,
+        "plausible": true
+      },
+      {
+        "state": "moving",
+        "time_s": 13.700000000001245,
+        "reason": "transport"
+      },
+      {
+        "state": "transport",
+        "time_s": 15.200000000001745,
+        "reason": null
+      },
+      {
+        "state": "gripper_check",
+        "time_s": 15.250000000001762,
+        "reason": "after_lift",
+        "measured_rad": 0.15083117239475613,
+        "plausible": true
+      },
+      {
+        "state": "aborted",
+        "time_s": 15.250000000001762,
+        "reason": "no IK solution with validated pose and sampled path: [{'valid': False, 'in_joint_limits': True, 'position_error_m': 0.11983312627397923, 'downward_axis_dot': -0.9787606885690858, 'site_xyz_m': [0.05221128848893358, 0.2568438452744417, 0.23400710250334036]}, {'valid': False, 'in_joint_limits': True, 'position_error_m': 0.08647621998616443, 'downward_axis_dot': 0.8330305468650981, 'site_xyz_m': [0.04993177801859587, 0.2910816300336235, 0.16924970904096628]}, {'valid': False, 'in_joint_limits': True, 'position_error_m': 0.0006902118076622937, 'downward_axis_dot': 0.6296012547773013, 'site_xyz_m': [0.04993499965815772, 0.21931345483239623, 0.12002868846173537]}, {'valid': False, 'in_joint_limits': True, 'position_error_m': 0.0007015240299539818, 'downward_axis_dot': 0.2611289133594389, 'site_xyz_m': [0.04966243890088082, 0.21938964206285433, 0.12007517750679293]}, {'valid': False, 'in_joint_limits': True, 'position_error_m': 0.11943446499867029, 'downward_axis_dot': -0.9787606885690854, 'site_xyz_m': [0.0696584529545407, 0.2551671208029767, 0.23404456962090642]}, {'valid': False, 'in_joint_limits': True, 'position_error_m': 0.08971763522896613, 'downward_axis_dot': 0.816574208533107, 'site_xyz_m': [0.06976949690880993, 0.29238752876559804, 0.17278779830154306]}, {'valid': False, 'in_joint_limits': True, 'position_error_m': 0.0006106519526983221, 'downward_axis_dot': 0.6373018833074556, 'site_xyz_m': [0.06490455447962097, 0.21939700175781388, 0.12001338207361704]}, {'valid': False, 'in_joint_limits': True, 'position_error_m': 0.0008613247361100986, 'downward_axis_dot': 0.26813164728546274, 'site_xyz_m': [0.06443288262720562, 0.2193581960888445, 0.1200913560404977]}, {'valid': False, 'in_joint_limits': True, 'position_error_m': 0.1638297404446853, 'downward_axis_dot': -0.9994056784985327, 'site_xyz_m': [0.05174852939606431, 0.2325196729903716, 0.2814923964080881]}, {'valid': False, 'in_joint_limits': True, 'position_error_m': 0.06156281773347427, 'downward_axis_dot': 0.9212946151334882, 'site_xyz_m': [0.05002271680289007, 0.26107912944999406, 0.14539904036302653]}, {'valid': False, 'in_joint_limits': True, 'position_error_m': 0.0006700323448673105, 'downward_axis_dot': 0.657109140045983, 'site_xyz_m': [0.04993475466430949, 0.2043384473682838, 0.1200838719548381]}, {'valid': False, 'in_joint_limits': True, 'position_error_m': 0.0006893972498727209, 'downward_axis_dot': 0.2783620293125807, 'site_xyz_m': [0.0499434827557215, 0.20460215918297125, 0.12056017591302833]}, {'valid': False, 'in_joint_limits': True, 'position_error_m': 0.16191966656377496, 'downward_axis_dot': -0.9991344027166833, 'site_xyz_m': [0.06882074477374721, 0.23193020823405183, 0.2796187464365278]}, {'valid': False, 'in_joint_limits': True, 'position_error_m': 0.06547835786196458, 'downward_axis_dot': 0.9102383140710386, 'site_xyz_m': [0.06916789468334122, 0.2640136020297368, 0.14806133955612105]}, {'valid': False, 'in_joint_limits': True, 'position_error_m': 0.000583411085010309, 'downward_axis_dot': 0.6644937511431431, 'site_xyz_m': [0.06490992307508747, 0.2044276573869125, 0.12006840010932263]}, {'valid': False, 'in_joint_limits': True, 'position_error_m': 0.0006808638978796704, 'downward_axis_dot': 0.2721895097425359, 'site_xyz_m': [0.06449431651741384, 0.20470205405978964, 0.12034509140758295]}, {'valid': False, 'in_joint_limits': True, 'position_error_m': 0.11992071461345477, 'downward_axis_dot': -0.9787606885690852, 'site_xyz_m': [0.03452552332348032, 0.25726339939700005, 0.23398329584050795]}, {'valid': False, 'in_joint_limits': True, 'position_error_m': 0.08250319422505947, 'downward_axis_dot': 0.8507348458110587, 'site_xyz_m': [0.030495434977577236, 0.28865638008928196, 0.16552787524509244]}, {'valid': False, 'in_joint_limits': True, 'position_error_m': 0.0007644224491877569, 'downward_axis_dot': 0.6363556087465125, 'site_xyz_m': [0.03497490820808717, 0.21923709749367726, 0.12004113208780609]}, {'valid': False, 'in_joint_limits': True, 'position_error_m': 0.0006069247156602622, 'downward_axis_dot': 0.2567812767021047, 'site_xyz_m': [0.03489315441329771, 0.21940438091809233, 0.12004668554753883]}, {'valid': False, 'in_joint_limits': True, 'position_error_m': 0.11609707962599339, 'downward_axis_dot': -0.9787606885690854, 'site_xyz_m': [0.051235719860414926, 0.25687882634069975, 0.2340101831068801]}, {'valid': False, 'in_joint_limits': True, 'position_error_m': 0.08848198717724456, 'downward_axis_dot': 0.7895714270921931, 'site_xyz_m': [0.049937477097216645, 0.3043560313826618, 0.17494359886800215]}, {'valid': False, 'in_joint_limits': True, 'position_error_m': 0.000709610294823862, 'downward_axis_dot': 0.6076576196434839, 'site_xyz_m': [0.049939294283886354, 0.2342935219465373, 0.11997260754617221]}, {'valid': False, 'in_joint_limits': True, 'position_error_m': 0.0005300125250240849, 'downward_axis_dot': 0.29037888378790144, 'site_xyz_m': [0.04970840475427247, 0.23456090754730846, 0.11994447246322007]}]"
+      },
+      {
+        "state": "bandit_trial",
+        "time_s": 24.999999999997023,
+        "status": "no_placement_selection",
+        "action": null,
+        "reward": null,
+        "learner": "centered-linear-ucb-v1"
+      }
+    ],
+    "depth_checks": []
+  }
+]

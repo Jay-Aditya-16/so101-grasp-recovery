@@ -1,0 +1,16 @@
+[
+  {
+    "trace": "datasets/local-rollouts/phase3-v2-phase2-1030.npz",
+    "scenario": "cube",
+    "transitions": 500,
+    "valid": true,
+    "problems": []
+  },
+  {
+    "trace": "datasets/local-rollouts/phase3-v2-bandit-1030.npz",
+    "scenario": "cube",
+    "transitions": 500,
+    "valid": true,
+    "problems": []
+  }
+]
