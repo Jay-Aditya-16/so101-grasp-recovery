@@ -132,6 +132,7 @@ def main():
     parser.add_argument("--depth-view", choices=("top", "wrist"), default="top", help="View used by the optional depth gate")
     parser.add_argument("--recover-unknown-empty", action="store_true", help="Experimental empty-gripper fallback for unknown alerts")
     parser.add_argument("--recover-unknown-stationary", action="store_true", help="Experimental fresh stationary-cube fallback for unknown alerts")
+    parser.add_argument("--grasp-candidate", choices=("low", "center", "high"), default="center", help="Simulator-only cube contact-height experiment")
     parser.add_argument("--experimental-cone-ik", action="store_true", help="Simulator-only tilted IK search fallback")
     parser.add_argument("--retry-only", action="store_true", help="After return-to-view, reset ACT instead of using object-aware recovery")
     parser.add_argument("--bandit-mode", choices=("shadow", "active"), help="Experimental simulator placement ranking; shadow preserves Phase II ordering")
@@ -145,6 +146,8 @@ def main():
         parser.error("--bandit-frozen requires an existing bandit memory")
     if args.bandit_mode and (not args.recovery or args.retry_only or args.scenario != "cube" or args.scene_check):
         parser.error("Phase III requires object-aware recovery in the original cube simulation")
+    if args.grasp_candidate != "center" and (not args.recovery or args.retry_only or args.scenario != "cube" or args.scene_check):
+        parser.error("non-default grasp candidates require object-aware cube recovery")
     if args.experimental_cone_ik and (not args.recovery or args.retry_only or args.scenario != "cube" or args.scene_check):
         parser.error("--experimental-cone-ik requires object-aware recovery in the cube simulation")
     if args.depth_gate and not args.recovery:
@@ -235,7 +238,7 @@ def main():
             from phase2_controller import RecoveryController
             recovery = RecoveryController(robot, FPS, depth_gate=depth_gate, depth_view=args.depth_view,
                                           retry_only=args.retry_only, bandit=bandit, bandit_mode=args.bandit_mode,
-                                          experimental_cone_ik=args.experimental_cone_ik)
+                                          experimental_cone_ik=args.experimental_cone_ik, grasp_candidate=args.grasp_candidate)
         if reference is not None and not np.allclose(robot.data.qpos[:6], reference[2][0], atol=1e-4):
             raise RuntimeError("The recorded and simulated initial joint positions differ")
         capture = {key: [] for key in ("time", "qpos", "qvel", "cube_xyz", "top_rgb", "wrist_rgb",
@@ -359,7 +362,7 @@ def main():
                                 depth_view=args.depth_view if args.depth_gate else None,
                                 recover_unknown_empty=args.recover_unknown_empty,
                                 recover_unknown_stationary=args.recover_unknown_stationary, retry_only=args.retry_only,
-                                experimental_cone_ik=args.experimental_cone_ik)
+                                experimental_cone_ik=args.experimental_cone_ik, grasp_candidate=args.grasp_candidate)
             if reference is not None:
                 capture["reference_action"] = reference[1]
                 capture["reference_joint_state"] = reference[2]
@@ -373,7 +376,7 @@ def main():
             break
         summary = {"episode": episode + 1, "seed": args.seed, "scenario": args.scenario, "start_xy": cube,
                    "checkpoint_sha256": checkpoint_sha256, "horizon_s": args.seconds, "bandit_mode": args.bandit_mode,
-                   "frozen": args.bandit_frozen, "experimental_cone_ik": args.experimental_cone_ik, "memory_sha256_before": memory_before, "memory_sha256_after": memory_after, **result}
+                   "frozen": args.bandit_frozen, "experimental_cone_ik": args.experimental_cone_ik, "grasp_candidate": args.grasp_candidate, "memory_sha256_before": memory_before, "memory_sha256_after": memory_after, **result}
         summary["capture_path"] = str(capture_path) if capture_path else None
         if args.recovery:
             summary["recovery_events"] = recovery.events

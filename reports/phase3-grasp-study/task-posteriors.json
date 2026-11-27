@@ -1,0 +1,27 @@
+{
+  "pose_class_assumption": "fixed_red_cube_assumed_single_class",
+  "outcome": "task",
+  "updates": 6,
+  "censored": [],
+  "posteriors": {
+    "low": {
+      "alpha": 3,
+      "beta": 1,
+      "attempts": 2,
+      "mean": 0.75
+    },
+    "center": {
+      "alpha": 3,
+      "beta": 1,
+      "attempts": 2,
+      "mean": 0.75
+    },
+    "high": {
+      "alpha": 2,
+      "beta": 2,
+      "attempts": 2,
+      "mean": 0.5
+    }
+  },
+  "limitations": "Offline privileged simulator proxy, tiny development sample, not online grasp learning or a BORGES reproduction."
+}

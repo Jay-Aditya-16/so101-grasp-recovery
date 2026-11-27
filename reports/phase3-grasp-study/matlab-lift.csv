@@ -1,0 +1,4 @@
+action,attempts,successes,failures,alpha,beta,posterior_mean
+low,2,2,0,3,1,0.75
+center,2,2,0,3,1,0.75
+high,2,2,0,3,1,0.75

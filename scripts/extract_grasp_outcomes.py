@@ -49,7 +49,12 @@ def main():
         with np.load(path, allow_pickle=False) as data:
             meta = json.loads(data["metadata"].item())
             row = extract(meta, data["time"], data["cube_xyz"], data["bilateral_contact"])
-        row.update(source=str(path), sha256=digest, seed=meta.get("seed"), scenario=meta.get("scenario", "cube"),
+        candidate_event = next((event for event in meta.get("recovery_events", []) if event.get("state") == "grasp_candidate"), None)
+        hold_check = next((event for event in meta.get("recovery_events", []) if event.get("state") == "gripper_check" and event.get("reason") == "after_transport"), None)
+        row.update(post_transport_obstruction_plausible=(hold_check.get("plausible") if hold_check else None),
+                   candidate=(candidate_event.get("candidate") if candidate_event else None),
+                   candidate_target_xyz_m=(candidate_event.get("target_xyz_m") if candidate_event else None),
+                   source=str(path), sha256=digest, seed=meta.get("seed"), scenario=meta.get("scenario", "cube"),
                    task_success=meta.get("result", {}).get("task_success") if meta.get("result") else None,
                    label_source="privileged MuJoCo state and contact; offline only")
         rows.append(row)
