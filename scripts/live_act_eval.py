@@ -1,6 +1,7 @@
 """Run a Colab ACT checkpoint in the tutorial scene with a live MuJoCo viewer."""
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 import sys
@@ -166,6 +167,11 @@ def main():
     ):
         parser.error("pass --checkpoint pointing to the extracted pretrained_model folder")
 
+    checkpoint_sha256 = None
+    if not args.scene_check:
+        with (args.checkpoint / "model.safetensors").open("rb") as checkpoint_file:
+            checkpoint_sha256 = hashlib.file_digest(checkpoint_file, "sha256").hexdigest()
+
     tutorial = args.tutorial.resolve()
     if not (tutorial / "ch06" / "record_demos.py").is_file():
         parser.error("--tutorial must point to the Physical AI tutorial checkout")
@@ -206,6 +212,7 @@ def main():
         bandit = PlacementBandit(args.bandit_memory)
     episode_results = []
     for episode in range(args.episodes):
+        memory_before = hashlib.sha256(args.bandit_memory.read_bytes()).hexdigest() if args.bandit_memory and args.bandit_memory.is_file() else None
         capture_path = args.capture
         if not args.scene_check and capture_path is None and not args.no_capture:
             capture_path = args.capture_dir / f"rollout-seed{args.seed}-episode{episode + 1}-{uuid.uuid4().hex}.npz"
@@ -318,27 +325,29 @@ def main():
                                  task="drawer" if args.scenario == "drawer" else "pick_place", scenario=args.scenario)
                 if capture_path and capture["action"]:
                     observe()
-        if bandit is not None and recovery.bandit_selection is not None:
-            from placement_bandit import verified_outcome
+        if bandit is not None:
+            from placement_bandit import verified_outcome, summarize_trial
             record = verified_outcome(recovery.bandit_selection, recovery.events, result, float(robot.data.time),
                                       uuid.uuid4().hex, args.seed, episode + 1, args.bandit_mode)
             if record is not None and not args.bandit_frozen:
                 bandit.update(record)
                 recovery.events.append({"state": "bandit_update", "time_s": float(robot.data.time), **record})
                 print(f"Phase III memory updated: {record}", flush=True)
-            else:
-                recovery.events.append({"state": "bandit_no_update", "time_s": float(robot.data.time),
-                                        "reason": "memory frozen" if args.bandit_frozen else "viewer interrupted or placement release not observed long enough"})
+            trial = summarize_trial(recovery.bandit_selection, result, record, args.bandit_frozen)
+            recovery.events.append({"state": "bandit_trial", "time_s": float(robot.data.time), **trial})
+            print(f"Phase III trial: {trial}", flush=True)
+        memory_after = hashlib.sha256(args.bandit_memory.read_bytes()).hexdigest() if args.bandit_memory and args.bandit_memory.is_file() else None
         if capture_path and capture["action"]:
             n = len(capture["action"])
             terminated = np.zeros(n, dtype=bool)
             terminated[-1] = bool(result and result["task_success"])
             truncated = np.zeros(n, dtype=bool)
             truncated[-1] = not terminated[-1]
-            metadata = {"checkpoint": str(args.checkpoint), "fps": FPS, "start_xy": cube,
+            metadata = {"checkpoint": str(args.checkpoint), "checkpoint_sha256": checkpoint_sha256, "horizon_s": args.seconds, "fps": FPS, "start_xy": cube,
                         "seed": args.seed, "episode": episode + 1,
                         "scenario": args.scenario,
-                        "mode": "recovery" if args.recovery else "act", "bandit_mode": args.bandit_mode,
+                        "mode": "recovery" if args.recovery else "act", "bandit_mode": args.bandit_mode, "bandit_frozen": args.bandit_frozen,
+                        "memory_sha256_before": memory_before, "memory_sha256_after": memory_after,
                         "reference_episode": args.demo_episode if reference is not None else None,
                         "viewer_closed": result is None, "result": result}
             if args.recovery:
@@ -357,7 +366,9 @@ def main():
         if result is None:
             print("Viewer closed. Episode stopped without a score.")
             break
-        summary = {"episode": episode + 1, "seed": args.seed, "scenario": args.scenario, "start_xy": cube, **result}
+        summary = {"episode": episode + 1, "seed": args.seed, "scenario": args.scenario, "start_xy": cube,
+                   "checkpoint_sha256": checkpoint_sha256, "horizon_s": args.seconds, "bandit_mode": args.bandit_mode,
+                   "frozen": args.bandit_frozen, "memory_sha256_before": memory_before, "memory_sha256_after": memory_after, **result}
         summary["capture_path"] = str(capture_path) if capture_path else None
         if args.recovery:
             summary["recovery_events"] = recovery.events

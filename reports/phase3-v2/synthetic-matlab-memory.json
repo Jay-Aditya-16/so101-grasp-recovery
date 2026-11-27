@@ -1,0 +1,31 @@
+{
+  "schema": "so101-placement-bandit-v1",
+  "actions": [
+    "center",
+    "x_plus",
+    "y_minus",
+    "x_plus_y_minus",
+    "x_minus",
+    "y_plus"
+  ],
+  "records": [
+    {
+      "id": "synthetic-success",
+      "action": "y_minus",
+      "observed_xy_m": [
+        0.21,
+        -0.04
+      ],
+      "reward": 1
+    },
+    {
+      "id": "synthetic-failure",
+      "action": "center",
+      "observed_xy_m": [
+        0.2,
+        0.0
+      ],
+      "reward": 0
+    }
+  ]
+}
