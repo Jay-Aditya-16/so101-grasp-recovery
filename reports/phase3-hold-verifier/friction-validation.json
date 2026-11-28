@@ -1,0 +1,16 @@
+[
+  {
+    "trace": "datasets/local-rollouts/verifier-friction-1050.npz",
+    "scenario": "cube",
+    "transitions": 500,
+    "valid": true,
+    "problems": []
+  },
+  {
+    "trace": "datasets/local-rollouts/verifier-friction-1051.npz",
+    "scenario": "cube",
+    "transitions": 377,
+    "valid": true,
+    "problems": []
+  }
+]

@@ -1,0 +1,551 @@
+{
+  "captures": [
+    {
+      "capture": "datasets/local-rollouts/borges-1030-low.npz",
+      "sha256": "bc5e71c1836c7581a59214961de00630703538c2c988024dfa79dc59eb51ad99",
+      "seed": 1030,
+      "scenario": "cube",
+      "viewer_closed": false,
+      "task_success": true,
+      "sim_grasp_friction": null,
+      "stages_evaluated": 3,
+      "stages": [
+        "after_closure",
+        "after_lift",
+        "after_transport"
+      ],
+      "loss_detection": {
+        "reference_empty_time_s": null,
+        "gripper_empty_time_s": null,
+        "fusion_empty_time_s": null,
+        "gripper_signed_delay_s": null,
+        "fusion_signed_delay_s": null
+      }
+    },
+    {
+      "capture": "datasets/local-rollouts/borges-1030-center.npz",
+      "sha256": "ce8ec42b25cb0731a48c7bcd8b47b0377e00a2d9caf39a36ab9fb922e960da8c",
+      "seed": 1030,
+      "scenario": "cube",
+      "viewer_closed": false,
+      "task_success": true,
+      "sim_grasp_friction": null,
+      "stages_evaluated": 3,
+      "stages": [
+        "after_closure",
+        "after_lift",
+        "after_transport"
+      ],
+      "loss_detection": {
+        "reference_empty_time_s": null,
+        "gripper_empty_time_s": null,
+        "fusion_empty_time_s": null,
+        "gripper_signed_delay_s": null,
+        "fusion_signed_delay_s": null
+      }
+    },
+    {
+      "capture": "datasets/local-rollouts/borges-1030-high.npz",
+      "sha256": "15fec7a067598d18f66dec88f3b739698702c000598166661217cbc865325652",
+      "seed": 1030,
+      "scenario": "cube",
+      "viewer_closed": false,
+      "task_success": false,
+      "sim_grasp_friction": null,
+      "stages_evaluated": 3,
+      "stages": [
+        "after_closure",
+        "after_lift",
+        "after_transport"
+      ],
+      "loss_detection": {
+        "reference_empty_time_s": 16.45000000000176,
+        "gripper_empty_time_s": 16.300000000001845,
+        "fusion_empty_time_s": 16.700000000001623,
+        "gripper_signed_delay_s": -0.14999999999991687,
+        "fusion_signed_delay_s": 0.24999999999986144
+      }
+    },
+    {
+      "capture": "datasets/local-rollouts/borges-1031-low.npz",
+      "sha256": "25644596debf0276b271a11b7240434fb7d64db11f7c8638158e444550be4726",
+      "seed": 1031,
+      "scenario": "cube",
+      "viewer_closed": false,
+      "task_success": true,
+      "sim_grasp_friction": null,
+      "stages_evaluated": 3,
+      "stages": [
+        "after_closure",
+        "after_lift",
+        "after_transport"
+      ],
+      "loss_detection": {
+        "reference_empty_time_s": null,
+        "gripper_empty_time_s": null,
+        "fusion_empty_time_s": null,
+        "gripper_signed_delay_s": null,
+        "fusion_signed_delay_s": null
+      }
+    },
+    {
+      "capture": "datasets/local-rollouts/borges-1031-center.npz",
+      "sha256": "f42a79cec4658c758924c2a7d7ea5cd2dde6c559bf51400d2c0b6fcc5da3b07b",
+      "seed": 1031,
+      "scenario": "cube",
+      "viewer_closed": false,
+      "task_success": true,
+      "sim_grasp_friction": null,
+      "stages_evaluated": 3,
+      "stages": [
+        "after_closure",
+        "after_lift",
+        "after_transport"
+      ],
+      "loss_detection": {
+        "reference_empty_time_s": null,
+        "gripper_empty_time_s": null,
+        "fusion_empty_time_s": null,
+        "gripper_signed_delay_s": null,
+        "fusion_signed_delay_s": null
+      }
+    },
+    {
+      "capture": "datasets/local-rollouts/borges-1031-high.npz",
+      "sha256": "3d3f422c223172374db61a62f38f11296c93a3bab600c960986a96f069d90018",
+      "seed": 1031,
+      "scenario": "cube",
+      "viewer_closed": false,
+      "task_success": true,
+      "sim_grasp_friction": null,
+      "stages_evaluated": 3,
+      "stages": [
+        "after_closure",
+        "after_lift",
+        "after_transport"
+      ],
+      "loss_detection": {
+        "reference_empty_time_s": null,
+        "gripper_empty_time_s": null,
+        "fusion_empty_time_s": null,
+        "gripper_signed_delay_s": null,
+        "fusion_signed_delay_s": null
+      }
+    }
+  ],
+  "rows": [
+    {
+      "capture": "datasets/local-rollouts/borges-1030-low.npz",
+      "seed": 1030,
+      "candidate": "low",
+      "stage": "after_closure",
+      "time_s": 13.700000000001245,
+      "truth": "held",
+      "gripper": "held",
+      "vision": "held",
+      "fusion": "held"
+    },
+    {
+      "capture": "datasets/local-rollouts/borges-1030-low.npz",
+      "seed": 1030,
+      "candidate": "low",
+      "stage": "after_lift",
+      "time_s": 15.250000000001762,
+      "truth": "held",
+      "gripper": "held",
+      "vision": "held",
+      "fusion": "held"
+    },
+    {
+      "capture": "datasets/local-rollouts/borges-1030-low.npz",
+      "seed": 1030,
+      "candidate": "low",
+      "stage": "after_transport",
+      "time_s": 16.800000000001567,
+      "truth": "held",
+      "gripper": "held",
+      "vision": "held",
+      "fusion": "held"
+    },
+    {
+      "capture": "datasets/local-rollouts/borges-1030-center.npz",
+      "seed": 1030,
+      "candidate": "center",
+      "stage": "after_closure",
+      "time_s": 13.700000000001245,
+      "truth": "held",
+      "gripper": "held",
+      "vision": "held",
+      "fusion": "held"
+    },
+    {
+      "capture": "datasets/local-rollouts/borges-1030-center.npz",
+      "seed": 1030,
+      "candidate": "center",
+      "stage": "after_lift",
+      "time_s": 15.250000000001762,
+      "truth": "held",
+      "gripper": "held",
+      "vision": "held",
+      "fusion": "held"
+    },
+    {
+      "capture": "datasets/local-rollouts/borges-1030-center.npz",
+      "seed": 1030,
+      "candidate": "center",
+      "stage": "after_transport",
+      "time_s": 16.800000000001567,
+      "truth": "held",
+      "gripper": "held",
+      "vision": "held",
+      "fusion": "held"
+    },
+    {
+      "capture": "datasets/local-rollouts/borges-1030-high.npz",
+      "seed": 1030,
+      "candidate": "high",
+      "stage": "after_closure",
+      "time_s": 13.700000000001245,
+      "truth": "held",
+      "gripper": "held",
+      "vision": "held",
+      "fusion": "held"
+    },
+    {
+      "capture": "datasets/local-rollouts/borges-1030-high.npz",
+      "seed": 1030,
+      "candidate": "high",
+      "stage": "after_lift",
+      "time_s": 15.250000000001762,
+      "truth": "held",
+      "gripper": "held",
+      "vision": "held",
+      "fusion": "held"
+    },
+    {
+      "capture": "datasets/local-rollouts/borges-1030-high.npz",
+      "seed": 1030,
+      "candidate": "high",
+      "stage": "after_transport",
+      "time_s": 16.800000000001567,
+      "truth": "empty",
+      "gripper": "empty",
+      "vision": "unknown",
+      "fusion": "empty"
+    },
+    {
+      "capture": "datasets/local-rollouts/borges-1031-low.npz",
+      "seed": 1031,
+      "candidate": "low",
+      "stage": "after_closure",
+      "time_s": 13.750000000001261,
+      "truth": "held",
+      "gripper": "held",
+      "vision": "held",
+      "fusion": "held"
+    },
+    {
+      "capture": "datasets/local-rollouts/borges-1031-low.npz",
+      "seed": 1031,
+      "candidate": "low",
+      "stage": "after_lift",
+      "time_s": 15.300000000001779,
+      "truth": "held",
+      "gripper": "held",
+      "vision": "held",
+      "fusion": "held"
+    },
+    {
+      "capture": "datasets/local-rollouts/borges-1031-low.npz",
+      "seed": 1031,
+      "candidate": "low",
+      "stage": "after_transport",
+      "time_s": 16.85000000000154,
+      "truth": "held",
+      "gripper": "held",
+      "vision": "held",
+      "fusion": "held"
+    },
+    {
+      "capture": "datasets/local-rollouts/borges-1031-center.npz",
+      "seed": 1031,
+      "candidate": "center",
+      "stage": "after_closure",
+      "time_s": 13.750000000001261,
+      "truth": "held",
+      "gripper": "held",
+      "vision": "held",
+      "fusion": "held"
+    },
+    {
+      "capture": "datasets/local-rollouts/borges-1031-center.npz",
+      "seed": 1031,
+      "candidate": "center",
+      "stage": "after_lift",
+      "time_s": 15.300000000001779,
+      "truth": "held",
+      "gripper": "held",
+      "vision": "held",
+      "fusion": "held"
+    },
+    {
+      "capture": "datasets/local-rollouts/borges-1031-center.npz",
+      "seed": 1031,
+      "candidate": "center",
+      "stage": "after_transport",
+      "time_s": 16.85000000000154,
+      "truth": "held",
+      "gripper": "held",
+      "vision": "held",
+      "fusion": "held"
+    },
+    {
+      "capture": "datasets/local-rollouts/borges-1031-high.npz",
+      "seed": 1031,
+      "candidate": "high",
+      "stage": "after_closure",
+      "time_s": 13.750000000001261,
+      "truth": "held",
+      "gripper": "held",
+      "vision": "held",
+      "fusion": "held"
+    },
+    {
+      "capture": "datasets/local-rollouts/borges-1031-high.npz",
+      "seed": 1031,
+      "candidate": "high",
+      "stage": "after_lift",
+      "time_s": 15.300000000001779,
+      "truth": "held",
+      "gripper": "held",
+      "vision": "held",
+      "fusion": "held"
+    },
+    {
+      "capture": "datasets/local-rollouts/borges-1031-high.npz",
+      "seed": 1031,
+      "candidate": "high",
+      "stage": "after_transport",
+      "time_s": 16.85000000000154,
+      "truth": "held",
+      "gripper": "held",
+      "vision": "held",
+      "fusion": "held"
+    }
+  ],
+  "confusion": {
+    "gripper": {
+      "held": {
+        "held": 17,
+        "empty": 0,
+        "unknown": 0
+      },
+      "empty": {
+        "held": 0,
+        "empty": 1,
+        "unknown": 0
+      },
+      "unknown": {
+        "held": 0,
+        "empty": 0,
+        "unknown": 0
+      }
+    },
+    "vision": {
+      "held": {
+        "held": 17,
+        "empty": 0,
+        "unknown": 0
+      },
+      "empty": {
+        "held": 0,
+        "empty": 0,
+        "unknown": 1
+      },
+      "unknown": {
+        "held": 0,
+        "empty": 0,
+        "unknown": 0
+      }
+    },
+    "fusion": {
+      "held": {
+        "held": 17,
+        "empty": 0,
+        "unknown": 0
+      },
+      "empty": {
+        "held": 0,
+        "empty": 1,
+        "unknown": 0
+      },
+      "unknown": {
+        "held": 0,
+        "empty": 0,
+        "unknown": 0
+      }
+    }
+  },
+  "confusion_by_stage": {
+    "after_closure": {
+      "gripper": {
+        "held": {
+          "held": 6,
+          "empty": 0,
+          "unknown": 0
+        },
+        "empty": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        }
+      },
+      "vision": {
+        "held": {
+          "held": 6,
+          "empty": 0,
+          "unknown": 0
+        },
+        "empty": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        }
+      },
+      "fusion": {
+        "held": {
+          "held": 6,
+          "empty": 0,
+          "unknown": 0
+        },
+        "empty": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        }
+      }
+    },
+    "after_lift": {
+      "gripper": {
+        "held": {
+          "held": 6,
+          "empty": 0,
+          "unknown": 0
+        },
+        "empty": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        }
+      },
+      "vision": {
+        "held": {
+          "held": 6,
+          "empty": 0,
+          "unknown": 0
+        },
+        "empty": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        }
+      },
+      "fusion": {
+        "held": {
+          "held": 6,
+          "empty": 0,
+          "unknown": 0
+        },
+        "empty": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        }
+      }
+    },
+    "after_transport": {
+      "gripper": {
+        "held": {
+          "held": 5,
+          "empty": 0,
+          "unknown": 0
+        },
+        "empty": {
+          "held": 0,
+          "empty": 1,
+          "unknown": 0
+        },
+        "unknown": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        }
+      },
+      "vision": {
+        "held": {
+          "held": 5,
+          "empty": 0,
+          "unknown": 0
+        },
+        "empty": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 1
+        },
+        "unknown": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        }
+      },
+      "fusion": {
+        "held": {
+          "held": 5,
+          "empty": 0,
+          "unknown": 0
+        },
+        "empty": {
+          "held": 0,
+          "empty": 1,
+          "unknown": 0
+        },
+        "unknown": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        }
+      }
+    }
+  },
+  "limitations": "Contact and object height are privileged simulator-only ground truth proxies. Correlated stages are not independent trials."
+}

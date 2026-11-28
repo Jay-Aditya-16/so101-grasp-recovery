@@ -1,0 +1,161 @@
+[
+  {
+    "episode": 1,
+    "seed": 1062,
+    "scenario": "cube",
+    "start_xy": [
+      0.2112810898444835,
+      -0.10361725838498291
+    ],
+    "checkpoint_sha256": "974eda64112cb6505fa45d06bc9f74c9f848cc0db4416b8eab86a7021140a142",
+    "horizon_s": 25.0,
+    "bandit_mode": null,
+    "sim_grasp_friction": null,
+    "sim_push_force": null,
+    "shadow_hold_verifier": true,
+    "frozen": false,
+    "experimental_cone_ik": true,
+    "grasp_candidate": "high",
+    "memory_sha256_before": null,
+    "memory_sha256_after": null,
+    "bilateral_gripper_contact": true,
+    "lifted_5cm": true,
+    "settled_placement": true,
+    "max_lift_m": 0.0906,
+    "task": "pick_place",
+    "task_success": true,
+    "capture_path": "datasets/local-rollouts/verifier-high-1062.npz",
+    "recovery_events": [
+      {
+        "state": "moving",
+        "time_s": 4.0999999999997705,
+        "reason": "observe"
+      },
+      {
+        "state": "observe",
+        "time_s": 8.049999999999358,
+        "reason": null
+      },
+      {
+        "state": "open",
+        "time_s": 8.099999999999374,
+        "reason": "observed cube at [0.2106314814342428, -0.10099907362530636]"
+      },
+      {
+        "state": "moving",
+        "time_s": 8.799999999999608,
+        "reason": "descend"
+      },
+      {
+        "state": "descend",
+        "time_s": 10.300000000000109,
+        "reason": null
+      },
+      {
+        "state": "grasp_candidate",
+        "time_s": 10.350000000000126,
+        "candidate": "high",
+        "target_xyz_m": [
+          0.2106314814342428,
+          -0.10099907362530636,
+          0.025
+        ],
+        "predicted_site_xyz_m": [
+          0.21054854238692158,
+          -0.10096045818839745,
+          0.025434722387556674
+        ],
+        "position_error_m": 0.0004442449682114462,
+        "downward_axis_dot": 0.9999999719935853
+      },
+      {
+        "state": "moving",
+        "time_s": 10.350000000000126,
+        "reason": "close"
+      },
+      {
+        "state": "close",
+        "time_s": 11.850000000000627,
+        "reason": null
+      },
+      {
+        "state": "closing",
+        "time_s": 11.900000000000643,
+        "reason": null
+      },
+      {
+        "state": "gripper_check",
+        "time_s": 12.900000000000977,
+        "reason": "after_closure",
+        "measured_rad": 0.14184285382656944,
+        "plausible": true
+      },
+      {
+        "state": "moving",
+        "time_s": 12.900000000000977,
+        "reason": "transport"
+      },
+      {
+        "state": "hold_verifier_shadow",
+        "time_s": 12.900000000000977,
+        "stage": "after_closure",
+        "decision": "held"
+      },
+      {
+        "state": "transport",
+        "time_s": 14.400000000001478,
+        "reason": null
+      },
+      {
+        "state": "gripper_check",
+        "time_s": 14.450000000001495,
+        "reason": "after_lift",
+        "measured_rad": 0.1424226327257994,
+        "plausible": true
+      },
+      {
+        "state": "box_target",
+        "time_s": 14.450000000001495,
+        "xy_m": [
+          0.05,
+          0.22
+        ]
+      },
+      {
+        "state": "moving",
+        "time_s": 14.450000000001495,
+        "reason": "place"
+      },
+      {
+        "state": "hold_verifier_shadow",
+        "time_s": 14.450000000001495,
+        "stage": "after_lift",
+        "decision": "held"
+      },
+      {
+        "state": "place",
+        "time_s": 15.950000000001996,
+        "reason": null
+      },
+      {
+        "state": "gripper_check",
+        "time_s": 16.00000000000201,
+        "reason": "after_transport",
+        "measured_rad": 0.13647270502700007,
+        "plausible": true
+      },
+      {
+        "state": "moving",
+        "time_s": 16.00000000000201,
+        "reason": "release"
+      },
+      {
+        "state": "hold_verifier_shadow",
+        "time_s": 16.00000000000201,
+        "stage": "after_transport",
+        "decision": "held"
+      }
+    ],
+    "depth_checks": []
+  }
+]

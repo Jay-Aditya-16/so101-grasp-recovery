@@ -1,0 +1,325 @@
+{
+  "captures": [
+    {
+      "capture": "datasets/local-rollouts/complex-sphere-recovery-1020.npz",
+      "sha256": "84a2eb6b2a1165320d9c4dab8f68cc25beaedd4eb199372072ceb441e645f7d4",
+      "seed": 1020,
+      "scenario": "sphere",
+      "viewer_closed": false,
+      "task_success": false,
+      "sim_grasp_friction": null,
+      "stages_evaluated": 3,
+      "stages": [
+        "after_closure",
+        "after_lift",
+        "after_transport"
+      ],
+      "loss_detection": {
+        "reference_empty_time_s": 16.2000000000019,
+        "gripper_empty_time_s": 16.050000000001983,
+        "fusion_empty_time_s": 16.500000000001734,
+        "gripper_signed_delay_s": -0.14999999999991687,
+        "fusion_signed_delay_s": 0.29999999999983373
+      }
+    },
+    {
+      "capture": "datasets/local-rollouts/complex-small-recovery-1020.npz",
+      "sha256": "300362271f94f29581ed19bd5631b6e277b00c312dd5a7588ef51fd138358bc6",
+      "seed": 1020,
+      "scenario": "small_cube",
+      "viewer_closed": false,
+      "task_success": false,
+      "sim_grasp_friction": null,
+      "stages_evaluated": 0,
+      "stages": [],
+      "loss_detection": null
+    },
+    {
+      "capture": "datasets/local-rollouts/complex-green-recovery-1020.npz",
+      "sha256": "8a726f2367208c3a94a5c2c7004e360f48dfd644f50cb35f6f11cdfd7eafe8ba",
+      "seed": 1020,
+      "scenario": "green_cube",
+      "viewer_closed": false,
+      "task_success": false,
+      "sim_grasp_friction": null,
+      "stages_evaluated": 0,
+      "stages": [],
+      "loss_detection": null
+    },
+    {
+      "capture": "datasets/local-rollouts/complex-two-objects-recovery-1020.npz",
+      "sha256": "39eef80d509e2eceae047dceb0451be6d18aa558ba24ca2f6a081caf6885e65a",
+      "seed": 1020,
+      "scenario": "two_objects",
+      "viewer_closed": false,
+      "task_success": false,
+      "sim_grasp_friction": null,
+      "stages_evaluated": 1,
+      "stages": [
+        "after_closure"
+      ],
+      "loss_detection": null
+    }
+  ],
+  "rows": [
+    {
+      "capture": "datasets/local-rollouts/complex-sphere-recovery-1020.npz",
+      "seed": 1020,
+      "candidate": null,
+      "stage": "after_closure",
+      "time_s": 13.500000000001178,
+      "truth": "held",
+      "gripper": "held",
+      "vision": "held",
+      "fusion": "held"
+    },
+    {
+      "capture": "datasets/local-rollouts/complex-sphere-recovery-1020.npz",
+      "seed": 1020,
+      "candidate": null,
+      "stage": "after_lift",
+      "time_s": 15.050000000001695,
+      "truth": "held",
+      "gripper": "held",
+      "vision": "held",
+      "fusion": "held"
+    },
+    {
+      "capture": "datasets/local-rollouts/complex-sphere-recovery-1020.npz",
+      "seed": 1020,
+      "candidate": null,
+      "stage": "after_transport",
+      "time_s": 16.60000000000168,
+      "truth": "empty",
+      "gripper": "empty",
+      "vision": "unknown",
+      "fusion": "empty"
+    },
+    {
+      "capture": "datasets/local-rollouts/complex-two-objects-recovery-1020.npz",
+      "seed": 1020,
+      "candidate": null,
+      "stage": "after_closure",
+      "time_s": 12.70000000000091,
+      "truth": "held",
+      "gripper": "empty",
+      "vision": "held",
+      "fusion": "unknown"
+    }
+  ],
+  "confusion": {
+    "gripper": {
+      "held": {
+        "held": 2,
+        "empty": 1,
+        "unknown": 0
+      },
+      "empty": {
+        "held": 0,
+        "empty": 1,
+        "unknown": 0
+      },
+      "unknown": {
+        "held": 0,
+        "empty": 0,
+        "unknown": 0
+      }
+    },
+    "vision": {
+      "held": {
+        "held": 3,
+        "empty": 0,
+        "unknown": 0
+      },
+      "empty": {
+        "held": 0,
+        "empty": 0,
+        "unknown": 1
+      },
+      "unknown": {
+        "held": 0,
+        "empty": 0,
+        "unknown": 0
+      }
+    },
+    "fusion": {
+      "held": {
+        "held": 2,
+        "empty": 0,
+        "unknown": 1
+      },
+      "empty": {
+        "held": 0,
+        "empty": 1,
+        "unknown": 0
+      },
+      "unknown": {
+        "held": 0,
+        "empty": 0,
+        "unknown": 0
+      }
+    }
+  },
+  "confusion_by_stage": {
+    "after_closure": {
+      "gripper": {
+        "held": {
+          "held": 1,
+          "empty": 1,
+          "unknown": 0
+        },
+        "empty": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        }
+      },
+      "vision": {
+        "held": {
+          "held": 2,
+          "empty": 0,
+          "unknown": 0
+        },
+        "empty": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        }
+      },
+      "fusion": {
+        "held": {
+          "held": 1,
+          "empty": 0,
+          "unknown": 1
+        },
+        "empty": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        }
+      }
+    },
+    "after_lift": {
+      "gripper": {
+        "held": {
+          "held": 1,
+          "empty": 0,
+          "unknown": 0
+        },
+        "empty": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        }
+      },
+      "vision": {
+        "held": {
+          "held": 1,
+          "empty": 0,
+          "unknown": 0
+        },
+        "empty": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        }
+      },
+      "fusion": {
+        "held": {
+          "held": 1,
+          "empty": 0,
+          "unknown": 0
+        },
+        "empty": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        }
+      }
+    },
+    "after_transport": {
+      "gripper": {
+        "held": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        },
+        "empty": {
+          "held": 0,
+          "empty": 1,
+          "unknown": 0
+        },
+        "unknown": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        }
+      },
+      "vision": {
+        "held": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        },
+        "empty": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 1
+        },
+        "unknown": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        }
+      },
+      "fusion": {
+        "held": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        },
+        "empty": {
+          "held": 0,
+          "empty": 1,
+          "unknown": 0
+        },
+        "unknown": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        }
+      }
+    }
+  },
+  "limitations": "Contact and object height are privileged simulator-only ground truth proxies. Correlated stages are not independent trials."
+}

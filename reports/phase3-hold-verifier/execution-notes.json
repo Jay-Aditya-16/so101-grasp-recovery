@@ -1,0 +1,5 @@
+{
+  "note": "The 1040-high launcher remained running after it wrote its completed result and capture, so it was intentionally terminated to proceed; the shell exit was 143. The saved episode is retained only if its capture validator passes and its own metadata says the episode was not interrupted.",
+  "additional_note": "The 1050 low-friction launcher also remained open after writing a completed result and capture; it was intentionally terminated to advance (exit 143). Validate the archive and recorded viewer status before treating the saved episode as complete.",
+  "1051": "Launcher intentionally terminated after writing completed result and validated capture; shell exit 143."
+}

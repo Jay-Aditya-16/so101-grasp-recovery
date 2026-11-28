@@ -1,0 +1,5 @@
+truth,gripper,vision,fusion
+held,held,held,held
+held,held,held,held
+empty,empty,unknown,empty
+held,empty,held,unknown

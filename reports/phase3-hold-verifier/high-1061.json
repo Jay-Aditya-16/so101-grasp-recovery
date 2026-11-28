@@ -1,0 +1,176 @@
+[
+  {
+    "episode": 1,
+    "seed": 1061,
+    "scenario": "cube",
+    "start_xy": [
+      0.23099622424526065,
+      0.016073277109786375
+    ],
+    "checkpoint_sha256": "974eda64112cb6505fa45d06bc9f74c9f848cc0db4416b8eab86a7021140a142",
+    "horizon_s": 25.0,
+    "bandit_mode": null,
+    "sim_grasp_friction": null,
+    "sim_push_force": null,
+    "shadow_hold_verifier": true,
+    "frozen": false,
+    "experimental_cone_ik": true,
+    "grasp_candidate": "high",
+    "memory_sha256_before": null,
+    "memory_sha256_after": null,
+    "bilateral_gripper_contact": true,
+    "lifted_5cm": true,
+    "settled_placement": true,
+    "max_lift_m": 0.0899,
+    "task": "pick_place",
+    "task_success": true,
+    "capture_path": "datasets/local-rollouts/verifier-high-1061.npz",
+    "recovery_events": [
+      {
+        "state": "trigger",
+        "time_s": 4.699999999999704,
+        "reason": "unknown_stationary_cube"
+      },
+      {
+        "state": "moving",
+        "time_s": 4.699999999999704,
+        "reason": "observe"
+      },
+      {
+        "state": "observe",
+        "time_s": 8.649999999999558,
+        "reason": null
+      },
+      {
+        "state": "open",
+        "time_s": 8.699999999999575,
+        "reason": "observed cube at [0.22923657394416763, 0.018605092509924856]"
+      },
+      {
+        "state": "moving",
+        "time_s": 9.399999999999809,
+        "reason": "descend"
+      },
+      {
+        "state": "descend",
+        "time_s": 10.90000000000031,
+        "reason": null
+      },
+      {
+        "state": "grasp_candidate",
+        "time_s": 10.950000000000326,
+        "candidate": "high",
+        "target_xyz_m": [
+          0.22923657394416763,
+          0.018605092509924856,
+          0.025
+        ],
+        "predicted_site_xyz_m": [
+          0.2291418479396606,
+          0.018593980926114154,
+          0.02543731474898371
+        ],
+        "position_error_m": 0.00044759431732689783,
+        "downward_axis_dot": 0.9999999733370724
+      },
+      {
+        "state": "moving",
+        "time_s": 10.950000000000326,
+        "reason": "close"
+      },
+      {
+        "state": "close",
+        "time_s": 12.450000000000827,
+        "reason": null
+      },
+      {
+        "state": "closing",
+        "time_s": 12.500000000000844,
+        "reason": null
+      },
+      {
+        "state": "gripper_check",
+        "time_s": 13.500000000001178,
+        "reason": "after_closure",
+        "measured_rad": 0.14413720592739002,
+        "plausible": true
+      },
+      {
+        "state": "moving",
+        "time_s": 13.500000000001178,
+        "reason": "transport"
+      },
+      {
+        "state": "hold_verifier_shadow",
+        "time_s": 13.500000000001178,
+        "stage": "after_closure",
+        "decision": "held"
+      },
+      {
+        "state": "transport",
+        "time_s": 15.000000000001679,
+        "reason": null
+      },
+      {
+        "state": "gripper_check",
+        "time_s": 15.050000000001695,
+        "reason": "after_lift",
+        "measured_rad": 0.14211280557212375,
+        "plausible": true
+      },
+      {
+        "state": "box_target",
+        "time_s": 15.050000000001695,
+        "xy_m": [
+          0.05,
+          0.22
+        ]
+      },
+      {
+        "state": "moving",
+        "time_s": 15.050000000001695,
+        "reason": "place"
+      },
+      {
+        "state": "hold_verifier_shadow",
+        "time_s": 15.050000000001695,
+        "stage": "after_lift",
+        "decision": "held"
+      },
+      {
+        "state": "place",
+        "time_s": 16.550000000001706,
+        "reason": null
+      },
+      {
+        "state": "gripper_check",
+        "time_s": 16.60000000000168,
+        "reason": "after_transport",
+        "measured_rad": 0.14415508918530412,
+        "plausible": true
+      },
+      {
+        "state": "moving",
+        "time_s": 16.60000000000168,
+        "reason": "release"
+      },
+      {
+        "state": "hold_verifier_shadow",
+        "time_s": 16.60000000000168,
+        "stage": "after_transport",
+        "decision": "held"
+      },
+      {
+        "state": "release",
+        "time_s": 18.100000000000847,
+        "reason": null
+      },
+      {
+        "state": "releasing",
+        "time_s": 18.15000000000082,
+        "reason": null
+      }
+    ],
+    "depth_checks": []
+  }
+]

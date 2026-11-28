@@ -1,0 +1,161 @@
+[
+  {
+    "episode": 1,
+    "seed": 1043,
+    "scenario": "cube",
+    "start_xy": [
+      0.15849617896297258,
+      -0.09873220054781245
+    ],
+    "checkpoint_sha256": "974eda64112cb6505fa45d06bc9f74c9f848cc0db4416b8eab86a7021140a142",
+    "horizon_s": 25.0,
+    "bandit_mode": null,
+    "sim_grasp_friction": null,
+    "frozen": false,
+    "experimental_cone_ik": true,
+    "grasp_candidate": "high",
+    "memory_sha256_before": null,
+    "memory_sha256_after": null,
+    "bilateral_gripper_contact": true,
+    "lifted_5cm": true,
+    "settled_placement": true,
+    "max_lift_m": 0.0931,
+    "task": "pick_place",
+    "task_success": true,
+    "capture_path": "datasets/local-rollouts/verifier-1043-high.npz",
+    "recovery_events": [
+      {
+        "state": "trigger",
+        "time_s": 4.64999999999971,
+        "reason": "unknown_stationary_cube"
+      },
+      {
+        "state": "moving",
+        "time_s": 4.64999999999971,
+        "reason": "observe"
+      },
+      {
+        "state": "observe",
+        "time_s": 8.599999999999541,
+        "reason": null
+      },
+      {
+        "state": "open",
+        "time_s": 8.649999999999558,
+        "reason": "observed cube at [0.15756766124748528, -0.09579563728953258]"
+      },
+      {
+        "state": "moving",
+        "time_s": 9.349999999999792,
+        "reason": "descend"
+      },
+      {
+        "state": "descend",
+        "time_s": 10.850000000000293,
+        "reason": null
+      },
+      {
+        "state": "grasp_candidate",
+        "time_s": 10.90000000000031,
+        "candidate": "high",
+        "target_xyz_m": [
+          0.15756766124748528,
+          -0.09579563728953258,
+          0.025
+        ],
+        "predicted_site_xyz_m": [
+          0.15739025070419402,
+          -0.09566362775727831,
+          0.025899140566276735
+        ],
+        "position_error_m": 0.0009259345416396006,
+        "downward_axis_dot": 0.9999999470941371
+      },
+      {
+        "state": "moving",
+        "time_s": 10.90000000000031,
+        "reason": "close"
+      },
+      {
+        "state": "close",
+        "time_s": 12.40000000000081,
+        "reason": null
+      },
+      {
+        "state": "closing",
+        "time_s": 12.450000000000827,
+        "reason": null
+      },
+      {
+        "state": "gripper_check",
+        "time_s": 13.450000000001161,
+        "reason": "after_closure",
+        "measured_rad": 0.1429118616586991,
+        "plausible": true
+      },
+      {
+        "state": "moving",
+        "time_s": 13.450000000001161,
+        "reason": "transport"
+      },
+      {
+        "state": "transport",
+        "time_s": 14.950000000001662,
+        "reason": null
+      },
+      {
+        "state": "gripper_check",
+        "time_s": 15.000000000001679,
+        "reason": "after_lift",
+        "measured_rad": 0.14214088364497166,
+        "plausible": true
+      },
+      {
+        "state": "box_target",
+        "time_s": 15.000000000001679,
+        "xy_m": [
+          0.065,
+          0.20500000000000002
+        ]
+      },
+      {
+        "state": "moving",
+        "time_s": 15.000000000001679,
+        "reason": "place"
+      },
+      {
+        "state": "place",
+        "time_s": 16.500000000001734,
+        "reason": null
+      },
+      {
+        "state": "gripper_check",
+        "time_s": 16.550000000001706,
+        "reason": "after_transport",
+        "measured_rad": 0.13158529541296837,
+        "plausible": true
+      },
+      {
+        "state": "moving",
+        "time_s": 16.550000000001706,
+        "reason": "release"
+      },
+      {
+        "state": "release",
+        "time_s": 18.050000000000875,
+        "reason": null
+      },
+      {
+        "state": "releasing",
+        "time_s": 18.100000000000847,
+        "reason": null
+      },
+      {
+        "state": "done",
+        "time_s": 19.100000000000293,
+        "reason": null
+      }
+    ],
+    "depth_checks": []
+  }
+]

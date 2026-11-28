@@ -1,0 +1,6 @@
+{
+  "samples": 100,
+  "median_ms": 3.35370801622048,
+  "p95_ms": 12.929391278885301,
+  "limitations": "offline in-memory benchmark while simulation is running; excludes camera acquisition and hardware IO"
+}

@@ -1,0 +1,4 @@
+mode,held_correct,empty_correct,errors,abstain
+gripper,9,0,0,0
+vision,9,0,0,0
+fusion,9,0,0,0

@@ -1,6 +1,7 @@
 """Run a Colab ACT checkpoint in the tutorial scene with a live MuJoCo viewer."""
 
 import argparse
+from collections import deque
 import hashlib
 import json
 from pathlib import Path
@@ -11,6 +12,21 @@ import uuid
 import mujoco
 import mujoco.viewer
 import numpy as np
+
+
+def set_sim_grasp_friction(model, friction):
+    """Apply a known sliding-friction perturbation to cube and both jaws."""
+    if not np.isfinite(friction) or not .01 <= friction <= 1.5:
+        raise ValueError("friction must be in [0.01, 1.5]")
+    cube = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_GEOM, "cube_geom")
+    jaws = {mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_BODY, name)
+            for name in ("gripper", "moving_jaw_so101_v1")}
+    if cube < 0 or -1 in jaws:
+        raise ValueError("expected cube and jaw geometry not found")
+    model.geom_friction[cube, 0] = friction
+    for i in range(model.ngeom):
+        if int(model.geom_bodyid[i]) in jaws:
+            model.geom_friction[i, 0] = friction
 
 
 def placement_frame_supported(supported, jaw_contact, distance_xy, linear_speed):
@@ -132,6 +148,9 @@ def main():
     parser.add_argument("--depth-view", choices=("top", "wrist"), default="top", help="View used by the optional depth gate")
     parser.add_argument("--recover-unknown-empty", action="store_true", help="Experimental empty-gripper fallback for unknown alerts")
     parser.add_argument("--recover-unknown-stationary", action="store_true", help="Experimental fresh stationary-cube fallback for unknown alerts")
+    parser.add_argument("--shadow-hold-verifier", action="store_true", help="Log wrist/joint verifier at recovery checks without changing control")
+    parser.add_argument("--sim-push-force", type=float, help="Experimental external cube push in newtons during recovery descent")
+    parser.add_argument("--sim-grasp-friction", type=float, help="Experimental cube and jaw sliding-friction perturbation")
     parser.add_argument("--grasp-candidate", choices=("low", "center", "high"), default="center", help="Simulator-only cube contact-height experiment")
     parser.add_argument("--experimental-cone-ik", action="store_true", help="Simulator-only tilted IK search fallback")
     parser.add_argument("--retry-only", action="store_true", help="After return-to-view, reset ACT instead of using object-aware recovery")
@@ -146,6 +165,12 @@ def main():
         parser.error("--bandit-frozen requires an existing bandit memory")
     if args.bandit_mode and (not args.recovery or args.retry_only or args.scenario != "cube" or args.scene_check):
         parser.error("Phase III requires object-aware recovery in the original cube simulation")
+    if args.shadow_hold_verifier and (not args.recovery or args.retry_only or args.scenario != "cube" or args.scene_check):
+        parser.error("--shadow-hold-verifier requires object-aware cube recovery")
+    if args.sim_push_force is not None and (args.scenario != "cube" or not args.recovery or args.retry_only or args.scene_check or not np.isfinite(args.sim_push_force) or not 0 < args.sim_push_force <= .5):
+        parser.error("--sim-push-force requires cube recovery and a force in (0, 0.5] N")
+    if args.sim_grasp_friction is not None and (args.scenario != "cube" or not args.recovery or args.scene_check or not np.isfinite(args.sim_grasp_friction) or not .01 <= args.sim_grasp_friction <= 1.5):
+        parser.error("--sim-grasp-friction requires cube recovery and a value in [0.01, 1.5]")
     if args.grasp_candidate != "center" and (not args.recovery or args.retry_only or args.scenario != "cube" or args.scene_check):
         parser.error("non-default grasp candidates require object-aware cube recovery")
     if args.experimental_cone_ik and (not args.recovery or args.retry_only or args.scenario != "cube" or args.scene_check):
@@ -234,6 +259,8 @@ def main():
             cube = [0.8, 0.8]  # hidden placeholder for the unchanged policy interface
         with scenario_scene(args.scenario) as scene_kwargs:
             robot = SO101Sim(cube_pos=cube, box_pos=(0.05, 0.22), render=False, **scene_kwargs)
+        if args.sim_grasp_friction is not None:
+            set_sim_grasp_friction(robot.model, args.sim_grasp_friction)
         if args.recovery:
             from phase2_controller import RecoveryController
             recovery = RecoveryController(robot, FPS, depth_gate=depth_gate, depth_view=args.depth_view,
@@ -241,6 +268,8 @@ def main():
                                           experimental_cone_ik=args.experimental_cone_ik, grasp_candidate=args.grasp_candidate)
         if reference is not None and not np.allclose(robot.data.qpos[:6], reference[2][0], atol=1e-4):
             raise RuntimeError("The recorded and simulated initial joint positions differ")
+        wrist_history, gripper_history = deque(maxlen=3), deque(maxlen=3)
+        push_frames = 0
         capture = {key: [] for key in ("time", "qpos", "qvel", "cube_xyz", "top_rgb", "wrist_rgb",
                                        "action", "bilateral_contact", "box_support", "settled", "reward")}
         if args.scenario == "drawer":
@@ -274,15 +303,37 @@ def main():
                 return obs
 
             def get_action():
-                nonlocal reported, empty_evidence_frames, stationary_evidence_frames
+                nonlocal reported, empty_evidence_frames, stationary_evidence_frames, push_frames
                 obs = observe()
                 image = (obs["observation.images.top"][0].permute(1, 2, 0).numpy() * 255).round().astype(np.uint8)
+                if args.sim_push_force is not None:
+                    robot.data.xfrc_applied[robot.cube_id, :] = 0
+                    if recovery.state == "moving" and recovery.next_state == "close" and push_frames < round(.2 * FPS):
+                        robot.data.xfrc_applied[robot.cube_id, 0] = args.sim_push_force
+                        if push_frames == 0:
+                            recovery.events.append({'state': 'sim_external_push', 'time_s': float(robot.data.time),
+                                                    'force_x_n': args.sim_push_force, 'duration_s': .2})
+                        push_frames += 1
+                if args.shadow_hold_verifier:
+                    wrist_observation = (obs["observation.images.wrist"][0].permute(1, 2, 0).numpy() * 255).round().astype(np.uint8)
+                    wrist_history.append(wrist_observation)
+                    gripper_history.append(robot.gripper_opening())
                 if args.recovery and recovery.state == "policy_retry":
                     policy.reset()
                     recovery.log("retrying", "ACT resumed; further interventions disabled")
                 if args.recovery and recovery.state not in ("idle", "retrying"):
                     wrist = (obs["observation.images.wrist"][0].permute(1, 2, 0).numpy() * 255).round().astype(np.uint8)
-                    return recovery.step(image, wrist)
+                    previous_events = len(recovery.events)
+                    command = recovery.step(image, wrist)
+                    if args.shadow_hold_verifier:
+                        from hold_verifier import verify_hold
+                        checks = [event for event in recovery.events[previous_events:] if event['state'] == 'gripper_check']
+                        for check in checks:
+                            decision = verify_hold(wrist_history, gripper_history)
+                            recovery.events.append({'state': 'hold_verifier_shadow', 'time_s': float(robot.data.time),
+                                                    'stage': check['reason'], 'decision': decision})
+                            print(f"Shadow hold verifier ({check['reason']}): {decision}", flush=True)
+                    return command
                 with torch.inference_mode():
                     action = postprocess(policy.select_action(preprocess(obs)))[0].cpu().numpy()
                 if action.shape != (6,) or not np.isfinite(action).all():
@@ -352,7 +403,7 @@ def main():
             truncated[-1] = not terminated[-1]
             metadata = {"checkpoint": str(args.checkpoint), "checkpoint_sha256": checkpoint_sha256, "horizon_s": args.seconds, "fps": FPS, "start_xy": cube,
                         "seed": args.seed, "episode": episode + 1,
-                        "scenario": args.scenario,
+                        "scenario": args.scenario, "sim_grasp_friction": args.sim_grasp_friction, "sim_push_force": args.sim_push_force, "shadow_hold_verifier": args.shadow_hold_verifier,
                         "mode": "recovery" if args.recovery else "act", "bandit_mode": args.bandit_mode, "bandit_frozen": args.bandit_frozen,
                         "memory_sha256_before": memory_before, "memory_sha256_after": memory_after,
                         "reference_episode": args.demo_episode if reference is not None else None,
@@ -376,7 +427,7 @@ def main():
             break
         summary = {"episode": episode + 1, "seed": args.seed, "scenario": args.scenario, "start_xy": cube,
                    "checkpoint_sha256": checkpoint_sha256, "horizon_s": args.seconds, "bandit_mode": args.bandit_mode,
-                   "frozen": args.bandit_frozen, "experimental_cone_ik": args.experimental_cone_ik, "grasp_candidate": args.grasp_candidate, "memory_sha256_before": memory_before, "memory_sha256_after": memory_after, **result}
+                   "sim_grasp_friction": args.sim_grasp_friction, "sim_push_force": args.sim_push_force, "shadow_hold_verifier": args.shadow_hold_verifier, "frozen": args.bandit_frozen, "experimental_cone_ik": args.experimental_cone_ik, "grasp_candidate": args.grasp_candidate, "memory_sha256_before": memory_before, "memory_sha256_after": memory_after, **result}
         summary["capture_path"] = str(capture_path) if capture_path else None
         if args.recovery:
             summary["recovery_events"] = recovery.events
