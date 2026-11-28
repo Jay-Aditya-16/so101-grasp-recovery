@@ -1,0 +1,1 @@
+{"purpose":"controlled simulator-only loss-of-grip challenge; lower cube and both jaw sliding friction to seek negative verification examples","friction":0.05,"scenario":"cube","candidate":"center","horizon_s":25,"split":{"development":[1050],"holdout":[1051]},"do_not_assume_failure":"record outcome; retain censored runs"}

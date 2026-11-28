@@ -1,0 +1,386 @@
+{
+  "captures": [
+    {
+      "capture": "datasets/local-rollouts/verifier-1043-high.npz",
+      "sha256": "d2d604733c8dfeeff00e448725c8249de35c6bd4d173e55409c4ec3c5e4aec1b",
+      "seed": 1043,
+      "scenario": "cube",
+      "viewer_closed": false,
+      "task_success": true,
+      "sim_grasp_friction": null,
+      "stages_evaluated": 3,
+      "stages": [
+        "after_closure",
+        "after_lift",
+        "after_transport"
+      ],
+      "loss_detection": {
+        "reference_empty_time_s": null,
+        "gripper_empty_time_s": null,
+        "fusion_empty_time_s": null,
+        "gripper_signed_delay_s": null,
+        "fusion_signed_delay_s": null
+      }
+    },
+    {
+      "capture": "datasets/local-rollouts/verifier-1044-low.npz",
+      "sha256": "8f6446edf521684bd34134c1d66ff813be83a66cf51b64985562f58c51810ee7",
+      "seed": 1044,
+      "scenario": "cube",
+      "viewer_closed": false,
+      "task_success": true,
+      "sim_grasp_friction": null,
+      "stages_evaluated": 3,
+      "stages": [
+        "after_closure",
+        "after_lift",
+        "after_transport"
+      ],
+      "loss_detection": {
+        "reference_empty_time_s": null,
+        "gripper_empty_time_s": null,
+        "fusion_empty_time_s": null,
+        "gripper_signed_delay_s": null,
+        "fusion_signed_delay_s": null
+      }
+    },
+    {
+      "capture": "datasets/local-rollouts/verifier-1045-center.npz",
+      "sha256": "73fbb53febc0cf47ac7515b24532ba106b5c3418034e40ae38f00bfaa46a90fe",
+      "seed": 1045,
+      "scenario": "cube",
+      "viewer_closed": false,
+      "task_success": true,
+      "sim_grasp_friction": null,
+      "stages_evaluated": 3,
+      "stages": [
+        "after_closure",
+        "after_lift",
+        "after_transport"
+      ],
+      "loss_detection": {
+        "reference_empty_time_s": null,
+        "gripper_empty_time_s": null,
+        "fusion_empty_time_s": null,
+        "gripper_signed_delay_s": null,
+        "fusion_signed_delay_s": null
+      }
+    }
+  ],
+  "rows": [
+    {
+      "capture": "datasets/local-rollouts/verifier-1043-high.npz",
+      "seed": 1043,
+      "candidate": "high",
+      "stage": "after_closure",
+      "time_s": 13.450000000001161,
+      "truth": "held",
+      "gripper": "held",
+      "vision": "held",
+      "fusion": "held"
+    },
+    {
+      "capture": "datasets/local-rollouts/verifier-1043-high.npz",
+      "seed": 1043,
+      "candidate": "high",
+      "stage": "after_lift",
+      "time_s": 15.000000000001679,
+      "truth": "held",
+      "gripper": "held",
+      "vision": "held",
+      "fusion": "held"
+    },
+    {
+      "capture": "datasets/local-rollouts/verifier-1043-high.npz",
+      "seed": 1043,
+      "candidate": "high",
+      "stage": "after_transport",
+      "time_s": 16.550000000001706,
+      "truth": "held",
+      "gripper": "held",
+      "vision": "held",
+      "fusion": "held"
+    },
+    {
+      "capture": "datasets/local-rollouts/verifier-1044-low.npz",
+      "seed": 1044,
+      "candidate": "low",
+      "stage": "after_closure",
+      "time_s": 12.85000000000096,
+      "truth": "held",
+      "gripper": "held",
+      "vision": "held",
+      "fusion": "held"
+    },
+    {
+      "capture": "datasets/local-rollouts/verifier-1044-low.npz",
+      "seed": 1044,
+      "candidate": "low",
+      "stage": "after_lift",
+      "time_s": 14.400000000001478,
+      "truth": "held",
+      "gripper": "held",
+      "vision": "held",
+      "fusion": "held"
+    },
+    {
+      "capture": "datasets/local-rollouts/verifier-1044-low.npz",
+      "seed": 1044,
+      "candidate": "low",
+      "stage": "after_transport",
+      "time_s": 15.950000000001996,
+      "truth": "held",
+      "gripper": "held",
+      "vision": "held",
+      "fusion": "held"
+    },
+    {
+      "capture": "datasets/local-rollouts/verifier-1045-center.npz",
+      "seed": 1045,
+      "candidate": "center",
+      "stage": "after_closure",
+      "time_s": 13.850000000001295,
+      "truth": "held",
+      "gripper": "held",
+      "vision": "held",
+      "fusion": "held"
+    },
+    {
+      "capture": "datasets/local-rollouts/verifier-1045-center.npz",
+      "seed": 1045,
+      "candidate": "center",
+      "stage": "after_lift",
+      "time_s": 15.400000000001812,
+      "truth": "held",
+      "gripper": "held",
+      "vision": "held",
+      "fusion": "held"
+    },
+    {
+      "capture": "datasets/local-rollouts/verifier-1045-center.npz",
+      "seed": 1045,
+      "candidate": "center",
+      "stage": "after_transport",
+      "time_s": 16.950000000001484,
+      "truth": "held",
+      "gripper": "held",
+      "vision": "held",
+      "fusion": "held"
+    }
+  ],
+  "confusion": {
+    "gripper": {
+      "held": {
+        "held": 9,
+        "empty": 0,
+        "unknown": 0
+      },
+      "empty": {
+        "held": 0,
+        "empty": 0,
+        "unknown": 0
+      },
+      "unknown": {
+        "held": 0,
+        "empty": 0,
+        "unknown": 0
+      }
+    },
+    "vision": {
+      "held": {
+        "held": 9,
+        "empty": 0,
+        "unknown": 0
+      },
+      "empty": {
+        "held": 0,
+        "empty": 0,
+        "unknown": 0
+      },
+      "unknown": {
+        "held": 0,
+        "empty": 0,
+        "unknown": 0
+      }
+    },
+    "fusion": {
+      "held": {
+        "held": 9,
+        "empty": 0,
+        "unknown": 0
+      },
+      "empty": {
+        "held": 0,
+        "empty": 0,
+        "unknown": 0
+      },
+      "unknown": {
+        "held": 0,
+        "empty": 0,
+        "unknown": 0
+      }
+    }
+  },
+  "confusion_by_stage": {
+    "after_closure": {
+      "gripper": {
+        "held": {
+          "held": 3,
+          "empty": 0,
+          "unknown": 0
+        },
+        "empty": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        }
+      },
+      "vision": {
+        "held": {
+          "held": 3,
+          "empty": 0,
+          "unknown": 0
+        },
+        "empty": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        }
+      },
+      "fusion": {
+        "held": {
+          "held": 3,
+          "empty": 0,
+          "unknown": 0
+        },
+        "empty": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        }
+      }
+    },
+    "after_lift": {
+      "gripper": {
+        "held": {
+          "held": 3,
+          "empty": 0,
+          "unknown": 0
+        },
+        "empty": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        }
+      },
+      "vision": {
+        "held": {
+          "held": 3,
+          "empty": 0,
+          "unknown": 0
+        },
+        "empty": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        }
+      },
+      "fusion": {
+        "held": {
+          "held": 3,
+          "empty": 0,
+          "unknown": 0
+        },
+        "empty": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        }
+      }
+    },
+    "after_transport": {
+      "gripper": {
+        "held": {
+          "held": 3,
+          "empty": 0,
+          "unknown": 0
+        },
+        "empty": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        }
+      },
+      "vision": {
+        "held": {
+          "held": 3,
+          "empty": 0,
+          "unknown": 0
+        },
+        "empty": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        }
+      },
+      "fusion": {
+        "held": {
+          "held": 3,
+          "empty": 0,
+          "unknown": 0
+        },
+        "empty": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        },
+        "unknown": {
+          "held": 0,
+          "empty": 0,
+          "unknown": 0
+        }
+      }
+    }
+  },
+  "limitations": "Contact and object height are privileged simulator-only ground truth proxies. Correlated stages are not independent trials."
+}

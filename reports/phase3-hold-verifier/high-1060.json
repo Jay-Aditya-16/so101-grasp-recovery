@@ -1,0 +1,51 @@
+[
+  {
+    "episode": 1,
+    "seed": 1060,
+    "scenario": "cube",
+    "start_xy": [
+      0.224777382740362,
+      -0.14676771234097544
+    ],
+    "checkpoint_sha256": "974eda64112cb6505fa45d06bc9f74c9f848cc0db4416b8eab86a7021140a142",
+    "horizon_s": 25.0,
+    "bandit_mode": null,
+    "sim_grasp_friction": null,
+    "shadow_hold_verifier": true,
+    "frozen": false,
+    "experimental_cone_ik": true,
+    "grasp_candidate": "high",
+    "memory_sha256_before": null,
+    "memory_sha256_after": null,
+    "bilateral_gripper_contact": false,
+    "lifted_5cm": false,
+    "settled_placement": false,
+    "max_lift_m": 0.0,
+    "task": "pick_place",
+    "task_success": false,
+    "capture_path": "datasets/local-rollouts/verifier-high-1060.npz",
+    "recovery_events": [
+      {
+        "state": "moving",
+        "time_s": 4.0999999999997705,
+        "reason": "observe"
+      },
+      {
+        "state": "observe",
+        "time_s": 8.049999999999358,
+        "reason": null
+      },
+      {
+        "state": "open",
+        "time_s": 8.099999999999374,
+        "reason": "observed cube at [0.22392083322704626, -0.14485393454155782]"
+      },
+      {
+        "state": "aborted",
+        "time_s": 8.799999999999608,
+        "reason": "no IK solution with validated pose and sampled path: [{'valid': False, 'in_joint_limits': True, 'position_error_m': 0.009026955323352192, 'downward_axis_dot': 0.9983848448173498, 'site_xyz_m': [0.23083382106761757, -0.15056451396189785, 0.08104201929439839]}, {'valid': False, 'in_joint_limits': True, 'position_error_m': 0.009025523474057504, 'downward_axis_dot': 0.9983853603542543, 'site_xyz_m': [0.23083278811354688, -0.15056352883208007, 0.08104186691346776]}]"
+      }
+    ],
+    "depth_checks": []
+  }
+]

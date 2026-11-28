@@ -33,3 +33,23 @@ class PlacementScoringTests(unittest.TestCase):
         self.assertFalse(placement_frame_supported(True, True, [0, 0], 0))
         self.assertFalse(placement_frame_supported(True, False, [0.031, 0], 0))
         self.assertFalse(placement_frame_supported(True, False, [0, 0], 0.03))
+
+
+def test_grasp_friction_rejects_invalid_values():
+    from live_act_eval import set_sim_grasp_friction
+    import pytest
+    for value in (0, float('nan'), 2):
+        with pytest.raises(ValueError):
+            set_sim_grasp_friction(None, value)
+
+
+def test_grasp_friction_changes_both_jaws_and_cube_only(monkeypatch):
+    import numpy as np
+    from types import SimpleNamespace
+    import live_act_eval
+    ids = {'cube_geom': 3, 'gripper': 10, 'moving_jaw_so101_v1': 11}
+    monkeypatch.setattr(live_act_eval.mujoco, 'mj_name2id', lambda model, kind, name: ids[name])
+    model = SimpleNamespace(ngeom=4, geom_bodyid=np.array([10,11,12,13]), geom_friction=np.ones((4,3)))
+    live_act_eval.set_sim_grasp_friction(model, .05)
+    assert np.allclose(model.geom_friction[:,0], [.05,.05,1,.05])
+    assert np.allclose(model.geom_friction[:,1:], 1)

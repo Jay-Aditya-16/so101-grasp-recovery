@@ -1,0 +1,1 @@
+{"purpose":"additional untouched cube positions with high grasp to seek natural losses; verifier and thresholds frozen before trials","holdout_seeds":[1060,1061,1062,1063],"candidate":"high","horizon_s":25,"shadow_hold_verifier":true,"experimental_cone_ik":true,"failure_reporting":"retain every failure, missing check and intervention; no guarantee of a negative outcome"}

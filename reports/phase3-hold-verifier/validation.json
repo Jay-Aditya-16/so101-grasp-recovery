@@ -1,0 +1,44 @@
+[
+  {
+    "trace": "datasets/local-rollouts/verifier-1040-high.npz",
+    "scenario": "cube",
+    "transitions": 355,
+    "valid": true,
+    "problems": []
+  },
+  {
+    "trace": "datasets/local-rollouts/verifier-1041-low.npz",
+    "scenario": "cube",
+    "transitions": 386,
+    "valid": true,
+    "problems": []
+  },
+  {
+    "trace": "datasets/local-rollouts/verifier-1042-center.npz",
+    "scenario": "cube",
+    "transitions": 365,
+    "valid": true,
+    "problems": []
+  },
+  {
+    "trace": "datasets/local-rollouts/verifier-1043-high.npz",
+    "scenario": "cube",
+    "transitions": 417,
+    "valid": true,
+    "problems": []
+  },
+  {
+    "trace": "datasets/local-rollouts/verifier-1044-low.npz",
+    "scenario": "cube",
+    "transitions": 365,
+    "valid": true,
+    "problems": []
+  },
+  {
+    "trace": "datasets/local-rollouts/verifier-1045-center.npz",
+    "scenario": "cube",
+    "transitions": 384,
+    "valid": true,
+    "problems": []
+  }
+]
